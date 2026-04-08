@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "title": "IPTV Schweiz — Premium IPTV Abo, 37 000+ HD/4K Kanäle & Replay",
+    "description": "IPTV Schweiz Premium: 37 000+ HD/4K-Kanäle, 40 000 Filme, 17 000 Serien, 7 Tage Replay. Aktivierung in unter 2h, deutschsprachiger Support 24/7, ohne Vertrag."
+  },
+  "nav": {
+    "home": "Startseite",
+    "plans": "Angebote",
+    "multiScreen": "Multi-Bildschirm",
+    "faq": "FAQ",
+    "installation": "Installation",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "cta": "Angebote ansehen",
+    "promoBar": "🔥 Limitiertes Angebot: -30% auf alle IPTV-Abos — Jetzt zugreifen!",
+    "promoBarShort": "🔥 -30% auf alle IPTV-Abos!"
+  },
+  "hero": {
+    "badge": "IPTV Service Schweiz",
+    "swissBadge": "100% Schweizer Premium-Service",
+    "deviceBadge": "Alle Geräte",
+    "title": "IPTV Schweiz",
+    "titleHighlight": "Premium",
+    "titleEnd": "— 37 000+ Kanäle HD & 4K",
+    "subtitle": "IPTV Schweiz seit 2020 — Zugang zu 37 000 HD/4K-Kanälen, 40 000 Filmen, 17 000 Serien und 7 Tage Replay. Ohne Buffering, ohne Vertragsbindung. Aktivierung in unter 2h. Deutschsprachiger Support 24/7.",
+    "ctaPrimary": "Abonnements ansehen",
+    "ctaSecondary": "Mehr erfahren",
+    "trust": "Tausende Schweizer Haushalte vertrauen uns",
+    "imageAlt": "IPTV Schweiz — Premium IPTV-Service auf allen Geräten: TV, Computer, Tablet und Smartphone"
+  },
+  "stats": {
+    "channels": "Kanäle",
+    "movies": "Filme",
+    "series": "Serien",
+    "uptime": "Verfügbarkeit",
+    "support": "Support"
+  },
+  "features": {
+    "title": "Warum unseren Service wählen",
+    "subtitle": "TV-Streaming in der Schweiz mit Deutschschweizer, Romand und internationalen Kanälen, Replay, VOD und null Buffering",
+    "quality": {
+      "title": "Ultra HD 4K",
+      "description": "Geniessen Sie aussergewöhnliche Bildqualität mit unseren Kanälen in Ultra HD 4K, Full HD und HD."
+    },
+    "noBuffering": {
+      "title": "Ohne Buffering",
+      "description": "Flüssiges Streaming ohne Unterbrechungen oder Latenz dank unserer leistungsstarken Premium-Serverinfrastruktur."
+    },
+    "replay": {
+      "title": "Replay & VOD",
+      "description": "Verpassen Sie nie Ihre Lieblingssendungen mit unserer Replay-Funktion und greifen Sie auf über 40'000 Filme und 17'000 Serien zu."
+    }
+  },
+  "whyUs": {
+    "title": "Warum uns",
+    "titleHighlight": "wählen",
+    "subtitle": "IPTV Schweiz seit 2020, mit Tausenden Schweizer Haushalten als Kunden. Unsere Premium-Infrastruktur garantiert aussergewöhnliche Bildqualität und unterbrechungsfreies Streaming. Reaktionsschneller Support auf Deutsch und Französisch, mit Aktivierung in unter 2 Stunden.",
+    "swiss": {
+      "title": "Schweizer Service",
+      "description": "Unternehmen mit Sitz in der Schweiz mit deutsch- und französischsprachigem 24/7 Kundensupport."
+    },
+    "fast": {
+      "title": "Schnelle Aktivierung",
+      "description": "Ihr Abonnement wird in weniger als 2 Stunden aktiviert. Sofort loslegen."
+    },
+    "quality": {
+      "title": "Beste Qualität",
+      "description": "Premium-Infrastruktur mit 99.9% Verfügbarkeit und bester Bildqualität."
+    }
+  },
+  "pricing": {
+    "title": "Unsere Abonnements",
+    "titleHighlight": "IPTV Schweiz",
+    "subtitle": "Wählen Sie das Abo, das zu Ihnen passt, und geniessen Sie Ihr TV-Streaming in unter 2 Stunden.",
+    "popular": "Beliebteste",
+    "perMonth": "/Monat",
+    "duration": "{count} Monate",
+    "save": "{percent}% sparen",
+    "cta": "Jetzt abonnieren",
+    "viewAll": "Alle Abonnements anzeigen",
+    "features": {
+      "premium_server": "Premium Server",
+      "all_channels": "37'000+ Kanäle",
+      "hd_4k": "HD & 4K Qualität",
+      "replay_vod": "Replay & VOD inklusive",
+      "all_devices": "Alle Geräte",
+      "support_24_7": "24/7 Support",
+      "free_updates": "Kostenlose Updates",
+      "multi_screen": "{count} gleichzeitige Bildschirme"
+    },
+    "guarantee": "24h Geld-zurück-Garantie"
+  },
+  "testimonials": {
+    "title": "Was unsere",
+    "titleHighlight": "Kunden sagen",
+    "subtitle": "Über 37'000 zufriedene Kunden in der ganzen Schweiz."
+  },
+  "faq": {
+    "title": "Häufig gestellte",
+    "titleHighlight": "Fragen",
+    "subtitle": "Alles, was Sie über unseren IPTV-Service wissen müssen.",
+    "viewAll": "Alle Fragen ansehen",
+    "items": [
+      {
+        "question": "Was ist IPTV Schweiz?",
+        "answer": "IPTV Schweiz ist ein Internet-TV-Service, der Ihnen Zugang zu über 37'000 Live-TV-Kanälen, 40'000+ Filmen und 17'000+ Serien in HD- und 4K-Streaming bietet. Unser Service ist speziell für die Schweiz optimiert."
+      },
+      {
+        "question": "Welche Geräte sind kompatibel?",
+        "answer": "Unser Service ist mit allen Geräten kompatibel: Smart TV (Samsung, LG, Sony), Android TV, Amazon Fire Stick, Apple TV, Android- und iOS-Smartphones, Tablets, Windows- und Mac-Computer sowie MAG-Boxen."
+      },
+      {
+        "question": "Wie lange dauert die Aktivierung?",
+        "answer": "Die Aktivierung Ihres Abonnements erfolgt in weniger als 2 Stunden nach Zahlungsbestätigung. Sie erhalten Ihre Zugangsdaten per E-Mail."
+      },
+      {
+        "question": "Ist Replay enthalten?",
+        "answer": "Ja, die Replay-Funktion ist in allen unseren Abonnements enthalten. Sie können Ihre Sendungen bis zu 7 Tage zurückschauen, ohne zusätzliche Kosten."
+      },
+      {
+        "question": "Wie kann ich den Support kontaktieren?",
+        "answer": "Unser deutschsprachiges Support-Team ist 24/7 per WhatsApp, E-Mail und Telefon erreichbar. Wir garantieren eine Antwort in weniger als 2 Stunden."
+      },
+      {
+        "question": "Kann ich den Service auf mehreren Geräten nutzen?",
+        "answer": "Standard-Abonnements ermöglichen die Nutzung auf 1 Gerät gleichzeitig. Für die gleichzeitige Nutzung auf mehreren Bildschirmen, schauen Sie sich unsere Multi-Screen-Angebote an."
+      },
+      {
+        "question": "Ist IPTV in der Schweiz legal?",
+        "answer": "In der Schweiz ist der Empfang von IPTV-Inhalten für den privaten Gebrauch erlaubt. Unser Service hält sich an geltende Vorschriften und bietet Zugang zu legitimen Kanälen."
+      },
+      {
+        "question": "Brauche ich ein VPN für IPTV?",
+        "answer": "Nein, unser Service funktioniert in der Schweiz perfekt ohne VPN. Ein VPN ist optional für mehr Privatsphäre."
+      },
+      {
+        "question": "Welche Schweizer Kanäle sind verfügbar?",
+        "answer": "Zugang zu allen wichtigen Schweizer deutsch- und französischsprachigen Kanälen sowie Sport-, Unterhaltungs- und internationale Kanäle aus über 50 Ländern — insgesamt 37'000+ Kanäle."
+      },
+      {
+        "question": "Kann ich Fussball live schauen?",
+        "answer": "Ja! Zugang zu den wichtigsten Sportkanälen für Fussball, Hockey, Tennis und viele weitere Sportarten live. Die grössten europäischen und Schweizer Wettbewerbe sind abgedeckt."
+      },
+      {
+        "question": "Welche Internetgeschwindigkeit wird benötigt?",
+        "answer": "Eine Verbindung von 10 Mbit/s reicht für HD-Streaming. Für 4K empfehlen wir 25 Mbit/s. Kompatibel mit Swisscom, Sunrise, Salt und allen Schweizer ISPs."
+      },
+      {
+        "question": "Gibt es einen kostenlosen Test?",
+        "answer": "Kontaktieren Sie unseren Support per WhatsApp für einen kostenlosen 24h-Test und entdecken Sie die Qualität unseres Services bevor Sie sich entscheiden."
+      }
+    ]
+  },
+  "devices": {
+    "title": "Kompatibel mit all Ihren Geräten",
+    "subtitle": "Greifen Sie auf Ihre Deutschschweizer, Romand und internationalen Kanäle von jedem Bildschirm aus zu.",
+    "smarttv": "Smart TV",
+    "android": "Android",
+    "ios": "iOS / tvOS",
+    "windows": "Windows",
+    "firetv": "Fire TV",
+    "iptv_box": "IPTV-Box"
+  },
+  "howItWorks": {
+    "badge": "Einfache und schnelle Installation",
+    "title": "So funktioniert's —",
+    "titleHighlight": "in 4 Schritten",
+    "subtitle": "Starten Sie Ihr Abonnement in wenigen Minuten — sichere Zahlung, sofortiger Zugang.",
+    "step1": {
+      "title": "Wählen Sie ein Abo",
+      "description": "Wählen Sie das Abo, das Ihren Bedürfnissen entspricht, und bezahlen Sie sicher."
+    },
+    "step2": {
+      "title": "Zugangsdaten erhalten",
+      "description": "Nach Bestätigung Ihrer Zahlung erhalten Sie sofort Ihre Zugangsdaten und Anweisungen per E-Mail."
+    },
+    "step3": {
+      "title": "App installieren",
+      "description": "Folgen Sie unserer einfachen Anleitung, um die IPTV-App auf Ihren Lieblingsgeräten zu installieren."
+    },
+    "step4": {
+      "title": "Inhalte geniessen",
+      "description": "Greifen Sie sofort auf über 37'000 HD-Kanäle und VOD-Inhalte auf all Ihren Geräten zu."
+    },
+    "cta": "Jetzt starten"
+  },
+  "cta": {
+    "title": "Bereit loszulegen?",
+    "subtitle": "Schliessen Sie sich Tausenden Schweizer Haushalten an, die ihre Lieblingskanäle ohne Buffering auf allen Bildschirmen schauen.",
+    "button": "Angebote ansehen",
+    "guarantee": "Aktivierung in 2h • 24/7 Support • Geld-zurück-Garantie"
+  },
+  "footer": {
+    "description": "IPTV Schweiz — TV-Streaming Service mit 37 000 HD/4K-Kanälen, unbegrenztem VOD und 7 Tage Replay auf allen Bildschirmen.",
+    "links": "Nützliche Links",
+    "support": "Support",
+    "legal": "Rechtliches",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "copyright": "© {year} IPTV Schweiz. Alle Rechte vorbehalten.",
+    "madeIn": "Mit ❤️ in der Schweiz entwickelt"
+  },
+  "lead": {
+    "title": "Bestellung abschliessen",
+    "subtitle": "Geben Sie Ihre Kontaktdaten ein, um Ihren sicheren Zahlungslink zu erhalten.",
+    "name": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "submit": "Zahlungslink erhalten",
+    "success": "Vielen Dank! Prüfen Sie Ihre E-Mail für den Zahlungslink.",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "privacy": "Ihre Daten sind geschützt und werden niemals weitergegeben."
+  },
+  "merci": {
+    "title": "Vielen Dank für Ihre Bestellung!",
+    "subtitle": "Ihr IPTV-Abonnement wird innerhalb der nächsten 2 Stunden aktiviert.",
+    "checkEmail": "Prüfen Sie Ihren Posteingang",
+    "emailInfo": "Sie erhalten Ihre Zugangsdaten an die angegebene E-Mail-Adresse.",
+    "backHome": "Zurück zur Startseite"
+  },
+  "installation": {
+    "title": "Installationsanleitung",
+    "subtitle": "Installieren Sie Ihren Streaming-Service in wenigen Minuten auf allen Geräten."
+  },
+  "about": {
+    "title": "Über uns",
+    "subtitle": "Ihr vertrauenswürdiger Partner für TV-Streaming in der Schweiz seit 2020."
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Unser Team ist 24/7 für Ihre Fragen verfügbar."
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "subtitle": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "backHome": "Zurück zur Startseite"
+  },
+  "planPage": {
+    "backToPlans": "Zurück zu den Angeboten",
+    "premiumPlan": "Premium-Plan",
+    "totalPrice": "GESAMTPREIS",
+    "forDuration": "Für {count} Monate Abonnement",
+    "savings": "Sie sparen {amount} CHF",
+    "subscribeNow": "JETZT ABONNIEREN",
+    "guarantee24h": "24h Garantie",
+    "guaranteeDesc": "Geld-zurück-Garantie",
+    "instantActivation": "Sofortige Aktivierung",
+    "instantActivationDesc": "Sofortiger Zugang",
+    "support247": "24/7 Support",
+    "support247Desc": "Prioritäre Unterstützung",
+    "aboutPlan": "Über diesen Plan",
+    "aboutPlanText": "Unbegrenzter Zugang zu den besten TV-Kanälen und On-Demand-Inhalten auf allen Ihren Geräten. Geniessen Sie aussergewöhnliche Bildqualität mit unseren Premium-Servern, optimiert für die Schweiz.",
+    "keyFeatures": "Hauptmerkmale",
+    "feat_channels": "+37'000 Kanäle",
+    "feat_channelsDesc": "TV-Kanäle weltweit",
+    "feat_4k": "Ultra HD 4K",
+    "feat_4kDesc": "Optimale Bildqualität",
+    "feat_vod": "VOD & Replay",
+    "feat_vodDesc": "On-Demand-Inhalte",
+    "feat_multiDevice": "Multi-Geräte",
+    "feat_multiDeviceDesc": "Kompatibel mit all Ihren Geräten",
+    "feat_support": "24/7 Support",
+    "feat_supportDesc": "Technische Unterstützung",
+    "feat_updates": "Laufende Updates",
+    "feat_updatesDesc": "Zugang zu allen Neuheiten",
+    "planDetails": "Plan-Details",
+    "allFeaturesIncluded": "Alle enthaltenen Funktionen",
+    "additionalInfo": "Informationen",
+    "infoDuration": "Dauer",
+    "infoDurationValue": "{count} Monate",
+    "infoConnections": "Verbindungen",
+    "infoConnectionsValue": "{count, plural, =1 {1 gleichzeitiges Gerät} other {# gleichzeitige Geräte}}",
+    "infoActivation": "Aktivierung",
+    "infoActivationValue": "Sofort (< 2h)",
+    "infoRenewal": "Verlängerung",
+    "infoRenewalValue": "Manuell",
+    "reviewsTitle": "Was unsere Kunden",
+    "reviewsTitleHighlight": "sagen",
+    "reviewsSubtitle": "Entdecken Sie die Erfahrungen unserer Abonnenten mit unserem Premium-IPTV-Service",
+    "overallRating": "Gesamtbewertung",
+    "basedOnReviews": "Basierend auf 347 Bewertungen",
+    "verifiedBy": "Verifiziert von",
+    "stars": "Sterne",
+    "review1Title": "Aussergewöhnliche Servicequalität",
+    "review1Text": "Makellose Bildqualität, keine Verzögerung und eine riesige Auswahl an Kanälen. Ich bereue mein Abo bei IPTV SUISSE nicht.",
+    "review1Name": "Marc S.",
+    "review1Since": "Kunde seit 8 Monaten",
+    "review2Title": "Hervorragendes Preis-Leistungs-Verhältnis",
+    "review2Text": "Intuitive Benutzeroberfläche, einfache Installation auf allen meinen Geräten und ein sehr reaktionsschneller Kundensupport. Perfekt für die ganze Familie.",
+    "review2Name": "Laura B.",
+    "review2Since": "Kundin seit 3 Monaten",
+    "review3Title": "Unglaubliche Inhalte",
+    "review3Text": "Keine Mehrfach-Abos mehr nötig! Mit IPTV SUISSE habe ich Zugang zu allen Kanälen und On-Demand-Inhalten zu einem unschlagbaren Preis.",
+    "review3Name": "Thomas R.",
+    "review3Since": "Kunde seit 1 Jahr",
+    "seeAllReviews": "Alle Bewertungen auf Trustpilot ansehen",
+    "otherPlans": "Weitere verfügbare Pläne",
+    "viewDetails": "Details ansehen",
+    "howItWorks": "So funktioniert's",
+    "howItWorksSubtitle": "Greifen Sie in nur wenigen einfachen Schritten auf unseren Premium-IPTV-Service zu",
+    "simpleAndFast": "Einfach und schnell",
+    "step1Title": "Wählen Sie Ihren Plan",
+    "step1Desc": "Wählen Sie das Paket, das Ihren Bedürfnissen entspricht, und fahren Sie mit der sicheren Zahlung fort.",
+    "step2Title": "Erhalten Sie Ihre Zugangsdaten",
+    "step2Desc": "Nach Bestätigung Ihrer Zahlung erhalten Sie sofort Ihre Zugangsdaten per E-Mail.",
+    "step3Title": "Installieren Sie die App",
+    "step3Desc": "Folgen Sie unserer einfachen Anleitung, um die IPTV-App auf Ihren bevorzugten Geräten zu installieren.",
+    "step4Title": "Geniessen Sie die Inhalte",
+    "step4Desc": "Greifen Sie sofort auf über 37'000 HD-Kanäle und VOD-Inhalte auf allen Ihren Geräten zu.",
+    "faqTitle": "Alles was Sie",
+    "faqTitleHighlight": "wissen müssen",
+    "faqSubtitle": "Hier finden Sie Antworten auf die häufigsten Fragen",
+    "frequentQuestions": "Häufige Fragen",
+    "faq1Q": "Welche Geräte sind kompatibel?",
+    "faq1A": "Unser Service ist kompatibel mit Smart TV (Samsung, LG, Sony), Android Box (Nvidia Shield, Mi Box), iOS (iPhone, iPad) und Apple TV, Android (Smartphones und Tablets), Windows und macOS, Amazon Fire TV Stick.",
+    "faq2Q": "Brauche ich ein VPN?",
+    "faq2A": "Unser Service funktioniert perfekt ohne VPN. Ein VPN kann jedoch zum Schutz Ihrer Privatsphäre und für eine bessere Stabilität mit einigen Internetanbietern hilfreich sein.",
+    "faq3Q": "Wie funktioniert die Verlängerung?",
+    "faq3A": "Die Verlängerung ist manuell (kein automatisches Abo). Sie erhalten 7 Tage vor Ablauf eine Benachrichtigung. Ihr Konto und Ihre Einstellungen bleiben erhalten.",
+    "faq4Q": "Welche Garantie gibt es?",
+    "faq4A": "Wir bieten eine 24-Stunden-Geld-zurück-Garantie. Wenn der Service nicht Ihren Erwartungen entspricht, werden Sie vollständig erstattet.",
+    "moreQuestions": "Antwort nicht gefunden?",
+    "contactSupport": "Kontaktieren Sie unseren Support"
+  },
+  "multiScreenBanner": {
+    "badge": "Multi-Bildschirm",
+    "title": "Pakete",
+    "titleHighlight": "Multi-Bildschirm",
+    "description": "Teilen Sie Ihr IPTV-Abo mit der ganzen Familie. Schauen Sie gleichzeitig auf 2, 3 oder 4 verschiedenen Geräten in Premium-Qualität.",
+    "cta": "Multi-Bildschirm-Pakete ansehen",
+    "devices": {
+      "smartTv": "Smart TV",
+      "smartphone": "Smartphone",
+      "tablet": "Tablet",
+      "computer": "Computer"
+    },
+    "familyNote": "Perfekt für die ganze Familie"
+  },
+  "multiEcrans": {
+    "backToPlans": "Zurück zu den Angeboten",
+    "title": "Pakete",
+    "titleHighlight": "Multi-Bildschirm",
+    "subtitle": "Teilen Sie Ihr IPTV-Abo mit Ihrer Familie auf mehreren Geräten gleichzeitig.",
+    "tab2": "2 Bildschirme",
+    "tab3": "3 Bildschirme",
+    "tab4": "4 Bildschirme",
+    "bestValue": "Bester Preis",
+    "whyTitle": "Warum ein",
+    "whyTitleHighlight": "Multi-Bildschirm-Paket wählen?",
+    "whySubtitle": "Ein einziges Abo für die ganze Familie — jeder schaut was er will, wann er will.",
+    "why1Title": "Unabhängig schauen",
+    "why1Desc": "Jeder Bildschirm funktioniert eigenständig. Papa schaut Fussball im Wohnzimmer, während Mama einen Film im Schlafzimmer geniesst.",
+    "why2Title": "Bis zu 60% sparen",
+    "why2Desc": "Ein Multi-Bildschirm-Paket kostet deutlich weniger als mehrere Einzelabos. Je mehr Sie teilen, desto mehr sparen Sie.",
+    "why3Title": "Alle Geräte kompatibel",
+    "why3Desc": "Smart TV, Smartphone, Tablet, Computer, Fire Stick, MAG — mischen Sie Ihre Geräte wie Sie möchten, ohne Einschränkungen.",
+    "why4Title": "Überall gleiche Qualität",
+    "why4Desc": "Jeder Bildschirm profitiert von HD- und 4K-Qualität, dem gleichen Katalog mit 37'000+ Kanälen und integriertem Replay.",
+    "howTitle": "Wie",
+    "howTitleHighlight": "funktioniert es?",
+    "howSubtitle": "3 einfache Schritte, um IPTV auf allen Ihren Bildschirmen zu geniessen.",
+    "how1Title": "Paket auswählen",
+    "how1Desc": "Wählen Sie 2, 3 oder 4 Bildschirme und die gewünschte Abonnementdauer.",
+    "how2Title": "Zugangsdaten erhalten",
+    "how2Desc": "Aktivierung in weniger als 2 Stunden. Sie erhalten Ihre Zugangsdaten per E-Mail für jedes Gerät.",
+    "how3Title": "Mit der Familie geniessen",
+    "how3Desc": "Installieren Sie die App auf jedem Gerät und schauen Sie Ihre Lieblingsprogramme gleichzeitig.",
+    "faqTitle": "Häufige Fragen zu den",
+    "faqTitleHighlight": "Multi-Bildschirm-Paketen",
+    "faq1Q": "Wie funktioniert Multi-Bildschirm?",
+    "faq1A": "Mit einem Multi-Bildschirm-Paket erhalten Sie ein Abonnement, das gleichzeitige Verbindungen auf 2, 3 oder 4 Geräten ermöglicht. Jeder Bildschirm kann ein anderes Programm gleichzeitig schauen, ohne Unterbrechung oder Qualitätsverlust.",
+    "faq2Q": "Kann ich verschiedene Gerätetypen verwenden?",
+    "faq2A": "Ja, absolut! Sie können Geräte beliebig mischen: einen Smart TV im Wohnzimmer, ein Smartphone im Schlafzimmer, ein Tablet für die Kinder und einen Computer im Büro. Es gibt keine Einschränkung beim Gerätetyp.",
+    "faq3Q": "Ist die Qualität auf allen Bildschirmen gleich?",
+    "faq3A": "Ja, jeder Bildschirm profitiert von der gleichen HD- und 4K-Qualität, dem gleichen Katalog mit über 37'000 Kanälen, VOD und Replay. Es gibt keine Qualitätseinbussen, unabhängig von der Anzahl der gleichzeitig genutzten Bildschirme.",
+    "faq4Q": "Kann ich das Gerät nach der Aktivierung wechseln?",
+    "faq4A": "Ja, Sie können das Gerät jederzeit wechseln. Wenn Sie Ihr Telefon oder Ihren Fernseher ersetzen, installieren Sie einfach die App auf dem neuen Gerät und verwenden Sie Ihre bestehenden Zugangsdaten.",
+    "faq5Q": "Sind Replay und VOD bei Multi-Bildschirm enthalten?",
+    "faq5A": "Ja, alle Funktionen sind auf jedem Bildschirm enthalten: Replay bis zu 7 Tage, VOD mit 40'000+ Filmen und 17'000+ Serien, EPG (Programmführer) und automatische Updates.",
+    "faq6Q": "Was ist der Unterschied zwischen 2, 3 und 4 Bildschirmen?",
+    "faq6A": "Der einzige Unterschied ist die Anzahl der gleichzeitigen Verbindungen. Ein 2-Bildschirm-Paket ermöglicht 2 Personen gleichzeitiges Schauen, 3 Bildschirme für 3 Personen usw. Alle Funktionen und die Qualität bleiben identisch.",
+    "ctaTitle": "Bereit für IPTV mit der ganzen Familie?",
+    "ctaDesc": "Wählen Sie Ihr Multi-Bildschirm-Paket und beginnen Sie in weniger als 2 Stunden auf allen Ihren Geräten zu schauen.",
+    "ctaButton": "Pakete ansehen"
+  }
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <rect width="50" height="50" rx="8" fill="#E31937" y="5"/>
+  <path d="M25 15v20M15 25h20" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <text x="60" y="38" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="32" fill="#111827">IPTV</text>
+  <text x="133" y="38" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="32" fill="#E31937">SUISSE</text>
+</svg>

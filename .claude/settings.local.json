@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Ahrefs__serp-overview",
+      "mcp__claude_ai_Ahrefs__site-explorer-referring-domains"
+    ]
+  }
+}

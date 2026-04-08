@@ -1,0 +1,267 @@
+// ============================================================
+// City data for local SEO landing pages
+// ============================================================
+
+export interface CityData {
+  name: string;
+  canton: string;
+  population: string;
+  neighborhoods_fr: string[];
+  neighborhoods_de: string[];
+  meta_fr: { title: string; description: string; h1: string; intro: string };
+  meta_de: { title: string; description: string; h1: string; intro: string };
+}
+
+export const CITIES_DATA: Record<string, CityData> = {
+  geneve: {
+    name: 'Genève',
+    canton: 'GE',
+    population: '200,000+',
+    neighborhoods_fr: ['Carouge', 'Lancy', 'Vernier', 'Meyrin', 'Onex', 'Thônex'],
+    neighborhoods_de: ['Carouge', 'Lancy', 'Vernier', 'Meyrin', 'Onex', 'Thônex'],
+    meta_fr: {
+      title: 'IPTV Genève - Meilleur Abonnement IPTV à Genève 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Genève. +15\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Genève dès 35.99 CHF. Compatible Swisscom, Sunrise, Salt.',
+      h1: 'IPTV Genève — Votre Service IPTV Premium',
+      intro: 'Profitez du meilleur service IPTV à Genève avec plus de 15\'000 chaînes en HD et 4K. Notre équipe basée en Suisse offre un support client réactif et une activation rapide pour tous les résidents de Genève et du canton. Que vous soyez à Carouge, Lancy, Vernier ou Meyrin, notre abonnement IPTV Suisse fonctionne parfaitement avec tous les fournisseurs internet locaux.',
+    },
+    meta_de: {
+      title: 'IPTV Genf - Bestes IPTV-Abo in Genf 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Genf. +15\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Genf ab 35.99 CHF. Kompatibel mit Swisscom, Sunrise, Salt.',
+      h1: 'IPTV Genf — Ihr Premium IPTV-Service',
+      intro: 'Geniessen Sie den besten IPTV-Service in Genf mit über 15\'000 Kanälen in HD und 4K. Unser in der Schweiz ansässiges Team bietet reaktionsschnellen Kundensupport und schnelle Aktivierung für alle Einwohner von Genf und dem Kanton. Ob in Carouge, Lancy, Vernier oder Meyrin — unser IPTV Schweiz Abo funktioniert einwandfrei mit allen lokalen Internetanbietern.',
+    },
+  },
+  zurich: {
+    name: 'Zürich',
+    canton: 'ZH',
+    population: '430,000+',
+    neighborhoods_fr: ['Zurich-Ville', 'Winterthur', 'Oerlikon', 'Altstetten', 'Seebach'],
+    neighborhoods_de: ['Zürich-Stadt', 'Winterthur', 'Oerlikon', 'Altstetten', 'Seebach'],
+    meta_fr: {
+      title: 'IPTV Zurich - Meilleur Abonnement IPTV à Zurich 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Zurich. +15\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Zurich dès 35.99 CHF. Compatible Swisscom, Sunrise, UPC.',
+      h1: 'IPTV Zurich — Votre Service IPTV Premium',
+      intro: 'Découvrez le meilleur service IPTV à Zurich avec plus de 15\'000 chaînes en HD et 4K. Que vous soyez à Zurich-Ville, Winterthur, Oerlikon ou dans le canton, profitez d\'un streaming fluide et d\'un support client 24/7. Notre abonnement IPTV Suisse est compatible avec Swisscom, Sunrise, UPC et tous les FAI de la région zurichoise.',
+    },
+    meta_de: {
+      title: 'IPTV Zürich - Bestes IPTV-Abo in Zürich 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Zürich. +15\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Zürich ab 35.99 CHF. Kompatibel mit Swisscom, Sunrise, UPC.',
+      h1: 'IPTV Zürich — Ihr Premium IPTV-Service',
+      intro: 'Entdecken Sie den besten IPTV-Service in Zürich mit über 15\'000 Kanälen in HD und 4K. Ob in der Stadt Zürich, Winterthur, Oerlikon oder im Kanton — geniessen Sie flüssiges Streaming und 24/7 Kundensupport. Unser IPTV Schweiz Abo ist kompatibel mit Swisscom, Sunrise, UPC und allen ISPs der Region Zürich.',
+    },
+  },
+  lausanne: {
+    name: 'Lausanne',
+    canton: 'VD',
+    population: '140,000+',
+    neighborhoods_fr: ['Ouchy', 'Flon', 'Pully', 'Renens', 'Morges', 'Vevey'],
+    neighborhoods_de: ['Ouchy', 'Flon', 'Pully', 'Renens', 'Morges', 'Vevey'],
+    meta_fr: {
+      title: 'IPTV Lausanne - Meilleur Abonnement IPTV à Lausanne 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Lausanne. +15\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Lausanne dès 35.99 CHF. Compatible tous FAI.',
+      h1: 'IPTV Lausanne — Votre Service IPTV Premium',
+      intro: 'Le meilleur service IPTV à Lausanne et dans tout le canton de Vaud. Plus de 15\'000 chaînes TV, 40\'000 films et séries en streaming HD/4K avec une activation rapide et un support francophone. Que vous habitiez à Ouchy, Flon, Pully, Renens ou Morges, profitez d\'un abonnement IPTV Suisse haute qualité compatible Swisscom, Sunrise et Salt.',
+    },
+    meta_de: {
+      title: 'IPTV Lausanne - Bestes IPTV-Abo in Lausanne 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Lausanne. +15\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Lausanne ab 35.99 CHF. Kompatibel mit allen ISPs.',
+      h1: 'IPTV Lausanne — Ihr Premium IPTV-Service',
+      intro: 'Der beste IPTV-Service in Lausanne und im gesamten Kanton Waadt. Über 15\'000 TV-Kanäle, 40\'000 Filme und Serien in HD/4K-Streaming mit schneller Aktivierung und französischsprachigem Support. Ob in Ouchy, Flon, Pully, Renens oder Morges — geniessen Sie ein hochwertiges IPTV Schweiz Abo, kompatibel mit Swisscom, Sunrise und Salt.',
+    },
+  },
+  bern: {
+    name: 'Bern',
+    canton: 'BE',
+    population: '135,000+',
+    neighborhoods_fr: ['Berne-Ville', 'Köniz', 'Ostermundigen', 'Muri bei Bern', 'Bümpliz'],
+    neighborhoods_de: ['Bern-Stadt', 'Köniz', 'Ostermundigen', 'Muri bei Bern', 'Bümpliz'],
+    meta_fr: {
+      title: 'IPTV Berne - Meilleur Abonnement IPTV à Berne 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Berne. +15\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Berne dès 35.99 CHF. Compatible Swisscom, Sunrise.',
+      h1: 'IPTV Berne — Votre Service IPTV Premium',
+      intro: 'Profitez du meilleur service IPTV à Berne, la capitale suisse. Plus de 15\'000 chaînes HD/4K avec support bilingue français-allemand et activation rapide dans tout le canton de Berne. Que vous soyez à Köniz, Ostermundigen, Muri bei Bern ou Bümpliz, notre abonnement IPTV Suisse fonctionne avec tous les fournisseurs internet de la région bernoise.',
+    },
+    meta_de: {
+      title: 'IPTV Bern - Bestes IPTV-Abo in Bern 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Bern. +15\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Bern ab 35.99 CHF. Kompatibel mit Swisscom, Sunrise.',
+      h1: 'IPTV Bern — Ihr Premium IPTV-Service',
+      intro: 'Geniessen Sie den besten IPTV-Service in Bern, der Schweizer Hauptstadt. Über 15\'000 HD/4K-Kanäle mit zweisprachigem Deutsch-Französisch-Support und schneller Aktivierung im gesamten Kanton Bern. Ob in Köniz, Ostermundigen, Muri bei Bern oder Bümpliz — unser IPTV Schweiz Abo funktioniert mit allen Internetanbietern der Region Bern.',
+    },
+  },
+  basel: {
+    name: 'Basel',
+    canton: 'BS',
+    population: '180,000+',
+    neighborhoods_fr: ['Bâle-Ville', 'Riehen', 'Binningen', 'Allschwil', 'Reinach'],
+    neighborhoods_de: ['Basel-Stadt', 'Riehen', 'Binningen', 'Allschwil', 'Reinach'],
+    meta_fr: {
+      title: 'IPTV Bâle - Meilleur Abonnement IPTV à Bâle 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Bâle. +15\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Bâle dès 35.99 CHF. Compatible tous FAI.',
+      h1: 'IPTV Bâle — Votre Service IPTV Premium',
+      intro: 'Le meilleur service IPTV à Bâle et dans la région trinationale. Plus de 15\'000 chaînes suisses, françaises, allemandes et internationales en HD/4K. Que vous habitiez à Riehen, Binningen, Allschwil ou Reinach, profitez d\'un abonnement IPTV Suisse premium compatible avec Swisscom, Sunrise, Salt et UPC.',
+    },
+    meta_de: {
+      title: 'IPTV Basel - Bestes IPTV-Abo in Basel 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Basel. +15\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Basel ab 35.99 CHF. Kompatibel mit allen ISPs.',
+      h1: 'IPTV Basel — Ihr Premium IPTV-Service',
+      intro: 'Der beste IPTV-Service in Basel und der Dreiländerregion. Über 15\'000 Schweizer, deutsche, französische und internationale Kanäle in HD/4K. Ob in Riehen, Binningen, Allschwil oder Reinach — geniessen Sie ein Premium IPTV Schweiz Abo, kompatibel mit Swisscom, Sunrise, Salt und UPC.',
+    },
+  },
+  // ── New cities for long-tail SEO ────────────────────────
+  winterthur: {
+    name: 'Winterthur',
+    canton: 'ZH',
+    population: '137,000+',
+    neighborhoods_fr: ['Winterthour-Ville', 'Töss', 'Wülflingen', 'Seen'],
+    neighborhoods_de: ['Winterthur-Stadt', 'Töss', 'Wülflingen', 'Seen'],
+    meta_fr: {
+      title: 'IPTV Winterthour - Abonnement IPTV à Winterthour 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Winterthour. +15\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Winterthour dès 35.99 CHF.',
+      h1: 'IPTV Winterthour — Votre Service IPTV Premium',
+      intro: 'Profitez du meilleur service IPTV à Winterthour, deuxième plus grande ville du canton de Zurich. Plus de 15\'000 chaînes en HD et 4K, VOD avec 40\'000+ films et 17\'000+ séries. Notre abonnement IPTV Suisse est activé en moins de 2 heures et fonctionne avec tous les FAI de Winterthour.',
+    },
+    meta_de: {
+      title: 'IPTV Winterthur - IPTV-Abo in Winterthur 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Winterthur. +15\'000 HD/4K-Kanäle. Aktivierung in 2h, 24/7 Support. IPTV-Abo Winterthur ab 35.99 CHF.',
+      h1: 'IPTV Winterthur — Ihr Premium IPTV-Service',
+      intro: 'Geniessen Sie den besten IPTV-Service in Winterthur, der zweitgrössten Stadt im Kanton Zürich. Über 15\'000 Kanäle in HD und 4K, VOD mit 40\'000+ Filmen und 17\'000+ Serien. Unser IPTV Schweiz Abo wird in weniger als 2 Stunden aktiviert und funktioniert mit allen ISPs in Winterthur.',
+    },
+  },
+  'st-gallen': {
+    name: 'St. Gallen',
+    canton: 'SG',
+    population: '80,000+',
+    neighborhoods_fr: ['Saint-Gall-Ville', 'Rorschach', 'Gossau', 'Herisau'],
+    neighborhoods_de: ['St. Gallen-Stadt', 'Rorschach', 'Gossau', 'Herisau'],
+    meta_fr: {
+      title: 'IPTV Saint-Gall - Abonnement IPTV à Saint-Gall 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Saint-Gall. +15\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Saint-Gall dès 35.99 CHF.',
+      h1: 'IPTV Saint-Gall — Votre Service IPTV Premium',
+      intro: 'Découvrez le meilleur service IPTV à Saint-Gall et en Suisse orientale. Plus de 15\'000 chaînes en HD et 4K, films et séries illimités. Activation rapide en 2 heures et support 24/7 pour tous les résidents de Saint-Gall, Rorschach, Gossau et Herisau.',
+    },
+    meta_de: {
+      title: 'IPTV St. Gallen - IPTV-Abo in St. Gallen 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in St. Gallen. +15\'000 HD/4K-Kanäle. Aktivierung in 2h, 24/7 Support. IPTV-Abo St. Gallen ab 35.99 CHF.',
+      h1: 'IPTV St. Gallen — Ihr Premium IPTV-Service',
+      intro: 'Entdecken Sie den besten IPTV-Service in St. Gallen und der Ostschweiz. Über 15\'000 Kanäle in HD und 4K, unbegrenzte Filme und Serien. Schnelle Aktivierung in 2 Stunden und 24/7 Support für alle Einwohner von St. Gallen, Rorschach, Gossau und Herisau.',
+    },
+  },
+  lugano: {
+    name: 'Lugano',
+    canton: 'TI',
+    population: '65,000+',
+    neighborhoods_fr: ['Lugano-Ville', 'Paradiso', 'Massagno', 'Viganello'],
+    neighborhoods_de: ['Lugano-Stadt', 'Paradiso', 'Massagno', 'Viganello'],
+    meta_fr: {
+      title: 'IPTV Lugano - Abonnement IPTV à Lugano 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Lugano. +15\'000 chaînes HD/4K, chaînes italiennes incluses. Activation en 2h. Abonnement IPTV Lugano dès 35.99 CHF.',
+      h1: 'IPTV Lugano — Votre Service IPTV Premium',
+      intro: 'Le meilleur service IPTV à Lugano et au Tessin. Plus de 15\'000 chaînes incluant toutes les chaînes suisses, italiennes et internationales en HD et 4K. Activation en 2 heures pour tous les résidents de Lugano, Paradiso et Massagno.',
+    },
+    meta_de: {
+      title: 'IPTV Lugano - IPTV-Abo in Lugano 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Lugano. +15\'000 HD/4K-Kanäle, italienische Kanäle inklusive. Aktivierung in 2h. IPTV-Abo Lugano ab 35.99 CHF.',
+      h1: 'IPTV Lugano — Ihr Premium IPTV-Service',
+      intro: 'Der beste IPTV-Service in Lugano und im Tessin. Über 15\'000 Kanäle inklusive aller Schweizer, italienischer und internationaler Kanäle in HD und 4K. Aktivierung in 2 Stunden für alle Einwohner von Lugano, Paradiso und Massagno.',
+    },
+  },
+  biel: {
+    name: 'Biel/Bienne',
+    canton: 'BE',
+    population: '55,000+',
+    neighborhoods_fr: ['Bienne-Ville', 'Nidau', 'Brügg', 'Port'],
+    neighborhoods_de: ['Biel-Stadt', 'Nidau', 'Brügg', 'Port'],
+    meta_fr: {
+      title: 'IPTV Bienne - Abonnement IPTV à Bienne 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Bienne. +15\'000 chaînes HD/4K, support bilingue FR/DE. Activation en 2h. Abonnement IPTV Bienne dès 35.99 CHF.',
+      h1: 'IPTV Bienne — Votre Service IPTV Premium',
+      intro: 'Profitez du meilleur service IPTV à Bienne, la plus grande ville bilingue de Suisse. Plus de 15\'000 chaînes francophones et germanophones en HD/4K. Support bilingue et activation rapide pour Bienne, Nidau et la région.',
+    },
+    meta_de: {
+      title: 'IPTV Biel - IPTV-Abo in Biel 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Biel. +15\'000 HD/4K-Kanäle, zweisprachiger Support FR/DE. Aktivierung in 2h. IPTV-Abo Biel ab 35.99 CHF.',
+      h1: 'IPTV Biel — Ihr Premium IPTV-Service',
+      intro: 'Geniessen Sie den besten IPTV-Service in Biel, der grössten zweisprachigen Stadt der Schweiz. Über 15\'000 französisch- und deutschsprachige Kanäle in HD/4K. Zweisprachiger Support und schnelle Aktivierung für Biel, Nidau und die Region.',
+    },
+  },
+  luzern: {
+    name: 'Luzern',
+    canton: 'LU',
+    population: '82,000+',
+    neighborhoods_fr: ['Lucerne-Ville', 'Emmen', 'Horw', 'Kriens'],
+    neighborhoods_de: ['Luzern-Stadt', 'Emmen', 'Horw', 'Kriens'],
+    meta_fr: {
+      title: 'IPTV Lucerne - Abonnement IPTV à Lucerne 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Lucerne. +15\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Lucerne dès 35.99 CHF.',
+      h1: 'IPTV Lucerne — Votre Service IPTV Premium',
+      intro: 'Découvrez le meilleur service IPTV à Lucerne et en Suisse centrale. Plus de 15\'000 chaînes HD/4K, 40\'000+ films et 17\'000+ séries. Activation rapide et support 24/7 pour Lucerne, Emmen, Horw et Kriens.',
+    },
+    meta_de: {
+      title: 'IPTV Luzern - IPTV-Abo in Luzern 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Luzern. +15\'000 HD/4K-Kanäle. Aktivierung in 2h, 24/7 Support. IPTV-Abo Luzern ab 35.99 CHF.',
+      h1: 'IPTV Luzern — Ihr Premium IPTV-Service',
+      intro: 'Entdecken Sie den besten IPTV-Service in Luzern und der Zentralschweiz. Über 15\'000 HD/4K-Kanäle, 40\'000+ Filme und 17\'000+ Serien. Schnelle Aktivierung und 24/7 Support für Luzern, Emmen, Horw und Kriens.',
+    },
+  },
+  fribourg: {
+    name: 'Fribourg',
+    canton: 'FR',
+    population: '40,000+',
+    neighborhoods_fr: ['Fribourg-Ville', 'Villars-sur-Glâne', 'Givisiez', 'Granges-Paccot'],
+    neighborhoods_de: ['Freiburg-Stadt', 'Villars-sur-Glâne', 'Givisiez', 'Granges-Paccot'],
+    meta_fr: {
+      title: 'IPTV Fribourg - Abonnement IPTV à Fribourg 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Fribourg. +15\'000 chaînes HD/4K, support bilingue. Activation en 2h. Abonnement IPTV Fribourg dès 35.99 CHF.',
+      h1: 'IPTV Fribourg — Votre Service IPTV Premium',
+      intro: 'Le meilleur service IPTV à Fribourg, ville bilingue au cœur de la Suisse. Plus de 15\'000 chaînes francophones et germanophones en HD/4K. Support bilingue 24/7, activation en 2 heures pour Fribourg, Villars-sur-Glâne et toute la région.',
+    },
+    meta_de: {
+      title: 'IPTV Freiburg - IPTV-Abo in Freiburg 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Freiburg. +15\'000 HD/4K-Kanäle, zweisprachiger Support. Aktivierung in 2h. IPTV-Abo Freiburg ab 35.99 CHF.',
+      h1: 'IPTV Freiburg — Ihr Premium IPTV-Service',
+      intro: 'Der beste IPTV-Service in Freiburg, der zweisprachigen Stadt im Herzen der Schweiz. Über 15\'000 französisch- und deutschsprachige Kanäle in HD/4K. Zweisprachiger 24/7-Support, Aktivierung in 2 Stunden für Freiburg, Villars-sur-Glâne und die gesamte Region.',
+    },
+  },
+  neuchatel: {
+    name: 'Neuchâtel',
+    canton: 'NE',
+    population: '35,000+',
+    neighborhoods_fr: ['Neuchâtel-Ville', 'La Chaux-de-Fonds', 'Le Locle', 'Peseux'],
+    neighborhoods_de: ['Neuenburg-Stadt', 'La Chaux-de-Fonds', 'Le Locle', 'Peseux'],
+    meta_fr: {
+      title: 'IPTV Neuchâtel - Abonnement IPTV à Neuchâtel 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Neuchâtel. +15\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Neuchâtel dès 35.99 CHF.',
+      h1: 'IPTV Neuchâtel — Votre Service IPTV Premium',
+      intro: 'Profitez du meilleur service IPTV à Neuchâtel et dans tout le canton. Plus de 15\'000 chaînes en HD/4K, 40\'000+ films et replay intégré. Activation rapide pour Neuchâtel, La Chaux-de-Fonds et Le Locle. Support francophone 24/7.',
+    },
+    meta_de: {
+      title: 'IPTV Neuenburg - IPTV-Abo in Neuenburg 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Neuenburg. +15\'000 HD/4K-Kanäle. Aktivierung in 2h, 24/7 Support. IPTV-Abo Neuenburg ab 35.99 CHF.',
+      h1: 'IPTV Neuenburg — Ihr Premium IPTV-Service',
+      intro: 'Geniessen Sie den besten IPTV-Service in Neuenburg und im gesamten Kanton. Über 15\'000 Kanäle in HD/4K, 40\'000+ Filme und integriertes Replay. Schnelle Aktivierung für Neuenburg, La Chaux-de-Fonds und Le Locle. Französischsprachiger 24/7-Support.',
+    },
+  },
+  thun: {
+    name: 'Thun',
+    canton: 'BE',
+    population: '45,000+',
+    neighborhoods_fr: ['Thoune-Ville', 'Steffisburg', 'Spiez', 'Heimberg'],
+    neighborhoods_de: ['Thun-Stadt', 'Steffisburg', 'Spiez', 'Heimberg'],
+    meta_fr: {
+      title: 'IPTV Thoune - Abonnement IPTV à Thoune 2026 | Dès 35.99 CHF',
+      description: 'Service IPTV premium à Thoune. +15\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Thoune dès 35.99 CHF.',
+      h1: 'IPTV Thoune — Votre Service IPTV Premium',
+      intro: 'Le meilleur service IPTV à Thoune et dans l\'Oberland bernois. Plus de 15\'000 chaînes en HD/4K avec activation rapide. Compatible avec tous les FAI de la région de Thoune, Steffisburg, Spiez et Heimberg.',
+    },
+    meta_de: {
+      title: 'IPTV Thun - IPTV-Abo in Thun 2026 | Ab 35.99 CHF',
+      description: 'Premium IPTV-Service in Thun. +15\'000 HD/4K-Kanäle. Aktivierung in 2h, 24/7 Support. IPTV-Abo Thun ab 35.99 CHF.',
+      h1: 'IPTV Thun — Ihr Premium IPTV-Service',
+      intro: 'Der beste IPTV-Service in Thun und im Berner Oberland. Über 15\'000 Kanäle in HD/4K mit schneller Aktivierung. Kompatibel mit allen ISPs der Region Thun, Steffisburg, Spiez und Heimberg.',
+    },
+  },
+};
+
+// All city slugs for sitemap generation and static params
+export const ALL_CITY_SLUGS = Object.keys(CITIES_DATA);
