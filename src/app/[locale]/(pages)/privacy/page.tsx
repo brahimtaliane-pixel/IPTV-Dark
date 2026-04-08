@@ -6,15 +6,15 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return { title: locale === 'fr' ? 'Politique de confidentialité' : 'Datenschutz', alternates: { canonical: locale === 'fr' ? `${SITE_CONFIG.url}/privacy` : `${SITE_CONFIG.url}/de/privacy`, languages: { 'fr-CH': `${SITE_CONFIG.url}/privacy`, 'de-CH': `${SITE_CONFIG.url}/de/privacy`, 'x-default': `${SITE_CONFIG.url}/privacy` } } };
+  return { title: locale === 'nl' ? 'Politique de confidentialité' : 'Datenschutz', alternates: { canonical: locale === 'nl' ? `${SITE_CONFIG.url}/privacy` : `${SITE_CONFIG.url}/de/privacy`, languages: { 'fr-CH': `${SITE_CONFIG.url}/privacy`, 'de-CH': `${SITE_CONFIG.url}/de/privacy`, 'x-default': `${SITE_CONFIG.url}/privacy` } } };
 }
 
 export default async function PrivacyPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const isFr = locale === 'fr';
+  const isNl = locale === 'nl';
 
-  const sections = isFr ? [
+  const sections = isNl ? [
     { title: '1. Collecte des données', content: 'Nous collectons les informations que vous nous fournissez directement : nom, adresse email, numéro de téléphone. Ces données sont nécessaires pour traiter votre commande et activer votre abonnement.' },
     { title: '2. Utilisation des données', content: 'Vos données sont utilisées exclusivement pour : le traitement de vos commandes, l\'activation de votre service, le support client et les communications relatives à votre abonnement.' },
     { title: '3. Protection des données', content: 'Nous prenons la sécurité de vos données au sérieux. Toutes les données sont chiffrées et stockées de manière sécurisée conformément aux normes suisses de protection des données.' },
@@ -29,7 +29,7 @@ export default async function PrivacyPage({ params }: Props) {
   return (
     <div className="pt-28 pb-20 bg-white">
       <div className="max-w-2xl mx-auto px-5 sm:px-8">
-        <h1 className="text-3xl font-extrabold text-text tracking-tight mb-8">{isFr ? 'Politique de confidentialité' : 'Datenschutzerklärung'}</h1>
+        <h1 className="text-3xl font-extrabold text-text tracking-tight mb-8">{isNl ? 'Politique de confidentialité' : 'Datenschutzerklärung'}</h1>
         <div className="bg-bg rounded-xl border border-border p-6 sm:p-8 space-y-6">
           {sections.map((s) => (
             <section key={s.title}>

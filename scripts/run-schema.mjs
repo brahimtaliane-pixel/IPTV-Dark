@@ -109,7 +109,7 @@ async function main() {
     
     const plans = await connected.client.query('SELECT slug, price FROM plans ORDER BY sort_order');
     console.log('\n💰 Plans seeded:');
-    plans.rows.forEach(r => console.log(`   - ${r.slug}: ${r.price} CHF`));
+    plans.rows.forEach(r => console.log(`   - ${r.slug}: ${r.price} EUR`));
     
   } catch (err) {
     console.error('❌ Error running schema:', err.message);

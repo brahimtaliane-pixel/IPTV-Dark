@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,7 +23,8 @@ import {
   Star,
   MessageCircle,
 } from 'lucide-react';
-import { PLANS } from '@/lib/constants';
+import { PRICE_CURRENCY } from '@/lib/constants';
+import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
 import LeadForm from '@/components/ui/LeadForm';
@@ -73,7 +74,7 @@ function StickyCTA({
               <h3 className="text-text font-bold text-sm sm:text-base hidden sm:block">{planName}</h3>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl sm:text-3xl font-extrabold text-text">{formatPrice(price)}</span>
-                <span className="text-sm font-bold text-text-muted">CHF</span>
+                <span className="text-sm font-bold text-text-muted">{PRICE_CURRENCY}</span>
               </div>
             </div>
             <button
@@ -134,16 +135,15 @@ function FAQItem({
 }
 
 // ─── Main Page ───────────────────────────────────────────────
-export default function PlanPageClient() {
+export default function PlanPageClient({ plans }: { plans: SitePlan[] }) {
   const t = useTranslations('planPage');
   const pt = useTranslations('pricing');
-  const locale = useLocale();
   const params = useParams();
   const slug = params.slug as string;
   const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const plan = PLANS.find((p) => p.slug === slug);
+  const plan = plans.find((p) => p.slug === slug);
   if (!plan) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -157,13 +157,13 @@ export default function PlanPageClient() {
     );
   }
 
-  const name = locale === 'fr' ? plan.name_fr : plan.name_de;
-  const description = locale === 'fr' ? plan.description_fr : plan.description_de;
+  const name = plan.name_nl;
+  const description = plan.description_nl;
   const discount = plan.original_price ? getDiscount(plan.original_price, plan.price) : 0;
   const savings = plan.original_price ? (plan.original_price - plan.price).toFixed(2) : '0';
   // Show other plans from same device group first, then other groups
-  const sameDevicePlans = PLANS.filter((p) => p.slug !== slug && p.devices === plan.devices);
-  const otherDevicePlans = PLANS.filter((p) => p.slug !== slug && p.devices !== plan.devices);
+  const sameDevicePlans = plans.filter((p) => p.slug !== slug && p.devices === plan.devices);
+  const otherDevicePlans = plans.filter((p) => p.slug !== slug && p.devices !== plan.devices);
   const otherPlans = [...sameDevicePlans, ...otherDevicePlans].slice(0, 4);
 
   const keyFeatures = [
@@ -257,7 +257,7 @@ export default function PlanPageClient() {
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 rounded-full border border-blue-200">
                     <Monitor className="w-3.5 h-3.5 text-blue-600" />
                     <span className="text-xs font-semibold text-blue-700">
-                      {plan.devices} {locale === 'fr' ? 'écrans simultanés' : 'gleichzeitige Bildschirme'}
+                      {plan.devices} schermen tegelijk
                     </span>
                   </div>
                 )}
@@ -291,7 +291,7 @@ export default function PlanPageClient() {
                   {plan.original_price && (
                     <div className="mb-1">
                       <span className="text-base text-text-muted line-through">
-                        {formatPrice(plan.original_price)} CHF
+                        {formatPrice(plan.original_price)} {PRICE_CURRENCY}
                       </span>
                     </div>
                   )}
@@ -299,7 +299,7 @@ export default function PlanPageClient() {
                   {/* Current price */}
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-4xl sm:text-5xl font-extrabold text-text">{formatPrice(plan.price)}</span>
-                    <span className="text-lg font-bold text-text-muted">CHF</span>
+                    <span className="text-lg font-bold text-text-muted">{PRICE_CURRENCY}</span>
                     {discount > 0 && (
                       <span className="ml-2 bg-success text-white text-xs font-bold px-2 py-0.5 rounded">
                         -{discount}%
@@ -605,7 +605,7 @@ export default function PlanPageClient() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {otherPlans.map((p, i) => {
-              const otherName = locale === 'fr' ? p.name_fr : p.name_de;
+              const otherName = p.name_nl;
               const otherDiscount = p.original_price ? getDiscount(p.original_price, p.price) : 0;
               const otherSavings = p.original_price ? (p.original_price - p.price).toFixed(2) : '0';
 
@@ -630,11 +630,11 @@ export default function PlanPageClient() {
                   <div className="mb-4">
                     {p.original_price && (
                       <div className="text-sm text-text-muted line-through mb-0.5">
-                        {formatPrice(p.original_price)} CHF
+                        {formatPrice(p.original_price)} {PRICE_CURRENCY}
                       </div>
                     )}
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-extrabold text-text">{formatPrice(p.price)} CHF</span>
+                      <span className="text-2xl font-extrabold text-text">{formatPrice(p.price)} {PRICE_CURRENCY}</span>
                       {otherDiscount > 0 && (
                         <span className="bg-success text-white text-xs font-bold px-2 py-0.5 rounded">
                           -{otherDiscount}%

@@ -10,21 +10,21 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'contact' });
-  const isFr = locale === 'fr';
+  const isNl = locale === 'nl';
   return {
     title: t('title'),
     description: t('subtitle'),
     openGraph: {
       title: t('title'),
       description: t('subtitle'),
-      url: isFr ? `${SITE_CONFIG.url}/contact` : `${SITE_CONFIG.url}/de/contact`,
+      url: isNl ? `${SITE_CONFIG.url}/contact` : `${SITE_CONFIG.url}/de/contact`,
       siteName: SITE_CONFIG.name,
-      locale: isFr ? 'fr_CH' : 'de_CH',
+      locale: isNl ? 'fr_CH' : 'de_CH',
       type: 'website',
     },
     twitter: { card: 'summary_large_image', title: t('title'), description: t('subtitle') },
     alternates: {
-      canonical: isFr ? `${SITE_CONFIG.url}/contact` : `${SITE_CONFIG.url}/de/contact`,
+      canonical: isNl ? `${SITE_CONFIG.url}/contact` : `${SITE_CONFIG.url}/de/contact`,
       languages: {
         'fr-CH': `${SITE_CONFIG.url}/contact`,
         'de-CH': `${SITE_CONFIG.url}/de/contact`,
@@ -38,19 +38,19 @@ export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'contact' });
-  const isFr = locale === 'fr';
+  const isNl = locale === 'nl';
 
   const channels = [
-    { icon: MessageCircle, title: 'WhatsApp', desc: isFr ? 'Réponse en moins de 30 min' : 'Antwort in weniger als 30 Min.', action: isFr ? 'Ouvrir WhatsApp' : 'WhatsApp öffnen', href: SITE_CONFIG.whatsapp, color: 'text-[#25D366]', bg: 'bg-[#25D366]/8' },
-    { icon: Mail, title: 'Email', desc: isFr ? 'Réponse garantie en 2h' : 'Garantierte Antwort in 2h', action: isFr ? 'Envoyer un email' : 'E-Mail senden', href: `mailto:${SITE_CONFIG.email}`, color: 'text-swiss-red', bg: 'bg-swiss-red/8' },
-    { icon: Phone, title: isFr ? 'Téléphone' : 'Telefon', desc: '24/7', action: isFr ? 'Appeler' : 'Anrufen', href: `tel:${SITE_CONFIG.phone}`, color: 'text-blue-600', bg: 'bg-blue-600/8' },
+    { icon: MessageCircle, title: 'WhatsApp', desc: isNl ? 'Réponse en moins de 30 min' : 'Antwort in weniger als 30 Min.', action: isNl ? 'Ouvrir WhatsApp' : 'WhatsApp öffnen', href: SITE_CONFIG.whatsapp, color: 'text-[#25D366]', bg: 'bg-[#25D366]/8' },
+    { icon: Mail, title: 'Email', desc: isNl ? 'Réponse garantie en 2h' : 'Garantierte Antwort in 2h', action: isNl ? 'Envoyer un email' : 'E-Mail senden', href: `mailto:${SITE_CONFIG.email}`, color: 'text-swiss-red', bg: 'bg-swiss-red/8' },
+    { icon: Phone, title: isNl ? 'Téléphone' : 'Telefon', desc: '24/7', action: isNl ? 'Appeler' : 'Anrufen', href: `tel:${SITE_CONFIG.phone}`, color: 'text-blue-600', bg: 'bg-blue-600/8' },
   ];
 
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: isFr ? 'Accueil' : 'Startseite', url: localeUrl(locale) },
+          { name: isNl ? 'Accueil' : 'Startseite', url: localeUrl(locale) },
           { name: 'Contact', url: localeUrl(locale, '/contact') },
         ]}
       />
@@ -76,8 +76,8 @@ export default async function ContactPage({ params }: Props) {
 
           <div className="bg-bg rounded-xl border border-border p-6 text-center">
             <Clock className="w-6 h-6 text-swiss-red mx-auto mb-2" />
-            <h3 className="font-bold text-text mb-1">{isFr ? 'Horaires de support' : 'Support-Zeiten'}</h3>
-            <p className="text-sm text-text-muted">{isFr ? 'Disponible 24h/24, 7j/7, y compris les jours fériés.' : 'Verfügbar 24/7, auch an Feiertagen.'}</p>
+            <h3 className="font-bold text-text mb-1">{isNl ? 'Horaires de support' : 'Support-Zeiten'}</h3>
+            <p className="text-sm text-text-muted">{isNl ? 'Disponible 24h/24, 7j/7, y compris les jours fériés.' : 'Verfügbar 24/7, auch an Feiertagen.'}</p>
           </div>
         </div>
       </div>

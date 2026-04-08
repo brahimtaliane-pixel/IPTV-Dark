@@ -1,21 +1,21 @@
 // ============================================================
-// IPTV Suisse - Type Definitions
+// IPTV Nederland - Type Definitions
 // ============================================================
 
 export interface Plan {
   id: string;
   slug: string;
   duration: number; // months
-  price: number; // CHF
+  price: number; // EUR
   original_price?: number;
   devices: number;
   features: string[];
   payment_link: string;
   is_popular: boolean;
   is_active: boolean;
-  name_fr: string;
+  name_nl: string;
   name_de: string;
-  description_fr: string;
+  description_nl: string;
   description_de: string;
   created_at: string;
 }
@@ -59,7 +59,7 @@ export interface Testimonial {
   is_featured: boolean;
 }
 
-export type Locale = 'fr' | 'de';
+export type Locale = 'nl';
 
 export interface NavItem {
   label: string;

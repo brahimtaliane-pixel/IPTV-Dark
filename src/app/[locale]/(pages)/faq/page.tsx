@@ -10,14 +10,12 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const isFr = locale === 'fr';
-  const title = isFr
-    ? 'FAQ IPTV Suisse — Réponses à Toutes Vos Questions'
-    : 'FAQ IPTV Schweiz — Antworten auf Alle Ihre Fragen';
-  const description = isFr
-    ? 'Trouvez les réponses à toutes vos questions sur IPTV Suisse : appareils compatibles, activation, replay, support 24/7 et plus encore.'
-    : 'Finden Sie Antworten auf alle Ihre Fragen zu IPTV Schweiz: kompatible Geräte, Aktivierung, Replay, 24/7 Support und mehr.';
+  await params;
+
+  const faqUrl = `${SITE_CONFIG.url}/faq`;
+  const title = 'Veelgestelde vragen — IPTV Nederland';
+  const description =
+    'Antwoorden op veelgestelde vragen over IPTV Nederland: apparaten, activering binnen 2 uur, replay, VOD met 170.000+ films en series, support 24/7 en meer.';
 
   return {
     title,
@@ -25,18 +23,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: isFr ? `${SITE_CONFIG.url}/faq` : `${SITE_CONFIG.url}/de/faq`,
+      url: faqUrl,
       siteName: SITE_CONFIG.name,
-      locale: isFr ? 'fr_CH' : 'de_CH',
+      locale: 'nl_NL',
       type: 'website',
     },
     twitter: { card: 'summary_large_image', title, description },
     alternates: {
-      canonical: isFr ? `${SITE_CONFIG.url}/faq` : `${SITE_CONFIG.url}/de/faq`,
+      canonical: faqUrl,
       languages: {
-        'fr-CH': `${SITE_CONFIG.url}/faq`,
-        'de-CH': `${SITE_CONFIG.url}/de/faq`,
-        'x-default': `${SITE_CONFIG.url}/faq`,
+        'nl-NL': faqUrl,
+        'x-default': faqUrl,
       },
     },
   };
@@ -46,31 +43,44 @@ export default async function FAQPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const isFr = locale === 'fr';
-
-  const allFaqs = isFr
-    ? [
-        { question: 'Qu\'est-ce que IPTV Suisse ?', answer: 'IPTV Suisse est un service de télévision par internet avec +37\'000 chaînes TV en direct, 40\'000+ films et 17\'000+ séries en HD et 4K.' },
-        { question: 'Quels appareils sont compatibles ?', answer: 'Smart TV, Android, iOS, Windows, Mac, Fire Stick, MAG et bien plus.' },
-        { question: 'Combien de temps prend l\'activation ?', answer: 'L\'activation se fait en moins de 2 heures après confirmation du paiement.' },
-        { question: 'Est-ce que le replay est inclus ?', answer: 'Oui, replay jusqu\'à 7 jours en arrière sans frais supplémentaires.' },
-        { question: 'Comment contacter le support ?', answer: 'Notre équipe est disponible 24/7 par WhatsApp, email et téléphone.' },
-        { question: 'Puis-je utiliser le service sur plusieurs appareils ?', answer: 'Les abonnements standard permettent 1 appareil. Pour plusieurs écrans, consultez nos offres multi-écrans.' },
-      ]
-    : [
-        { question: 'Was ist IPTV Schweiz?', answer: 'IPTV Schweiz ist ein Internet-TV-Service mit +37\'000 Live-Kanälen, 40\'000+ Filmen und 17\'000+ Serien in HD und 4K.' },
-        { question: 'Welche Geräte sind kompatibel?', answer: 'Smart TV, Android, iOS, Windows, Mac, Fire Stick, MAG und mehr.' },
-        { question: 'Wie lange dauert die Aktivierung?', answer: 'Die Aktivierung erfolgt in weniger als 2 Stunden nach Zahlungsbestätigung.' },
-        { question: 'Ist Replay enthalten?', answer: 'Ja, Replay bis zu 7 Tage zurück ohne zusätzliche Kosten.' },
-        { question: 'Wie erreiche ich den Support?', answer: 'Unser Team ist 24/7 per WhatsApp, E-Mail und Telefon erreichbar.' },
-        { question: 'Kann ich den Service auf mehreren Geräten nutzen?', answer: 'Standard-Abos erlauben 1 Gerät. Für mehrere Bildschirme siehe unsere Multi-Screen-Angebote.' },
-      ];
+  const allFaqs = [
+    {
+      question: 'Wat is IPTV Nederland?',
+      answer:
+        'IPTV Nederland is een internettelevisiedienst met meer dan 30.000 live TV-zenders en 170.000+ films en series on demand in HD en 4K. Geoptimaliseerd voor kijkers in Nederland.',
+    },
+    {
+      question: 'Welke apparaten worden ondersteund?',
+      answer:
+        'Smart TV (Samsung, LG, Sony), Android TV, Fire Stick, Apple TV, Android- en iOS-telefoons, tablets, Windows- en Mac-computers, en MAG-boxen.',
+    },
+    {
+      question: 'Hoe lang duurt de activering?',
+      answer:
+        'Na betaling wordt je account meestal binnen 2 uur geactiveerd. Je ontvangt je inloggegevens per e-mail.',
+    },
+    {
+      question: 'Is replay inbegrepen?',
+      answer:
+        'Ja, replay zit in alle pakketten. Bekijk uitzendingen tot 7 dagen terug zonder extra kosten.',
+    },
+    {
+      question: 'Hoe bereik ik de support?',
+      answer:
+        'Ons team is 24/7 bereikbaar via WhatsApp, e-mail en telefoon. We reageren doorgaans binnen 2 uur.',
+    },
+    {
+      question: 'Kan ik op meerdere apparaten kijken?',
+      answer:
+        'Standaardpakketten zijn voor 1 gelijktijdig apparaat. Voor meerdere schermen tegelijk: zie onze multi-scherm pakketten.',
+    },
+  ];
 
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: isFr ? 'Accueil' : 'Startseite', url: localeUrl(locale) },
+          { name: 'Home', url: localeUrl(locale) },
           { name: 'FAQ', url: localeUrl(locale, '/faq') },
         ]}
       />

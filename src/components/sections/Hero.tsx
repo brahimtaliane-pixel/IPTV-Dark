@@ -5,9 +5,9 @@ import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play, CheckCircle } from 'lucide-react';
-import { STATS } from '@/lib/constants';
+import type { SiteStatsSnapshot } from '@/lib/constants';
 
-export default function Hero() {
+export default function Hero({ statValues }: { statValues: SiteStatsSnapshot }) {
   const t = useTranslations('hero');
   const stats = useTranslations('stats');
 
@@ -20,16 +20,22 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left — Text content */}
           <div>
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/5 border border-swiss-red/15 rounded-full mb-6"
-            >
-              <div className="w-6 h-6 bg-swiss-red rounded swiss-cross flex-shrink-0" style={{ fontSize: 0 }} />
-              <span className="text-xs font-semibold text-swiss-red tracking-wide uppercase">{t('badge')}</span>
-            </motion.div>
+            {/* Badge — logo mark stays outside motion to avoid SSR/client tree drift with Framer */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/5 border border-swiss-red/15 rounded-full mb-6">
+              <div
+                className="w-6 h-6 nl-flag shrink-0"
+                aria-hidden={true}
+                suppressHydrationWarning
+              />
+              <motion.span
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="text-xs font-semibold text-swiss-red tracking-wide uppercase"
+              >
+                {t('badge')}
+              </motion.span>
+            </div>
 
             {/* Heading */}
             <motion.h1
@@ -129,10 +135,10 @@ export default function Hero() {
           className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden border border-border"
         >
           {[
-            { value: STATS.channels, label: stats('channels') },
-            { value: STATS.movies, label: stats('movies') },
-            { value: STATS.uptime, label: stats('uptime') },
-            { value: STATS.supportHours, label: stats('support') },
+            { value: statValues.channels, label: stats('channels') },
+            { value: statValues.movies, label: stats('movies') },
+            { value: statValues.uptime, label: stats('uptime') },
+            { value: statValues.supportHours, label: stats('support') },
           ].map((stat) => (
             <div key={stat.label} className="bg-white px-6 py-5 text-center">
               <div className="text-2xl sm:text-3xl font-extrabold text-swiss-red">{stat.value}</div>

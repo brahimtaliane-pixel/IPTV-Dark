@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@/lib/supabase';
 import { sendPaymentLinkEmail } from '@/lib/resend';
-import { PLANS } from '@/lib/constants';
+import { PLANS as STATIC_PLANS } from '@/lib/constants';
 import { formatPrice } from '@/lib/utils';
 
 async function requireAuth() {
@@ -55,10 +55,37 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No payment link set for this lead\'s plan' }, { status: 400 });
     }
 
-    // Look up plan info for price/duration
-    const plan = PLANS.find(p => p.name_fr === lead.plan_name || p.name_de === lead.plan_name);
-    const planPrice = plan ? formatPrice(plan.price) : '—';
-    const planDuration = plan?.duration || 0;
+    let dbPlan: { price: number; duration: number } | null = null;
+    const { data: byFr } = await supabase
+      .from('plans')
+      .select('price, duration')
+      .eq('name_fr', lead.plan_name)
+      .maybeSingle();
+    if (byFr) {
+      dbPlan = byFr;
+    } else {
+      const { data: byDe } = await supabase
+        .from('plans')
+        .select('price, duration')
+        .eq('name_de', lead.plan_name)
+        .maybeSingle();
+      if (byDe) dbPlan = byDe;
+    }
+
+    let planPrice = '—';
+    let planDuration = 0;
+    if (dbPlan) {
+      planPrice = formatPrice(Number(dbPlan.price));
+      planDuration = dbPlan.duration;
+    } else {
+      const fallback = STATIC_PLANS.find(
+        (p) => p.name_nl === lead.plan_name || p.name_de === lead.plan_name
+      );
+      if (fallback) {
+        planPrice = formatPrice(fallback.price);
+        planDuration = fallback.duration;
+      }
+    }
 
     // Send payment email
     const result = await sendPaymentLinkEmail({
@@ -69,7 +96,7 @@ export async function POST(request: NextRequest) {
       planPrice,
       planDuration,
       paymentLink: lead.payment_link,
-      locale: lead.locale || 'fr',
+      locale: lead.locale || 'nl',
       leadId: lead.id,
     });
 

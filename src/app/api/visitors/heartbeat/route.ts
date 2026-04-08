@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
           browser: browser || null,
           country,
           city,
-          locale: locale || 'fr',
+          locale: locale || 'nl',
           last_seen_at: new Date().toISOString(),
         },
         { onConflict: 'visitor_id' }

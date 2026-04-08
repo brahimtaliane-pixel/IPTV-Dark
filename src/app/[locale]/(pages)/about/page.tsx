@@ -2,33 +2,42 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { SITE_CONFIG } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
 import { BreadcrumbSchema } from '@/components/seo/SchemaMarkup';
-import { Shield, Users, Headphones, Award } from 'lucide-react';
+import { Shield, Headphones, Award, MapPin } from 'lucide-react';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string }> };
 
+const ABOUT_URL = `${SITE_CONFIG.url}/about`;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'about' });
-  const isFr = locale === 'fr';
+  const title = t('title');
+  const description = t('subtitle');
   return {
-    title: t('title'),
-    description: t('subtitle'),
+    title,
+    description,
+    keywords: [
+      'IPTV Nederland',
+      'over iptv nederland',
+      'iptv provider nederland',
+      'iptv streaming nederland',
+      'iptv support nederland',
+    ],
     openGraph: {
-      title: t('title'),
-      description: t('subtitle'),
-      url: isFr ? `${SITE_CONFIG.url}/about` : `${SITE_CONFIG.url}/de/about`,
+      title,
+      description,
+      url: ABOUT_URL,
       siteName: SITE_CONFIG.name,
-      locale: isFr ? 'fr_CH' : 'de_CH',
+      locale: 'nl_NL',
       type: 'website',
     },
-    twitter: { card: 'summary_large_image', title: t('title'), description: t('subtitle') },
+    twitter: { card: 'summary_large_image', title, description },
     alternates: {
-      canonical: isFr ? `${SITE_CONFIG.url}/about` : `${SITE_CONFIG.url}/de/about`,
+      canonical: ABOUT_URL,
       languages: {
-        'fr-CH': `${SITE_CONFIG.url}/about`,
-        'de-CH': `${SITE_CONFIG.url}/de/about`,
-        'x-default': `${SITE_CONFIG.url}/about`,
+        'nl-NL': ABOUT_URL,
+        'x-default': ABOUT_URL,
       },
     },
   };
@@ -38,39 +47,44 @@ export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'about' });
-  const isFr = locale === 'fr';
 
   const values = [
-    { icon: Shield, title: isFr ? 'Fiabilité' : 'Zuverlässigkeit', desc: isFr ? 'Une infrastructure premium avec 99.9% de disponibilité.' : 'Premium-Infrastruktur mit 99.9% Verfügbarkeit.' },
-    { icon: Users, title: isFr ? 'Communauté' : 'Gemeinschaft', desc: isFr ? 'Plus de 15 000 clients à travers la Suisse.' : 'Über 15 000 Kunden in der ganzen Schweiz.' },
-    { icon: Headphones, title: isFr ? 'Support Dédié' : 'Engagierter Support', desc: isFr ? 'Équipe bilingue disponible 24/7 pour vous accompagner.' : 'Zweisprachiges Team 24/7 für Sie verfügbar.' },
-    { icon: Award, title: isFr ? 'Qualité HD & 4K' : 'HD & 4K Qualität', desc: isFr ? 'Streaming en haute définition et 4K sur tous vos appareils.' : 'Streaming in HD und 4K auf allen Ihren Geräten.' },
+    { icon: Shield, title: t('valueReliabilityTitle'), desc: t('valueReliabilityDesc') },
+    { icon: MapPin, title: t('valueCommunityTitle'), desc: t('valueCommunityDesc') },
+    { icon: Headphones, title: t('valueSupportTitle'), desc: t('valueSupportDesc') },
+    { icon: Award, title: t('valueQualityTitle'), desc: t('valueQualityDesc') },
   ];
 
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: isFr ? 'Accueil' : 'Startseite', url: localeUrl(locale) },
-          { name: isFr ? 'À propos' : 'Über uns', url: localeUrl(locale, '/about') },
+          { name: 'Home', url: localeUrl(locale) },
+          { name: t('breadcrumb'), url: localeUrl(locale, '/about') },
         ]}
       />
       <div className="pt-28 pb-20 bg-white">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-14">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-3">{t('title')}</h1>
-            <p className="text-text-secondary">{t('subtitle')}</p>
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/8 rounded-full border border-swiss-red/15 mb-5">
+              <span className="text-xs font-semibold text-swiss-red uppercase tracking-wide">{t('badge')}</span>
+            </div>
+            <p className="text-sm font-semibold text-swiss-red mb-2">{SITE_CONFIG.name}</p>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-4">{t('title')}</h1>
+            <p className="text-text-secondary text-base leading-relaxed max-w-2xl mx-auto">{t('subtitle')}</p>
           </div>
 
           <div className="bg-bg rounded-xl border border-border p-6 sm:p-8 mb-10">
-            <p className="text-text-secondary leading-relaxed text-sm">
-              {isFr ? 'Notre service est né d\'une vision simple : offrir aux foyers suisses une expérience de streaming TV moderne et fiable. Depuis 2020, nous accompagnons plus de 15 000 clients en Suisse avec un service stable, un support réactif et un catalogue régulièrement mis à jour.' : 'Unser Service entstand aus einer einfachen Vision: Schweizer Haushalten ein modernes und zuverlässiges TV-Streaming-Erlebnis zu bieten. Seit 2020 betreuen wir über 15 000 Kunden in der Schweiz mit einem stabilen Service, reaktionsschnellem Support und einem regelmäßig aktualisierten Katalog.'}
-            </p>
+            <p className="text-text-secondary leading-relaxed text-sm sm:text-base">{t('story')}</p>
           </div>
 
+          <h2 className="text-lg font-bold text-text mb-5 text-center sm:text-left">{t('valuesHeading')}</h2>
           <div className="grid sm:grid-cols-2 gap-5">
             {values.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-bg rounded-xl border border-border p-5 hover:border-swiss-red/20 transition-colors">
+              <div
+                key={title}
+                className="bg-bg rounded-xl border border-border p-5 hover:border-swiss-red/25 transition-colors"
+              >
                 <div className="w-9 h-9 rounded-lg bg-swiss-red/8 flex items-center justify-center mb-3">
                   <Icon className="w-5 h-5 text-swiss-red" />
                 </div>

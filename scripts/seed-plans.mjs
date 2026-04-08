@@ -166,7 +166,7 @@ async function seedPlans() {
     plans.forEach(p => {
       const popular = p.is_popular ? ' ⭐ POPULAR' : '';
       const link = p.payment_link ? ' 🔗' : ' ⚠️ no payment link';
-      console.log(`   ${p.name_fr}: ${p.price} CHF (was ${p.original_price} CHF)${popular}${link}`);
+      console.log(`   ${p.name_fr}: ${p.price} EUR (was ${p.original_price} EUR)${popular}${link}`);
     });
     console.log('');
   }

@@ -1,6 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
-  <rect width="50" height="50" rx="8" fill="#E31937" y="5"/>
-  <path d="M25 15v20M15 25h20" stroke="white" stroke-width="4" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 60" fill="none">
+  <defs>
+    <linearGradient id="nlFlagMark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ae1c28"/>
+      <stop offset="33.33%" stop-color="#ae1c28"/>
+      <stop offset="33.33%" stop-color="#ffffff"/>
+      <stop offset="66.66%" stop-color="#ffffff"/>
+      <stop offset="66.66%" stop-color="#21468b"/>
+      <stop offset="100%" stop-color="#21468b"/>
+    </linearGradient>
+  </defs>
+  <rect width="50" height="50" rx="8" fill="url(#nlFlagMark)" y="5"/>
   <text x="60" y="38" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="32" fill="#111827">IPTV</text>
-  <text x="133" y="38" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="32" fill="#E31937">SUISSE</text>
+  <text x="128" y="38" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="24" fill="#D52B1E">NEDERLAND</text>
 </svg>

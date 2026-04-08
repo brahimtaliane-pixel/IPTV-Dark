@@ -1,0 +1,409 @@
+{
+  "metadata": {
+    "title": "IPTV Nederland — 30.000+ zenders HD/4K, VOD & 7 dagen replay",
+    "description": "IPTV-service in Nederland: 30.000+ zenders HD/4K, 170.000+ films en series on demand, 7 dagen replay. Activering binnen 2 uur, Nederlandstalige support, geen langlopend contract."
+  },
+  "nav": {
+    "home": "Home",
+    "plans": "Abonnementen",
+    "multiScreen": "Multi-scherm",
+    "faq": "FAQ",
+    "installation": "Installatie",
+    "about": "Over ons",
+    "contact": "Contact",
+    "cta": "Bekijk pakketten",
+    "promoBar": "🔥 Tijdelijke actie: -30% op alle IPTV-abonnementen — grijp je kans!",
+    "promoBarShort": "🔥 -30% op alle IPTV-abonnementen!"
+  },
+  "hero": {
+    "badge": "IPTV-service in Nederland",
+    "swissBadge": "Premium service voor heel Nederland",
+    "deviceBadge": "Alle apparaten",
+    "title": "IPTV Nederland",
+    "titleHighlight": "Premium",
+    "titleEnd": "— 30.000+ zenders HD & 4K",
+    "subtitle": "IPTV-provider actief sinds 2020. Krijg toegang tot 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay — zonder buffering, zonder verplichting. Activering binnen 2 uur. Nederlandstalige support 24/7.",
+    "ctaPrimary": "Bekijk abonnementen",
+    "ctaSecondary": "Meer informatie",
+    "trust": "Duizenden huishoudens in Nederland vertrouwen ons",
+    "imageAlt": "IPTV Nederland — premium IPTV op al je apparaten: TV, computer, tablet en smartphone"
+  },
+  "cityLinks": {
+    "badge": "Nederland",
+    "badgeLong": "Premium IPTV in heel Nederland",
+    "titleBrand": "IPTV Nederland",
+    "titleAccent": "in jouw regio",
+    "subtitle": "Van grote steden tot het platteland: dezelfde service met 30.000+ zenders, snelle activatie en Nederlandstalige support — op glasvezel, kabel en DSL.",
+    "provinceLabel": "Provincie",
+    "footerPrefix": "Ook actief in",
+    "footerSuffix": "— door heel Nederland. Of start direct met een abonnement."
+  },
+  "stats": {
+    "channels": "Zenders",
+    "movies": "Films en series",
+    "series": "Series",
+    "uptime": "Beschikbaarheid",
+    "support": "Support"
+  },
+  "features": {
+    "title": "Waarom kiezen voor onze service",
+    "subtitle": "TV-streaming in Nederland met Nederlandse, Belgische en internationale zenders, replay, VOD en geen buffering",
+    "quality": {
+      "title": "Ultra HD 4K",
+      "description": "Geniet van scherpe beelden met zenders in Ultra HD 4K, Full HD en HD."
+    },
+    "noBuffering": {
+      "title": "Geen buffering",
+      "description": "Vloeiend streamen zonder haperingen dankzij onze krachtige premium servers."
+    },
+    "replay": {
+      "title": "Replay & VOD",
+      "description": "Mis niets met replay en krijg toegang tot meer dan 170.000 films en series on demand."
+    }
+  },
+  "whyUs": {
+    "title": "Waarom",
+    "titleHighlight": "ons kiezen",
+    "subtitle": "IP-tv provider sinds 2020 met duizenden abonnees. Onze premium infrastructuur levert stabiele kwaliteit en streaming zonder onderbreking. Snelle Nederlandstalige support en activering binnen 2 uur.",
+    "swiss": {
+      "title": "Service voor Nederland",
+      "description": "Gericht op kijkers in Nederland met support 24/7."
+    },
+    "fast": {
+      "title": "Snel geactiveerd",
+      "description": "Je abonnement wordt binnen 2 uur geactiveerd. Direct kijken."
+    },
+    "quality": {
+      "title": "Topkwaliteit",
+      "description": "Premium infrastructuur met 99,9% uptime en de beste beeldkwaliteit."
+    }
+  },
+  "pricing": {
+    "title": "Onze abonnementen",
+    "titleHighlight": "IPTV Nederland",
+    "subtitle": "Kies het pakket dat bij je past en start binnen 2 uur met streamen.",
+    "popular": "Populair",
+    "perMonth": "/mnd",
+    "duration": "{count} mnd",
+    "save": "Bespaar {percent}%",
+    "cta": "Nu bestellen",
+    "viewAll": "Alle abonnementen",
+    "features": {
+      "premium_server": "Premium server",
+      "all_channels": "30.000+ zenders",
+      "hd_4k": "HD & 4K-kwaliteit",
+      "replay_vod": "Replay & VOD inbegrepen",
+      "all_devices": "Alle apparaten",
+      "support_24_7": "Support 24/7",
+      "free_updates": "Gratis updates",
+      "multi_screen": "{count} schermen tegelijk"
+    },
+    "guarantee": "Niet tevreden? Geld terug binnen 24 uur"
+  },
+  "testimonials": {
+    "title": "Wat onze",
+    "titleHighlight": "klanten zeggen",
+    "subtitle": "Meer dan 37.000 tevreden klanten in Nederland en daarbuiten."
+  },
+  "faq": {
+    "title": "Veelgestelde",
+    "titleHighlight": "vragen",
+    "subtitle": "Alles wat je moet weten over onze IPTV-service.",
+    "viewAll": "Alle vragen bekijken",
+    "items": [
+      {
+        "question": "Wat is IPTV Nederland?",
+        "answer": "IPTV Nederland is een internettelevisiedienst met meer dan 30.000 live TV-zenders en 170.000+ films en series on demand in HD en 4K. Geoptimaliseerd voor kijkers in Nederland."
+      },
+      {
+        "question": "Welke apparaten worden ondersteund?",
+        "answer": "Smart TV (Samsung, LG, Sony), Android TV, Fire Stick, Apple TV, Android- en iOS-telefoons, tablets, Windows- en Mac-computers, en MAG-boxen."
+      },
+      {
+        "question": "Hoe lang duurt de activering?",
+        "answer": "Na betaling wordt je account meestal binnen 2 uur geactiveerd. Je ontvangt je inloggegevens per e-mail."
+      },
+      {
+        "question": "Is replay inbegrepen?",
+        "answer": "Ja, replay zit in alle pakketten. Bekijk uitzendingen tot 7 dagen terug zonder extra kosten."
+      },
+      {
+        "question": "Hoe bereik ik de support?",
+        "answer": "Ons team is 24/7 bereikbaar via WhatsApp, e-mail en telefoon. We reageren doorgaans binnen 2 uur."
+      },
+      {
+        "question": "Kan ik op meerdere apparaten kijken?",
+        "answer": "Standaardpakketten zijn voor 1 gelijktijdig apparaat. Voor meerdere schermen tegelijk: zie onze multi-scherm pakketten."
+      },
+      {
+        "question": "Is IPTV in Nederland toegestaan?",
+        "answer": "Voor privégebruik gelden lokale regels over het ontvangen van IPTV. Wij bieden een transparante marketingdienst; raadpleeg voor juridische vragen een adviseur."
+      },
+      {
+        "question": "Heb ik een VPN nodig?",
+        "answer": "Meestal niet: onze service werkt goed zonder VPN in Nederland. Een VPN kan optioneel voor extra privacy."
+      },
+      {
+        "question": "Welke zenders zijn er?",
+        "answer": "Nederlandse, Belgische en internationale zenders, sport, entertainment en meer — ruim 30.000 zenders in totaal."
+      },
+      {
+        "question": "Kan ik live voetbal kijken?",
+        "answer": "Ja, via grote sportzenders volg je voetbal, tennis en meer. Aanbod hangt af van de zenders in je pakket."
+      },
+      {
+        "question": "Welke internetsnelheid heb ik nodig?",
+        "answer": "Voor HD volstaat vaak 10 Mbps, voor 4K raden we 25 Mbps aan. Werkt met KPN, Ziggo, T-Mobile en andere providers."
+      },
+      {
+        "question": "Is er een gratis proefperiode?",
+        "answer": "Neem contact op via WhatsApp voor een eventuele proef van 24 uur, afhankelijk van beschikbaarheid."
+      }
+    ]
+  },
+  "devices": {
+    "title": "Werkt op al je apparaten",
+    "subtitle": "Kijk Nederlandse, Belgische en internationale zenders op elk scherm.",
+    "smarttv": "Smart TV",
+    "android": "Android",
+    "ios": "iOS / tvOS",
+    "windows": "Windows",
+    "firetv": "Fire TV",
+    "iptv_box": "IPTV-box"
+  },
+  "howItWorks": {
+    "badge": "Eenvoudige snelle installatie",
+    "title": "Zo werkt het —",
+    "titleHighlight": "in 4 stappen",
+    "subtitle": "Start in enkele minuten — veilig betalen, snelle toegang.",
+    "step1": {
+      "title": "Kies een pakket",
+      "description": "Selecteer het abonnement dat bij je past en betaal veilig."
+    },
+    "step2": {
+      "title": "Ontvang je gegevens",
+      "description": "Na betaling sturen we je direct je inloggegevens en instructies per e-mail."
+    },
+    "step3": {
+      "title": "Installeer de app",
+      "description": "Volg onze gids om de IPTV-app op je apparaten te zetten."
+    },
+    "step4": {
+      "title": "Geniet van het aanbod",
+      "description": "Direct toegang tot 30.000+ HD-zenders en 170.000+ films en series on demand op al je schermen."
+    },
+    "cta": "Nu starten"
+  },
+  "cta": {
+    "title": "Klaar om te starten?",
+    "subtitle": "Sluit je aan bij duizenden huishoudens die buffer-vrij kijken op al hun schermen.",
+    "button": "Bekijk onze pakketten",
+    "guarantee": "Activering in 2 uur • Support 24/7 • Niet goed? Geld terug"
+  },
+  "footer": {
+    "description": "TV-streaming in Nederland. 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay op al je schermen.",
+    "links": "Handige links",
+    "cities": "Steden",
+    "support": "Support",
+    "legal": "Juridisch",
+    "privacy": "Privacybeleid",
+    "terms": "Algemene voorwaarden",
+    "copyright": "© {year} IPTV Nederland. Alle rechten voorbehouden.",
+    "madeIn": "Met ❤️ voor kijkers in Nederland"
+  },
+  "lead": {
+    "title": "Rond je bestelling af",
+    "subtitle": "Vul je gegevens in om je beveiligde betaallink te ontvangen.",
+    "name": "Volledige naam",
+    "email": "E-mailadres",
+    "phone": "Telefoonnummer",
+    "submit": "Betaallink ontvangen",
+    "success": "Bedankt! Check je e-mail voor de betaallink.",
+    "error": "Er ging iets mis. Probeer het opnieuw.",
+    "privacy": "Je gegevens zijn beschermd en worden niet gedeeld."
+  },
+  "merci": {
+    "title": "Bedankt voor je bestelling!",
+    "subtitle": "Je IPTV-abonnement wordt binnen 2 uur geactiveerd.",
+    "checkEmail": "Controleer je inbox",
+    "emailInfo": "Je ontvangt je inloggegevens op het opgegeven e-mailadres.",
+    "backHome": "Terug naar home"
+  },
+  "installation": {
+    "title": "Installatiegids",
+    "subtitle": "Installeer streaming op al je apparaten in een paar minuten."
+  },
+  "about": {
+    "title": "Over IPTV Nederland",
+    "breadcrumb": "Over ons",
+    "subtitle": "Premium IPTV voor heel Nederland — stabiele streams, Nederlandstalige support en een enorm aanbod aan zenders en on-demand content.",
+    "badge": "Sinds 2020 actief",
+    "story": "IPTV Nederland is ontstaan uit één duidelijk doel: huishoudens in Nederland een moderne, betrouwbare tv-ervaring zonder gedoe. We combineren krachtige servers met heldere instructies en support die je begrijpt — in het Nederlands, wanneer jij dat nodig hebt. Ons aanbod groeit mee met wat kijkers verwachten: meer dan 30.000 zenders, 170.000+ films en series on demand, replay en HD/4K op vrijwel elk apparaat.",
+    "valueReliabilityTitle": "Betrouwbaar",
+    "valueReliabilityDesc": "Premium infrastructuur met 99,9% beschikbaarheid en streaming zonder onnodige onderbrekingen.",
+    "valueCommunityTitle": "Voor Nederland",
+    "valueCommunityDesc": "Duizenden tevreden klanten — van Randstad tot platteland — dezelfde service en dezelfde prijzen.",
+    "valueSupportTitle": "Support 24/7",
+    "valueSupportDesc": "Nederlandstalige hulp via WhatsApp, e-mail en telefoon. Geen wachtlijsten van dagen.",
+    "valueQualityTitle": "HD & 4K",
+    "valueQualityDesc": "Scherp beeld op Smart TV, telefoon, tablet, pc en populaire mediaboxen.",
+    "valuesHeading": "Waarom kijkers voor ons kiezen"
+  },
+  "contact": {
+    "title": "Neem contact op",
+    "subtitle": "Ons team is 24/7 bereikbaar voor je vragen."
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "subtitle": "Deze pagina bestaat niet of is verplaatst.",
+    "backHome": "Terug naar home"
+  },
+  "planPage": {
+    "backToPlans": "Terug naar abonnementen",
+    "premiumPlan": "Premium pakket",
+    "totalPrice": "TOTAALPRIJS",
+    "forDuration": "Voor {count} maanden",
+    "savings": "Bespaar {amount} EUR",
+    "subscribeNow": "NU BESTELLEN",
+    "guarantee24h": "24 uur garantie",
+    "guaranteeDesc": "Niet goed? Geld terug",
+    "instantActivation": "Direct actief",
+    "instantActivationDesc": "Snelle toegang",
+    "support247": "Support 24/7",
+    "support247Desc": "Prioriteit support",
+    "aboutPlan": "Over dit pakket",
+    "aboutPlanText": "Onbeperkte toegang tot de beste zenders en on-demand content op al je apparaten. Scherpe beelden via onze premium servers, geoptimaliseerd voor kijkers in Nederland.",
+    "keyFeatures": "Belangrijkste kenmerken",
+    "feat_channels": "+30.000 zenders",
+    "feat_channelsDesc": "TV-zenders wereldwijd",
+    "feat_4k": "Ultra HD 4K",
+    "feat_4kDesc": "Optimale beeldkwaliteit",
+    "feat_vod": "VOD & replay",
+    "feat_vodDesc": "Content on demand",
+    "feat_multiDevice": "Multi-device",
+    "feat_multiDeviceDesc": "Werkt op al je devices",
+    "feat_support": "Support 24/7",
+    "feat_supportDesc": "Technische hulp",
+    "feat_updates": "Doorlopende updates",
+    "feat_updatesDesc": "Altijd de nieuwste features",
+    "planDetails": "Pakketdetails",
+    "allFeaturesIncluded": "Alles inbegrepen",
+    "additionalInfo": "Informatie",
+    "infoDuration": "Looptijd",
+    "infoDurationValue": "{count} maanden",
+    "infoConnections": "Verbindingen",
+    "infoConnectionsValue": "{count, plural, =1 {1 gelijktijdig apparaat} other {# gelijktijdige apparaten}}",
+    "infoActivation": "Activering",
+    "infoActivationValue": "Direct (< 2 uur)",
+    "infoRenewal": "Verlenging",
+    "infoRenewalValue": "Handmatig",
+    "reviewsTitle": "Wat klanten",
+    "reviewsTitleHighlight": "zeggen",
+    "reviewsSubtitle": "Ervaringen van abonnees met onze premium IPTV-service",
+    "overallRating": "Totaalscore",
+    "basedOnReviews": "Gebaseerd op 347 reviews",
+    "verifiedBy": "Geverifieerd door",
+    "stars": "sterren",
+    "review1Title": "Uitzonderlijke kwaliteit",
+    "review1Text": "Perfect beeld, geen vertraging en een enorme keuze aan zenders. Blij met IPTV Nederland.",
+    "review1Name": "Marc S.",
+    "review1Since": "Klant sinds 8 maanden",
+    "review2Title": "Uitstekende prijs-kwaliteit",
+    "review2Text": "Overzichtelijke app, eenvoudige installatie en snelle support. Ideaal voor het hele gezin.",
+    "review2Name": "Laura B.",
+    "review2Since": "Klant sinds 3 maanden",
+    "review3Title": "Enorm aanbod",
+    "review3Text": "Geen stapeling van abonnementen meer: alles in één pakket voor een scherpe prijs.",
+    "review3Name": "Thomas R.",
+    "review3Since": "Klant sinds 1 jaar",
+    "seeAllReviews": "Alle reviews op Trustpilot",
+    "otherPlans": "Andere pakketten",
+    "viewDetails": "Details",
+    "howItWorks": "Hoe het werkt",
+    "howItWorksSubtitle": "In een paar eenvoudige stappen aan de slag",
+    "simpleAndFast": "Simpel en snel",
+    "step1Title": "Kies je pakket",
+    "step1Desc": "Selecteer het abonnement dat bij je past en betaal veilig.",
+    "step2Title": "Ontvang je gegevens",
+    "step2Desc": "Na betaling sturen we je meteen je inloggegevens per e-mail.",
+    "step3Title": "Installeer de app",
+    "step3Desc": "Volg onze gids om de IPTV-app te installeren.",
+    "step4Title": "Geniet van content",
+    "step4Desc": "Direct 30.000+ HD-zenders en 170.000+ films en series on demand op al je apparaten.",
+    "faqTitle": "Alles wat je moet",
+    "faqTitleHighlight": "weten",
+    "faqSubtitle": "Antwoorden op veelgestelde vragen",
+    "frequentQuestions": "Veelgestelde vragen",
+    "faq1Q": "Welke apparaten?",
+    "faq1A": "Smart TV, Android-box, iPhone, iPad, Apple TV, Android, Windows, macOS, Fire TV Stick.",
+    "faq2Q": "VPN nodig?",
+    "faq2A": "Meestal niet. Optioneel voor extra privacy of stabiliteit.",
+    "faq3Q": "Hoe werkt verlengen?",
+    "faq3A": "Handmatig (geen automatische incasso). Je krijgt een herinnering 7 dagen voor afloop.",
+    "faq4Q": "Welke garantie?",
+    "faq4A": "24 uur niet-goed-geld-terug als de service niet bevalt.",
+    "moreQuestions": "Geen antwoord gevonden?",
+    "contactSupport": "Neem contact op met support"
+  },
+  "multiScreenBanner": {
+    "badge": "Multi-scherm",
+    "title": "Pakketten",
+    "titleHighlight": "Multi-scherm",
+    "description": "Deel je IPTV met het hele gezin. Gelijktijdig kijken op 2, 3 of 4 apparaten met dezelfde premiumkwaliteit.",
+    "cta": "Bekijk multi-scherm pakketten",
+    "devices": {
+      "smartTv": "Smart TV",
+      "smartphone": "Smartphone",
+      "tablet": "Tablet",
+      "computer": "Computer"
+    },
+    "familyNote": "Ideaal voor het hele gezin"
+  },
+  "multiEcrans": {
+    "backToPlans": "Terug naar abonnementen",
+    "title": "Pakketten",
+    "titleHighlight": "Multi-scherm",
+    "subtitle": "Deel je IPTV-abonnement met je gezin op meerdere apparaten tegelijk.",
+    "tab2": "2 schermen",
+    "tab3": "3 schermen",
+    "tab4": "4 schermen",
+    "bestValue": "Beste prijs",
+    "whyTitle": "Waarom een",
+    "whyTitleHighlight": "multi-scherm pakket?",
+    "whySubtitle": "Eén abonnement voor iedereen — ieder kijkt wat hij wil.",
+    "why1Title": "Onafhankelijk kijken",
+    "why1Desc": "Elk scherm werkt los. Voetbal in de woonkamer, een serie op de kamer.",
+    "why2Title": "Tot 60% besparen",
+    "why2Desc": "Eén multi-scherm pakket is goedkoper dan meerdere losse abonnementen.",
+    "why3Title": "Alle apparaten",
+    "why3Desc": "Smart TV, telefoon, tablet, PC, Fire Stick, MAG — mix en match vrij.",
+    "why4Title": "Zelfde kwaliteit",
+    "why4Desc": "Overal HD en 4K, hetzelfde aanbod van 30.000+ zenders, VOD en replay.",
+    "howTitle": "Hoe",
+    "howTitleHighlight": "het werkt",
+    "howSubtitle": "In 3 stappen IPTV op al je schermen.",
+    "how1Title": "Kies je pakket",
+    "how1Desc": "Kies 2, 3 of 4 schermen en de gewenste looptijd.",
+    "how2Title": "Ontvang toegang",
+    "how2Desc": "Activering binnen 2 uur. Inloggegevens per e-mail voor elk apparaat.",
+    "how3Title": "Kijk samen",
+    "how3Desc": "Installeer de app op elk apparaat en kijk gelijktijdig.",
+    "faqTitle": "Veelgestelde vragen over",
+    "faqTitleHighlight": "multi-scherm",
+    "faq1Q": "Hoe werkt multi-scherm?",
+    "faq1A": "Je mag gelijktijdig op 2, 3 of 4 apparaten inloggen. Elk scherm kan iets anders tonen, zonder kwaliteitsverlies.",
+    "faq2Q": "Verschillende soorten apparaten?",
+    "faq2A": "Ja: mix TV, telefoon, tablet en pc zoals je wilt.",
+    "faq3Q": "Zelfde kwaliteit op elk scherm?",
+    "faq3A": "Ja: overal HD/4K, dezelfde zenders, VOD en replay.",
+    "faq4Q": "Apparaat wisselen na activering?",
+    "faq4A": "Ja, installeer de app op een nieuw apparaat en gebruik dezelfde gegevens.",
+    "faq5Q": "Replay en VOD inbegrepen?",
+    "faq5A": "Ja op elk scherm: replay tot 7 dagen, enorme VOD-bibliotheek, EPG en updates.",
+    "faq6Q": "Verschil 2, 3 of 4 schermen?",
+    "faq6A": "Alleen het aantal gelijktijdige streams. Functionaliteit blijft gelijk.",
+    "ctaTitle": "Klaar voor IPTV met het gezin?",
+    "ctaDesc": "Kies je multi-scherm pakket en start binnen 2 uur.",
+    "ctaButton": "Bekijk pakketten"
+  }
+}

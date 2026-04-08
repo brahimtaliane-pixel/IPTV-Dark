@@ -57,8 +57,10 @@ const nextConfig: NextConfig = {
       // Redirect old /fr/ prefixed URLs to clean URLs
       { source: '/fr', destination: '/', permanent: true },
       { source: '/fr/:path+', destination: '/:path+', permanent: true },
-      // Trailing slash normalization
-      { source: '/de/:path+/', destination: '/de/:path+', permanent: true },
+      { source: '/de', destination: '/', permanent: true },
+      { source: '/de/:path+', destination: '/:path+', permanent: true },
+      { source: '/nl', destination: '/', permanent: true },
+      { source: '/nl/:path+', destination: '/:path+', permanent: true },
     ];
   },
 };

@@ -1,32 +1,20 @@
 'use client';
 
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 
-const TESTIMONIALS = {
-  fr: [
-    { name: 'Marc D.', location: 'Genève', rating: 5, text: 'Excellent service ! La qualité d\'image est incroyable et le choix de chaînes est impressionnant. Le support client est très réactif.' },
-    { name: 'Sophie L.', location: 'Lausanne', rating: 5, text: 'Utilisatrice depuis 6 mois, je suis très satisfaite. Le replay fonctionne parfaitement et l\'activation a été ultra rapide.' },
-    { name: 'Thomas B.', location: 'Zürich', rating: 5, text: 'Meilleur service IPTV que j\'ai testé. Stable, fiable et le support en français est un vrai plus.' },
-    { name: 'Laura M.', location: 'Bern', rating: 5, text: 'Service top ! Toute la famille est ravie. On regarde les chaînes suisses et françaises sans problème.' },
-    { name: 'Pierre R.', location: 'Fribourg', rating: 5, text: 'Rapport qualité-prix imbattable. Plus de 15\'000 chaînes pour ce prix, c\'est vraiment exceptionnel.' },
-    { name: 'Nathalie K.', location: 'Neuchâtel', rating: 5, text: 'Je recommande à 100%. Le VOD est complet et la qualité 4K est bluffante sur ma Smart TV.' },
-  ],
-  de: [
-    { name: 'Marc D.', location: 'Genf', rating: 5, text: 'Hervorragender Service! Die Bildqualität ist unglaublich und die Kanalauswahl beeindruckend.' },
-    { name: 'Sophie L.', location: 'Lausanne', rating: 5, text: 'Seit 6 Monaten Nutzerin, sehr zufrieden. Replay funktioniert perfekt und die Aktivierung war ultraschnell.' },
-    { name: 'Thomas B.', location: 'Zürich', rating: 5, text: 'Bester IPTV-Service, den ich getestet habe. Stabil, zuverlässig und der Support auf Deutsch ist ein echter Pluspunkt.' },
-    { name: 'Laura M.', location: 'Bern', rating: 5, text: 'Top Service! Die ganze Familie ist begeistert. Wir schauen Schweizer und deutsche Kanäle problemlos.' },
-    { name: 'Pierre R.', location: 'Freiburg', rating: 5, text: 'Unschlagbares Preis-Leistungs-Verhältnis. Über 15\'000 Kanäle zu diesem Preis ist wirklich aussergewöhnlich.' },
-    { name: 'Nathalie K.', location: 'Neuenburg', rating: 5, text: 'Ich empfehle 100%. Das VOD ist komplett und die 4K-Qualität ist auf meinem Smart TV verblüffend.' },
-  ],
-};
+const REVIEWS = [
+  { name: 'Marc D.', location: 'Amsterdam', rating: 5, text: 'Top service! Scherp beeld en een enorme keuze aan zenders. Support reageert snel.' },
+  { name: 'Sophie L.', location: 'Rotterdam', rating: 5, text: 'Al een half jaar klant — heel tevreden. Replay werkt perfect en activering was razendsnel.' },
+  { name: 'Thomas B.', location: 'Utrecht', rating: 5, text: 'De beste IPTV die ik heb geprobeid. Stabiel en betrouwbaar.' },
+  { name: 'Laura M.', location: 'Eindhoven', rating: 5, text: 'Hele gezin blij. Nederlandse en internationale zenders zonder problemen.' },
+  { name: 'Pierre R.', location: 'Den Haag', rating: 5, text: 'Uitstekende prijs-kwaliteit. Zoveel zenders voor deze prijs is zeldzaam.' },
+  { name: 'Nathalie K.', location: 'Groningen', rating: 5, text: 'Ik raad het 100% aan. VOD is compleet en 4K op mijn Smart TV is indrukwekkend.' },
+];
 
 export default function Testimonials() {
   const t = useTranslations('testimonials');
-  const locale = useLocale() as 'fr' | 'de';
-  const reviews = TESTIMONIALS[locale];
 
   return (
     <section className="py-14 lg:py-20 bg-white">
@@ -44,7 +32,7 @@ export default function Testimonials() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {reviews.map((review, i) => (
+          {REVIEWS.map((review, i) => (
             <motion.div
               key={review.name}
               initial={{ opacity: 0, y: 16 }}
@@ -53,7 +41,6 @@ export default function Testimonials() {
               transition={{ delay: i * 0.06 }}
               className="bg-bg rounded-xl border border-border p-5"
             >
-              {/* Stars */}
               <div className="flex gap-0.5 mb-3">
                 {Array.from({ length: review.rating }).map((_, j) => (
                   <Star key={j} className="w-4 h-4 text-warning fill-warning" />
@@ -65,7 +52,6 @@ export default function Testimonials() {
               </p>
 
               <div className="flex items-center gap-3">
-                {/* Avatar circle with initial */}
                 <div className="w-9 h-9 rounded-full bg-swiss-red/10 text-swiss-red flex items-center justify-center text-sm font-bold">
                   {review.name[0]}
                 </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Check,
@@ -19,7 +19,8 @@ import {
   Mail,
   Play,
 } from 'lucide-react';
-import { PLANS } from '@/lib/constants';
+import { PRICE_CURRENCY } from '@/lib/constants';
+import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getMonthlyPrice, getDiscount, cn } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
 
@@ -75,14 +76,13 @@ const DEVICE_TABS = [
 ] as const;
 
 // ─── Main Page ─────────────────────────────────────────────
-export default function MultiEcransClient() {
+export default function MultiEcransClient({ plans }: { plans: SitePlan[] }) {
   const t = useTranslations('multiEcrans');
   const pt = useTranslations('pricing');
-  const locale = useLocale();
   const [selectedDevices, setSelectedDevices] = useState(2);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const filtered = PLANS.filter((p) => p.devices === selectedDevices);
+  const filtered = plans.filter((p) => p.devices === selectedDevices);
   const ordered = [
     filtered.find((p) => p.duration === 3)!,
     filtered.find((p) => p.duration === 12)!,
@@ -184,7 +184,7 @@ export default function MultiEcransClient() {
               className="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto items-stretch"
             >
               {ordered.map((plan, i) => {
-                const name = locale === 'fr' ? plan.name_fr : plan.name_de;
+                const name = plan.name_nl;
                 const discount = plan.original_price ? getDiscount(plan.original_price, plan.price) : 0;
                 const isBest = plan.duration === 12;
 
@@ -222,7 +222,7 @@ export default function MultiEcransClient() {
                       {plan.original_price && (
                         <div className="mb-0.5">
                           <span className={cn('text-sm line-through', isBest ? 'text-white/50' : 'text-text-muted')}>
-                            {formatPrice(plan.original_price)} CHF
+                            {formatPrice(plan.original_price)} {PRICE_CURRENCY}
                           </span>
                         </div>
                       )}
@@ -231,12 +231,12 @@ export default function MultiEcransClient() {
                           {formatPrice(plan.price)}
                         </span>
                         <span className={cn('text-sm font-medium', isBest ? 'text-white/70' : 'text-text-muted')}>
-                          CHF
+                          {PRICE_CURRENCY}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <span className={cn('text-xs', isBest ? 'text-white/60' : 'text-text-muted')}>
-                          {getMonthlyPrice(plan.price, plan.duration)} CHF{pt('perMonth')}
+                          {getMonthlyPrice(plan.price, plan.duration)} {PRICE_CURRENCY}{pt('perMonth')}
                         </span>
                         {discount > 0 && (
                           <span className={cn(

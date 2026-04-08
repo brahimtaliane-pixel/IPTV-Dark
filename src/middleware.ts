@@ -70,5 +70,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/(fr|de)/:path*', '/((?!api|_next|_vercel|images|admin|geo-blocked|.*\\..*).*)'],
+  matcher: ['/', '/(nl)/:path*', '/((?!api|_next|_vercel|images|admin|geo-blocked|.*\\..*).*)'],
 };

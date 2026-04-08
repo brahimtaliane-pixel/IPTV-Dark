@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS plans (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   slug VARCHAR(255) UNIQUE NOT NULL,
   duration INTEGER NOT NULL, -- months
-  price DECIMAL(10,2) NOT NULL, -- CHF
+  price DECIMAL(10,2) NOT NULL, -- EUR
   original_price DECIMAL(10,2),
   devices INTEGER DEFAULT 1,
   features TEXT[] DEFAULT '{}',

@@ -1,36 +1,42 @@
 // ============================================================
-// IPTV Suisse - Constants & Configuration
+// IPTV Nederland - Constants & Configuration
 // ============================================================
 
 export const SITE_CONFIG = {
-  name: 'Meilleur IPTV Suisse',
-  domain: 'meilleur.iptv-suisse.com',
-  url: 'https://meilleur.iptv-suisse.com',
-  email: 'contact@meilleur.iptv-suisse.com',
+  name: 'IPTV Nederland',
+  domain: 'iptv-nederland.com',
+  url: 'https://iptv-nederland.com',
+  email: 'contact@iptv-nederland.com',
   // TODO: Replace with real phone number before go-live
-  phone: '+41 XX XXX XX XX',
+  phone: '+31 XX XXX XX XX',
   // TODO: Replace with real WhatsApp number before go-live
-  whatsapp: 'https://wa.me/41XXXXXXXXX',
-  defaultLocale: 'fr' as const,
-  locales: ['fr', 'de'] as const,
+  whatsapp: 'https://wa.me/31XXXXXXXXX',
+  defaultLocale: 'nl' as const,
+  locales: ['nl'] as const,
 } as const;
 
-// City pages for internal linking & SEO
-export const CITIES = [
-  'geneve', 'zurich', 'lausanne', 'bern', 'basel',
-  'winterthur', 'st-gallen', 'lugano', 'biel', 'luzern',
-  'fribourg', 'neuchatel', 'thun',
-] as const;
+/** ISO 4217 — plan prices, UI labels, and JSON-LD offers */
+export const PRICE_CURRENCY = 'EUR' as const;
 
+/** Schema.org LocalBusiness priceRange (min–max from PLANS) */
+export const SCHEMA_PRICE_RANGE = 'EUR 35.99 - EUR 179.99' as const;
+
+// City slugs live in `./nl-city-slugs` (small file — safe for Client Components)
+export { CITIES, NL_CITY_SLUGS_ORDERED, NL_CITY_SLUGS } from './nl-city-slugs';
+
+/** Hero & stat strip — channels = live TV; movies = films + series (VOD) combined */
 export const STATS = {
-  channels: '37,000+',
-  movies: '40,000+',
-  series: '17,000+',
+  channels: '30,000+',
+  movies: '170,000+',
+  series: '170,000+',
   uptime: '99.9%',
   customers: '37,000+',
   supportHours: '24/7',
   activationTime: '2h',
 } as const;
+
+/** Passed from Server Components into client city pages so stat text always matches SSR (avoids hydration drift). */
+export type SiteStatsSnapshot = Pick<typeof STATS, 'channels' | 'movies' | 'uptime' | 'supportHours'>;
 
 // Plans data — all 12 plans from WordPress, grouped by device count
 export const PLANS = [
@@ -46,9 +52,9 @@ export const PLANS = [
     is_active: true,
     payment_link: 'https://iptvsuisse.ch/standard',
     image: '/images/plans/abonnement-iptv-3-mois.png',
-    name_fr: 'Abonnement IPTV 3 Mois',
+    name_nl: 'IPTV-abonnement 3 maanden',
     name_de: 'IPTV Abo 3 Monate',
-    description_fr: 'Idéal pour découvrir notre service premium',
+    description_nl: 'Ideaal om onze premium service uit te proberen',
     description_de: 'Ideal zum Entdecken unseres Premium-Service',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -64,9 +70,9 @@ export const PLANS = [
     is_active: true,
     payment_link: 'https://iptvsuisse.ch/express',
     image: '/images/plans/abonnement-iptv-6-mois.png',
-    name_fr: 'Abonnement IPTV 6 Mois',
+    name_nl: 'IPTV-abonnement 6 maanden',
     name_de: 'IPTV Abo 6 Monate',
-    description_fr: "L'équilibre parfait entre durée et prix",
+    description_nl: 'De beste balans tussen looptijd en prijs',
     description_de: 'Die perfekte Balance zwischen Dauer und Preis',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -82,9 +88,9 @@ export const PLANS = [
     is_active: true,
     payment_link: 'https://supremeiptv.ch/Premium',
     image: '/images/plans/abonnement-iptv-12-mois.png',
-    name_fr: 'Abonnement IPTV 12 Mois',
+    name_nl: 'IPTV-abonnement 12 maanden',
     name_de: 'IPTV Abo 12 Monate',
-    description_fr: 'Notre meilleur rapport qualité-prix — Recommandé',
+    description_nl: 'Onze beste prijs-kwaliteit — aanbevolen',
     description_de: 'Unser bestes Preis-Leistungs-Verhältnis — Empfohlen',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     created_at: new Date().toISOString(),
@@ -101,9 +107,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/2-ecrans-3-mois.png',
-    name_fr: '2 Écrans 3 Mois',
+    name_nl: '2 schermen — 3 maanden',
     name_de: '2 Bildschirme 3 Monate',
-    description_fr: 'Partagez votre abonnement sur 2 appareils simultanément',
+    description_nl: 'Deel je abonnement op 2 apparaten tegelijk',
     description_de: 'Teilen Sie Ihr Abo auf 2 Geräten gleichzeitig',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -119,9 +125,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/2-ecrans-6-mois.png',
-    name_fr: '2 Écrans 6 Mois',
+    name_nl: '2 schermen — 6 maanden',
     name_de: '2 Bildschirme 6 Monate',
-    description_fr: '6 mois de streaming sur 2 écrans',
+    description_nl: 'Zes maanden streamen op twee schermen',
     description_de: '6 Monate Streaming auf 2 Bildschirmen',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -137,9 +143,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/2-ecrans-12-mois.png',
-    name_fr: '2 Écrans 12 Mois',
+    name_nl: '2 schermen — 12 maanden',
     name_de: '2 Bildschirme 12 Monate',
-    description_fr: 'Le meilleur prix pour 2 écrans — 1 an complet',
+    description_nl: 'Beste prijs voor twee schermen — een vol jaar',
     description_de: 'Bester Preis für 2 Bildschirme — 1 ganzes Jahr',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     created_at: new Date().toISOString(),
@@ -156,9 +162,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/3-ecrans-3-mois.png',
-    name_fr: '3 Écrans 3 Mois',
+    name_nl: '3 schermen — 3 maanden',
     name_de: '3 Bildschirme 3 Monate',
-    description_fr: 'Pour toute la famille — 3 appareils simultanés',
+    description_nl: 'Voor het hele gezin — drie apparaten tegelijk',
     description_de: 'Für die ganze Familie — 3 gleichzeitige Geräte',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -174,9 +180,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/3-ecrans-6-mois.png',
-    name_fr: '3 Écrans 6 Mois',
+    name_nl: '3 schermen — 6 maanden',
     name_de: '3 Bildschirme 6 Monate',
-    description_fr: '6 mois pour 3 écrans — idéal pour les familles',
+    description_nl: 'Zes maanden voor drie schermen — ideaal voor gezinnen',
     description_de: '6 Monate für 3 Bildschirme — ideal für Familien',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -192,9 +198,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/3-ecrans-12-mois.png',
-    name_fr: '3 Écrans 12 Mois',
+    name_nl: '3 schermen — 12 maanden',
     name_de: '3 Bildschirme 12 Monate',
-    description_fr: '1 an complet pour 3 écrans — meilleur prix familial',
+    description_nl: 'Een vol jaar voor drie schermen — beste gezinsdeal',
     description_de: '1 ganzes Jahr für 3 Bildschirme — bester Familienpreis',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     created_at: new Date().toISOString(),
@@ -211,9 +217,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/4-ecrans-3-mois.png',
-    name_fr: '4 Écrans 3 Mois',
+    name_nl: '4 schermen — 3 maanden',
     name_de: '4 Bildschirme 3 Monate',
-    description_fr: 'Maximum de connexions — 4 appareils simultanés',
+    description_nl: 'Maximaal parallel — vier apparaten tegelijk',
     description_de: 'Maximale Verbindungen — 4 gleichzeitige Geräte',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -229,9 +235,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/4-ecrans-6-mois.png',
-    name_fr: '4 Écrans 6 Mois',
+    name_nl: '4 Écrans 6 Mois',
     name_de: '4 Bildschirme 6 Monate',
-    description_fr: '6 mois sur 4 écrans pour toute la maison',
+    description_nl: '6 mois sur 4 écrans pour toute la maison',
     description_de: '6 Monate auf 4 Bildschirmen für das ganze Haus',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
@@ -247,9 +253,9 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/4-ecrans-12-mois.png',
-    name_fr: '4 Écrans 12 Mois',
+    name_nl: '4 schermen — 12 maanden',
     name_de: '4 Bildschirme 12 Monate',
-    description_fr: 'Offre ultime — 4 écrans pendant 1 an complet',
+    description_nl: 'Topdeal — vier schermen voor een vol jaar',
     description_de: 'Ultimatives Angebot — 4 Bildschirme für 1 ganzes Jahr',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     created_at: new Date().toISOString(),

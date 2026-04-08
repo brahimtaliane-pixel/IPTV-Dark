@@ -11,21 +11,35 @@ import FAQ from '@/components/sections/FAQ';
 import CityLinks from '@/components/sections/CityLinks';
 import CTA from '@/components/sections/CTA';
 import JsonLd from '@/components/sections/JsonLd';
+import { getPlans, selectHomePricingPlans } from '@/lib/get-plans';
+import { STATS } from '@/lib/constants';
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
+/** Always resolve plans at request time (DB prices), never a stale prerender vs client snapshot */
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const plans = await getPlans();
+  const homePricingPlans = selectHomePricingPlans(plans);
 
   return (
     <>
-      <JsonLd locale={locale} />
-      <Hero />
+      <JsonLd locale={locale} plans={plans} />
+      <Hero
+        statValues={{
+          channels: STATS.channels,
+          movies: STATS.movies,
+          uptime: STATS.uptime,
+          supportHours: STATS.supportHours,
+        }}
+      />
       <Features />
-      <Pricing />
+      <Pricing plans={homePricingPlans} />
       <MultiScreenBanner />
       <DeviceCompatibility />
       <HowItWorks />

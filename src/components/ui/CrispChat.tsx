@@ -25,7 +25,7 @@ export default function CrispChat() {
 
     // Set runtime config BEFORE loading the script — this is the official way
     window.CRISP_RUNTIME_CONFIG = {
-      locale: 'fr',
+      locale: 'nl',
       position: 'left',
     };
 

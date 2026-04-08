@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
 import { sendPaymentLinkEmail, sendAdminNotification } from '@/lib/resend';
-import { PLANS } from '@/lib/constants';
+import { PLANS as STATIC_PLANS } from '@/lib/constants';
 import { formatPrice } from '@/lib/utils';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, plan_id, plan_name, locale = 'fr' } = body;
+    const { name, email, phone, plan_id, plan_name, locale = 'nl' } = body;
 
     // Validate required fields
     if (!name || !email || !phone || !plan_id || !plan_name) {
@@ -29,11 +29,9 @@ export async function POST(request: NextRequest) {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
     const userAgent = request.headers.get('user-agent') || 'unknown';
 
-    // Find the plan in hardcoded constants for price/duration fallback
-    const plan = PLANS.find((p) => p.id === plan_id);
-    const planPrice = plan ? formatPrice(plan.price) : '0';
-    const planDuration = plan?.duration || 0;
-    let paymentLink = plan?.payment_link || '';
+    let planPrice = '0';
+    let planDuration = 0;
+    let paymentLink = '';
 
     let leadId = crypto.randomUUID();
 
@@ -41,17 +39,22 @@ export async function POST(request: NextRequest) {
     try {
       const supabase = createServerClient();
 
-      // Fetch the plan from DB to get the latest payment_link
-      if (plan?.slug) {
-        const { data: dbPlan } = await supabase
-          .from('plans')
-          .select('payment_link')
-          .eq('slug', plan.slug)
-          .eq('is_active', true)
-          .single();
+      const { data: dbPlan } = await supabase
+        .from('plans')
+        .select('price, duration, payment_link, slug')
+        .eq('id', plan_id)
+        .maybeSingle();
 
-        if (dbPlan?.payment_link) {
-          paymentLink = dbPlan.payment_link;
+      if (dbPlan) {
+        planPrice = formatPrice(Number(dbPlan.price));
+        planDuration = dbPlan.duration;
+        paymentLink = dbPlan.payment_link ?? '';
+      } else {
+        const fallback = STATIC_PLANS.find((p) => String(p.id) === String(plan_id));
+        if (fallback) {
+          planPrice = formatPrice(fallback.price);
+          planDuration = fallback.duration;
+          paymentLink = fallback.payment_link ?? '';
         }
       }
 

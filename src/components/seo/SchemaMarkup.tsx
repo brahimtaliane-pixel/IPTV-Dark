@@ -1,4 +1,6 @@
-import { SITE_CONFIG, PLANS } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE } from '@/lib/constants';
+import { NL_CITY_SLUGS } from '@/lib/nl-city-slugs';
+import type { SitePlan } from '@/lib/get-plans';
 import { CITIES_DATA } from '@/lib/cities';
 import { localeUrl } from '@/lib/utils';
 
@@ -37,17 +39,14 @@ const PRICE_VALID_UNTIL = '2026-12-31';
 // ─── Product Schema for Plan Detail ────────────────────────
 export function PlanProductSchema({
   locale,
-  slug,
+  plan,
 }: {
   locale: string;
-  slug: string;
+  plan: SitePlan;
 }) {
-  const plan = PLANS.find((p) => p.slug === slug);
-  if (!plan) return null;
-
-  const isFr = locale === 'fr';
-  const name = isFr ? plan.name_fr : plan.name_de;
-  const description = isFr ? plan.description_fr : plan.description_de;
+  const name = plan.name_nl;
+  const description = plan.description_nl;
+  const slug = plan.slug;
 
   const schema = {
     '@context': 'https://schema.org',
@@ -62,7 +61,7 @@ export function PlanProductSchema({
     offers: {
       '@type': 'Offer',
       price: plan.price,
-      priceCurrency: 'CHF',
+      priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
       priceValidUntil: PRICE_VALID_UNTIL,
       seller: {
@@ -123,6 +122,19 @@ const CITY_GEO: Record<string, { lat: string; lng: string }> = {
   fribourg: { lat: '46.8065', lng: '7.1620' },
   neuchatel: { lat: '46.9900', lng: '6.9293' },
   thun: { lat: '46.7580', lng: '7.6280' },
+  amsterdam: { lat: '52.3676', lng: '4.9041' },
+  rotterdam: { lat: '51.9244', lng: '4.4777' },
+  'den-haag': { lat: '52.0705', lng: '4.3007' },
+  utrecht: { lat: '52.0907', lng: '5.1214' },
+  eindhoven: { lat: '51.4416', lng: '5.4697' },
+  groningen: { lat: '53.2194', lng: '6.5665' },
+  tilburg: { lat: '51.5555', lng: '5.0913' },
+  almere: { lat: '52.3508', lng: '5.2647' },
+  maastricht: { lat: '50.8513', lng: '5.6909' },
+  haarlem: { lat: '52.3874', lng: '4.6462' },
+  arnhem: { lat: '51.9851', lng: '5.8987' },
+  zwolle: { lat: '52.5168', lng: '6.0830' },
+  breda: { lat: '51.5719', lng: '4.7683' },
 };
 
 export function CitySchema({
@@ -136,8 +148,6 @@ export function CitySchema({
   const geo = CITY_GEO[citySlug];
   if (!city || !geo) return null;
 
-  const isFr = locale === 'fr';
-
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
@@ -145,12 +155,12 @@ export function CitySchema({
     url: localeUrl(locale, `/iptv-${citySlug}`),
     telephone: SITE_CONFIG.phone,
     email: SITE_CONFIG.email,
-    description: isFr ? city.meta_fr.description : city.meta_de.description,
+    description: city.meta_fr.description,
     address: {
       '@type': 'PostalAddress',
       addressLocality: city.name,
       addressRegion: city.canton,
-      addressCountry: 'CH',
+      addressCountry: NL_CITY_SLUGS.has(citySlug) ? 'NL' : 'CH',
     },
     geo: {
       '@type': 'GeoCoordinates',
@@ -163,7 +173,7 @@ export function CitySchema({
       opens: '00:00',
       closes: '23:59',
     },
-    priceRange: 'CHF 35.99 - CHF 179.99',
+    priceRange: SCHEMA_PRICE_RANGE,
     areaServed: {
       '@type': 'City',
       name: city.name,
@@ -179,15 +189,20 @@ export function CitySchema({
 }
 
 // ─── Multi-Ecrans Product Schema ───────────────────────────
-export function MultiScreenSchema({ locale }: { locale: string }) {
-  const isFr = locale === 'fr';
-  const multiPlans = PLANS.filter((p) => p.devices > 1);
+export function MultiScreenSchema({
+  locale,
+  plans,
+}: {
+  locale: string;
+  plans: SitePlan[];
+}) {
+  const multiPlans = plans.filter((p) => p.devices > 1);
 
   const schemas = multiPlans.map((plan) => ({
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: isFr ? plan.name_fr : plan.name_de,
-    description: isFr ? plan.description_fr : plan.description_de,
+    name: plan.name_nl,
+    description: plan.description_nl,
     image: `${SITE_CONFIG.url}${plan.image}`,
     brand: {
       '@type': 'Brand',
@@ -196,7 +211,7 @@ export function MultiScreenSchema({ locale }: { locale: string }) {
     offers: {
       '@type': 'Offer',
       price: plan.price,
-      priceCurrency: 'CHF',
+      priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
       priceValidUntil: PRICE_VALID_UNTIL,
       url: localeUrl(locale, `/plans/${plan.slug}`),

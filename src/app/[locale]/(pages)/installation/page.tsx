@@ -8,23 +8,20 @@ import type { Metadata } from 'next';
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const isFr = locale === 'fr';
-  const title = isFr
-    ? 'Guide d\'Installation IPTV — Tous les Appareils'
-    : 'IPTV Installationsanleitung — Alle Geräte';
-  const description = isFr
-    ? 'Installez IPTV Suisse sur Smart TV, Android, iOS, Fire Stick, MAG et plus. Guide étape par étape pour tous les appareils.'
-    : 'Installieren Sie IPTV Schweiz auf Smart TV, Android, iOS, Fire Stick, MAG und mehr. Schritt-für-Schritt-Anleitung für alle Geräte.';
+  await params;
+  const title = 'IPTV-installatiegids — alle apparaten';
+  const description =
+    'Installeer IPTV Nederland op Smart TV, Android, iOS, Fire Stick, MAG en meer. Stap-voor-stap voor elk apparaat.';
+  const url = `${SITE_CONFIG.url}/installation`;
   return {
     title,
     description,
     openGraph: {
       title,
       description,
-      url: isFr ? `${SITE_CONFIG.url}/installation` : `${SITE_CONFIG.url}/de/installation`,
+      url,
       siteName: SITE_CONFIG.name,
-      locale: isFr ? 'fr_CH' : 'de_CH',
+      locale: 'nl_NL',
       type: 'article',
     },
     twitter: {
@@ -33,37 +30,80 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: isFr ? `${SITE_CONFIG.url}/installation` : `${SITE_CONFIG.url}/de/installation`,
+      canonical: url,
       languages: {
-        'fr-CH': `${SITE_CONFIG.url}/installation`,
-        'de-CH': `${SITE_CONFIG.url}/de/installation`,
-        'x-default': `${SITE_CONFIG.url}/installation`,
+        'nl-NL': url,
+        'x-default': url,
       },
     },
   };
 }
 
+const DEVICE_STEPS: Record<string, string[]> = {
+  'Smart TV': [
+    'Open de smart hub of app store',
+    'Zoek naar de IPTV-app',
+    'Installeer en open',
+    'Voer je inloggegevens in',
+    'Klaar — geniet van je zenders',
+  ],
+  'Android / iOS': [
+    'Download de app uit de store',
+    'Open de applicatie',
+    'Configureer met je M3U-link',
+    'Selecteer je zenders',
+    'Stream waar je wilt',
+  ],
+  'Windows / Mac': [
+    'Download een IPTV-speler',
+    'Installeer de software',
+    'Voeg je M3U-playlist toe',
+    'Controleer de instellingen',
+    'Start met kijken',
+  ],
+  'Fire Stick': [
+    'Ga naar Instellingen > Apparaat',
+    'Schakel onbekende bronnen in',
+    'Installeer Downloader',
+    'Download de IPTV-app',
+    'Voer je inloggegevens in',
+  ],
+  'MAG Box': [
+    'Verbind met het netwerk',
+    'Open het portaalmenu',
+    'Ga naar systeeminstellingen',
+    'Voer de portal-URL in',
+    'Sla op en herstart indien nodig',
+  ],
+  'Formuler / Enigma2': [
+    'Verbind met internet',
+    'Open netwerkinstellingen',
+    'Configureer het IPTV-portaal',
+    'Voer je gebruikersgegevens in',
+    'Geniet van stabiele streams',
+  ],
+};
+
 export default async function InstallationPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'installation' });
-  const isFr = locale === 'fr';
 
   const devices = [
-    { icon: Tv, name: 'Smart TV', brands: 'Samsung, LG, Sony, Philips', steps: isFr ? ['Ouvrez le Smart Hub ou App Store', 'Recherchez l\'application IPTV', 'Installez et ouvrez', 'Entrez vos identifiants', 'Profitez !'] : ['Smart Hub oder App Store öffnen', 'IPTV-App suchen', 'Installieren und öffnen', 'Zugangsdaten eingeben', 'Geniessen!'] },
-    { icon: Smartphone, name: 'Android / iOS', brands: 'iPhone, Samsung, Huawei', steps: isFr ? ['Téléchargez l\'app', 'Ouvrez l\'application', 'Configurez avec votre lien M3U', 'Sélectionnez vos chaînes', 'Regardez !'] : ['App herunterladen', 'App öffnen', 'Mit M3U-Link konfigurieren', 'Kanäle auswählen', 'Schauen!'] },
-    { icon: Monitor, name: 'Windows / Mac', brands: 'PC, MacBook, iMac', steps: isFr ? ['Téléchargez le lecteur IPTV', 'Installez le logiciel', 'Ajoutez votre playlist M3U', 'Configurez', 'Commencez !'] : ['IPTV-Player herunterladen', 'Software installieren', 'M3U-Playlist hinzufügen', 'Konfigurieren', 'Loslegen!'] },
-    { icon: Download, name: 'Fire Stick', brands: 'Fire TV Stick, Cube', steps: isFr ? ['Paramètres > Appareil', 'Activez sources inconnues', 'Installez Downloader', 'Téléchargez l\'app IPTV', 'Entrez vos identifiants'] : ['Einstellungen > Gerät', 'Unbekannte Quellen aktivieren', 'Downloader installieren', 'IPTV-App herunterladen', 'Zugangsdaten eingeben'] },
-    { icon: Tablet, name: 'MAG Box', brands: 'MAG 250, 254, 322, 520', steps: isFr ? ['Connectez au réseau', 'Accédez au portail', 'Paramètres système', 'Entrez l\'URL du portail', 'Sauvegardez'] : ['Mit Netzwerk verbinden', 'Portal aufrufen', 'Systemeinstellungen', 'Portal-URL eingeben', 'Speichern'] },
-    { icon: Wifi, name: 'Formuler / Enigma2', brands: 'Formuler Z+, Z8, Dreambox', steps: isFr ? ['Connectez à Internet', 'Paramètres réseau', 'Configurez le portail IPTV', 'Entrez les identifiants', 'Profitez !'] : ['Mit Internet verbinden', 'Netzwerkeinstellungen', 'IPTV-Portal konfigurieren', 'Anmeldedaten eingeben', 'Geniessen!'] },
-  ];
+    { icon: Tv, name: 'Smart TV', brands: 'Samsung, LG, Sony, Philips' },
+    { icon: Smartphone, name: 'Android / iOS', brands: 'iPhone, Samsung, Huawei' },
+    { icon: Monitor, name: 'Windows / Mac', brands: 'PC, MacBook, iMac' },
+    { icon: Download, name: 'Fire Stick', brands: 'Fire TV Stick, Cube' },
+    { icon: Tablet, name: 'MAG Box', brands: 'MAG 250, 254, 322, 520' },
+    { icon: Wifi, name: 'Formuler / Enigma2', brands: 'Formuler Z+, Z8, Dreambox' },
+  ].map((d) => ({ ...d, steps: DEVICE_STEPS[d.name] ?? [] }));
 
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: isFr ? 'Accueil' : 'Startseite', url: localeUrl(locale) },
-          { name: isFr ? 'Installation' : 'Installation', url: localeUrl(locale, '/installation') },
+          { name: 'Home', url: localeUrl(locale) },
+          { name: 'Installatie', url: localeUrl(locale, '/installation') },
         ]}
       />
       <div className="pt-28 pb-20 bg-white">

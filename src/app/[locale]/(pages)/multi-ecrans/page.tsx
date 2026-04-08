@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG } from '@/lib/constants';
+import { getPlans } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
 import { BreadcrumbSchema, MultiScreenSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import MultiEcransClient from './MultiEcransClient';
@@ -9,30 +10,34 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const isFr = locale === 'fr';
+  await params;
 
-  const title = isFr
-    ? 'Forfaits Multi-Écrans IPTV Suisse — 2, 3 ou 4 Écrans Simultanés'
-    : 'Multi-Bildschirm IPTV Schweiz Pakete — 2, 3 oder 4 Bildschirme';
-
-  const description = isFr
-    ? 'Abonnements IPTV multi-écrans en Suisse. Regardez sur 2, 3 ou 4 appareils simultanément. +15\'000 chaînes HD/4K, replay et VOD inclus. Dès 53.99 CHF.'
-    : 'Multi-Bildschirm IPTV-Abos in der Schweiz. Schauen Sie auf 2, 3 oder 4 Geräten gleichzeitig. +15\'000 HD/4K-Kanäle, Replay und VOD inklusive. Ab 53.99 CHF.';
+  const multiUrl = `${SITE_CONFIG.url}/multi-ecrans`;
+  const title =
+    'IPTV multi-scherm — 2, 3 of 4 schermen tegelijk | IPTV Nederland';
+  const description =
+    'IPTV Nederland multi-scherm pakketten: kijk op 2, 3 of 4 apparaten tegelijk. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, 7 dagen replay. Vanaf 53,99 EUR.';
 
   return {
     title,
     description,
-    keywords: isFr
-      ? ['IPTV multi-écrans', 'IPTV Suisse multi-écrans', 'IPTV famille Suisse', 'abonnement IPTV 2 écrans', 'IPTV 4 écrans']
-      : ['IPTV Multi-Bildschirm', 'IPTV Schweiz Multi-Bildschirm', 'IPTV Familie Schweiz', 'IPTV Abo 2 Bildschirme', 'IPTV 4 Bildschirme'],
+    keywords: [
+      'iptv multi scherm',
+      'IPTV Nederland multi scherm',
+      'iptv gezin',
+      'iptv 2 schermen',
+      'iptv 4 schermen',
+      'iptv meerdere apparaten',
+    ],
     openGraph: {
       title,
       description,
-      url: locale === 'fr' ? `${SITE_CONFIG.url}/multi-ecrans` : `${SITE_CONFIG.url}/de/multi-ecrans`,
+      url: multiUrl,
       siteName: SITE_CONFIG.name,
-      locale: isFr ? 'fr_CH' : 'de_CH',
+      locale: 'nl_NL',
       type: 'website',
     },
     twitter: {
@@ -41,11 +46,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: locale === 'fr' ? `${SITE_CONFIG.url}/multi-ecrans` : `${SITE_CONFIG.url}/de/multi-ecrans`,
+      canonical: multiUrl,
       languages: {
-        'fr-CH': `${SITE_CONFIG.url}/multi-ecrans`,
-        'de-CH': `${SITE_CONFIG.url}/de/multi-ecrans`,
-        'x-default': `${SITE_CONFIG.url}/multi-ecrans`,
+        'nl-NL': multiUrl,
+        'x-default': multiUrl,
       },
     },
   };
@@ -54,34 +58,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function MultiEcransPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const plans = await getPlans();
 
-  const isFr = locale === 'fr';
-
-  const multiEcransFaqs = isFr
-    ? [
-        { question: 'Comment fonctionne le multi-écrans ?', answer: 'Avec un forfait multi-écrans, vous recevez un abonnement qui permet de se connecter simultanément sur 2, 3 ou 4 appareils. Chaque écran peut regarder un programme différent en même temps.' },
-        { question: 'Puis-je utiliser différents types d\'appareils ?', answer: 'Oui, vous pouvez mélanger les appareils : Smart TV, smartphone, tablette, ordinateur, Fire Stick, MAG — sans restriction.' },
-        { question: 'La qualité est-elle la même sur tous les écrans ?', answer: 'Oui, chaque écran bénéficie de la même qualité HD et 4K, du même catalogue de 15\'000+ chaînes, VOD et replay.' },
-        { question: 'Le multi-écrans inclut-il le replay et la VOD ?', answer: 'Oui, toutes les fonctionnalités sont incluses sur chaque écran : replay jusqu\'à 7 jours, VOD avec 40\'000+ films et 17\'000+ séries.' },
-      ]
-    : [
-        { question: 'Wie funktioniert Multi-Bildschirm?', answer: 'Mit einem Multi-Bildschirm-Paket erhalten Sie ein Abonnement für gleichzeitige Verbindungen auf 2, 3 oder 4 Geräten.' },
-        { question: 'Kann ich verschiedene Gerätetypen verwenden?', answer: 'Ja, Sie können Geräte beliebig mischen: Smart TV, Smartphone, Tablet, Computer, Fire Stick, MAG — ohne Einschränkung.' },
-        { question: 'Ist die Qualität auf allen Bildschirmen gleich?', answer: 'Ja, jeder Bildschirm profitiert von HD- und 4K-Qualität, dem gleichen Katalog mit 15\'000+ Kanälen, VOD und Replay.' },
-        { question: 'Sind Replay und VOD bei Multi-Bildschirm enthalten?', answer: 'Ja, alle Funktionen sind auf jedem Bildschirm enthalten: Replay bis 7 Tage, VOD mit 40\'000+ Filmen und 17\'000+ Serien.' },
-      ];
+  const multiEcransFaqs = [
+    {
+      question: 'Hoe werkt multi-scherm?',
+      answer:
+        'Met een multi-scherm pakket mag je tegelijk inloggen op 2, 3 of 4 apparaten. Elk scherm kan iets anders tonen, zonder kwaliteitsverlies.',
+    },
+    {
+      question: 'Kan ik verschillende soorten apparaten gebruiken?',
+      answer:
+        'Ja: mix Smart TV, telefoon, tablet en pc zoals je wilt — Fire Stick, MAG en meer worden ondersteund.',
+    },
+    {
+      question: 'Is de kwaliteit op elk scherm hetzelfde?',
+      answer:
+        'Ja: overal HD en 4K, hetzelfde aanbod van meer dan 30.000 zenders, 170.000+ films en series on demand en replay.',
+    },
+    {
+      question: 'Zijn replay en VOD op elk scherm inbegrepen?',
+      answer:
+        'Ja op elk scherm: replay tot 7 dagen terug, grote VOD-bibliotheek, EPG en updates.',
+    },
+  ];
 
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: isFr ? 'Accueil' : 'Startseite', url: localeUrl(locale) },
-          { name: isFr ? 'Multi-Écrans' : 'Multi-Bildschirm', url: localeUrl(locale, '/multi-ecrans') },
+          { name: 'Home', url: localeUrl(locale) },
+          { name: 'Multi-scherm', url: localeUrl(locale, '/multi-ecrans') },
         ]}
       />
-      <MultiScreenSchema locale={locale} />
+      <MultiScreenSchema locale={locale} plans={plans} />
       <FAQSchema faqs={multiEcransFaqs} />
-      <MultiEcransClient />
+      <MultiEcransClient plans={plans} />
     </>
   );
 }

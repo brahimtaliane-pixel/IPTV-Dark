@@ -1,14 +1,12 @@
 import { ImageResponse } from 'next/og';
+import { SITE_CONFIG, PRICE_CURRENCY } from '@/lib/constants';
 
 export const runtime = 'edge';
-export const alt = 'IPTV Suisse — chaînes HD/4K, VOD et replay';
+export const alt = 'IPTV Nederland — zenders HD/4K, VOD en replay';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default async function OGImage({ params }: { params: { locale: string } }) {
-  const locale = params.locale;
-  const isFr = locale === 'fr';
-
+export default async function OGImage() {
   return new ImageResponse(
     (
       <div
@@ -24,7 +22,6 @@ export default async function OGImage({ params }: { params: { locale: string } }
           position: 'relative',
         }}
       >
-        {/* Red accent bar at top */}
         <div
           style={{
             position: 'absolute',
@@ -36,36 +33,6 @@ export default async function OGImage({ params }: { params: { locale: string } }
           }}
         />
 
-        {/* Swiss cross background watermark */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 300,
-            height: 300,
-            opacity: 0.04,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <div style={{
-            width: 300,
-            height: 300,
-            background: '#E31937',
-            borderRadius: 30,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 200,
-            color: 'white',
-            fontWeight: 900,
-          }}>+</div>
-        </div>
-
-        {/* Logo area */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
           <div
             style={{
@@ -90,11 +57,10 @@ export default async function OGImage({ params }: { params: { locale: string } }
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
             <span style={{ fontSize: 56, fontWeight: 900, color: '#ffffff' }}>IPTV</span>
-            <span style={{ fontSize: 56, fontWeight: 900, color: '#E31937' }}>SUISSE</span>
+            <span style={{ fontSize: 56, fontWeight: 900, color: '#E31937' }}>NEDERLAND</span>
           </div>
         </div>
 
-        {/* Title */}
         <div
           style={{
             fontSize: 40,
@@ -104,12 +70,9 @@ export default async function OGImage({ params }: { params: { locale: string } }
             textAlign: 'center',
           }}
         >
-          {isFr
-            ? 'Service IPTV en Suisse'
-            : 'IPTV-Service in der Schweiz'}
+          IPTV-service in Nederland
         </div>
 
-        {/* Subtitle */}
         <div
           style={{
             fontSize: 22,
@@ -119,12 +82,9 @@ export default async function OGImage({ params }: { params: { locale: string } }
             marginBottom: 36,
           }}
         >
-          {isFr
-            ? '37 000+ chaînes HD/4K • 40 000+ films • Replay & VOD • Support 24/7'
-            : '37 000+ HD/4K-Kanäle • 40 000+ Filme • Replay & VOD • 24/7 Support'}
+          30.000+ zenders HD/4K • 170.000+ films en series • Replay & VOD • Support 24/7
         </div>
 
-        {/* Price badge */}
         <div
           style={{
             display: 'flex',
@@ -138,10 +98,9 @@ export default async function OGImage({ params }: { params: { locale: string } }
             fontWeight: 700,
           }}
         >
-          {isFr ? 'Dès 35.99 CHF' : 'Ab 35.99 CHF'}
+          {`Vanaf 35,99 ${PRICE_CURRENCY}`}
         </div>
 
-        {/* Bottom URL */}
         <div
           style={{
             position: 'absolute',
@@ -151,7 +110,7 @@ export default async function OGImage({ params }: { params: { locale: string } }
             letterSpacing: 1,
           }}
         >
-          meilleur.iptv-suisse.com
+          {SITE_CONFIG.domain}
         </div>
       </div>
     ),

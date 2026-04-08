@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -11,12 +10,6 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import LiveChat from '@/components/ui/LiveChat';
 import VisitorTracker from '@/components/ui/VisitorTracker';
 import GoogleAnalytics from '@/components/ui/GoogleAnalytics';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
 
 type Props = {
   children: React.ReactNode;
@@ -39,17 +32,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       template: `%s | ${SITE_CONFIG.name}`,
     },
     description: meta.description,
-    keywords: locale === 'fr'
-      ? ['iptv suisse', 'abonnement iptv suisse', 'iptv suisse premium', 'iptv suisse 4k', 'iptv chaînes suisses', 'streaming iptv suisse', 'iptv vod suisse', 'iptv replay suisse', 'meilleur iptv suisse', 'tv internet suisse']
-      : ['iptv schweiz', 'iptv schweiz abo', 'iptv schweiz premium', 'iptv schweiz 4k', 'iptv abo schweiz', 'schweizer iptv kanäle', 'iptv streaming schweiz', 'iptv vod schweiz', 'iptv replay schweiz', 'bestes iptv schweiz'],
+    keywords: [
+      'iptv nederland',
+      'iptv abonnement nederland',
+      'iptv premium nederland',
+      'iptv 4k nederland',
+      'iptv streaming nederland',
+      'iptv vod nederland',
+      'iptv replay nederland',
+      'beste iptv nederland',
+      'tv internet nederland',
+    ],
     authors: [{ name: SITE_CONFIG.name }],
     creator: SITE_CONFIG.name,
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: locale === 'fr' ? SITE_CONFIG.url : `${SITE_CONFIG.url}/de`,
+      url: SITE_CONFIG.url,
       siteName: SITE_CONFIG.name,
-      locale: locale === 'fr' ? 'fr_CH' : 'de_CH',
+      locale: 'nl_NL',
       type: 'website',
     },
     twitter: {
@@ -58,10 +59,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: meta.description,
     },
     alternates: {
-      canonical: locale === 'fr' ? SITE_CONFIG.url : `${SITE_CONFIG.url}/de`,
+      canonical: SITE_CONFIG.url,
       languages: {
-        'fr-CH': SITE_CONFIG.url,
-        'de-CH': `${SITE_CONFIG.url}/de`,
+        'nl-NL': SITE_CONFIG.url,
         'x-default': SITE_CONFIG.url,
       },
     },
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as 'fr' | 'de')) {
+  if (!routing.locales.includes(locale as 'nl')) {
     notFound();
   }
 
@@ -90,20 +90,14 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale === 'fr' ? 'fr-CH' : 'de-CH'} className={inter.variable} suppressHydrationWarning>
-      <body className="font-body antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <GoogleAnalytics />
-          <Header />
-          <main className="min-h-screen bg-bg text-text">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppButton />
-          <LiveChat />
-          <VisitorTracker />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <GoogleAnalytics />
+      <Header />
+      <main className="min-h-screen bg-bg text-text">{children}</main>
+      <Footer />
+      <WhatsAppButton />
+      <LiveChat />
+      <VisitorTracker />
+    </NextIntlClientProvider>
   );
 }

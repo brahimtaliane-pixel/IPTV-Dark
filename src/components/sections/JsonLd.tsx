@@ -1,58 +1,55 @@
-import { SITE_CONFIG, PLANS } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
+import type { SitePlan } from '@/lib/get-plans';
 
 interface JsonLdProps {
   locale: string;
+  plans: SitePlan[];
 }
 
-export default function JsonLd({ locale }: JsonLdProps) {
-  const isFr = locale === 'fr';
-
-  // Organization Schema
+export default function JsonLd({ locale, plans }: JsonLdProps) {
+  const prices = plans.map((p) => p.price);
+  const priceRange =
+    prices.length > 0
+      ? `${PRICE_CURRENCY} ${Math.min(...prices)} - ${PRICE_CURRENCY} ${Math.max(...prices)}`
+      : SCHEMA_PRICE_RANGE;
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: SITE_CONFIG.name,
     url: SITE_CONFIG.url,
     logo: `${SITE_CONFIG.url}/logo.svg`,
-    description: isFr
-      ? 'Service IPTV en Suisse — 37 000 chaînes HD/4K, VOD illimité et replay 7 jours sur tous vos appareils.'
-      : 'IPTV-Service in der Schweiz — 37 000 HD/4K-Kanäle, unbegrenztes VOD und 7 Tage Replay auf allen Geräten.',
+    description:
+      'IPTV-service in Nederland — 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay op al je apparaten.',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: SITE_CONFIG.phone,
       contactType: 'customer service',
-      availableLanguage: ['French', 'German'],
-      areaServed: 'CH',
+      availableLanguage: ['Dutch'],
+      areaServed: 'NL',
     },
     address: {
       '@type': 'PostalAddress',
-      addressCountry: 'CH',
+      addressCountry: 'NL',
     },
     sameAs: [],
   };
 
-  // WebSite Schema for sitelinks searchbox
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_CONFIG.name,
     url: SITE_CONFIG.url,
-    inLanguage: isFr ? 'fr-CH' : 'de-CH',
+    inLanguage: 'nl-NL',
   };
 
-  // Product schemas for each plan.
-  // priceValidUntil is hardcoded (not Date.now()-based) so the SSR output is
-  // deterministic — non-deterministic JSON-LD breaks Vercel's edge cache and
-  // can cause Google "Temporary processing error" on the structured data.
-  // Bump this date manually each quarter.
   const priceValidUntil = '2026-12-31';
 
-  const productSchemas = PLANS.map((plan) => ({
+  const productSchemas = plans.map((plan) => ({
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: isFr ? plan.name_fr : plan.name_de,
-    description: isFr ? plan.description_fr : plan.description_de,
+    name: plan.name_nl,
+    description: plan.description_nl,
     image: `${SITE_CONFIG.url}${plan.image}`,
     brand: {
       '@type': 'Brand',
@@ -61,7 +58,7 @@ export default function JsonLd({ locale }: JsonLdProps) {
     offers: {
       '@type': 'Offer',
       price: plan.price,
-      priceCurrency: 'CHF',
+      priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
       priceValidUntil,
       seller: {
@@ -72,40 +69,21 @@ export default function JsonLd({ locale }: JsonLdProps) {
     },
   }));
 
-  // FAQ Schema
+  const faqPairs = [
+    { q: 'Wat is IPTV Nederland?', a: 'Een internettelevisiedienst met meer dan 30.000 live zenders en 170.000+ films en series on demand in HD en 4K.' },
+    { q: 'Welke apparaten?', a: 'Smart TV, Android, iOS, Windows, Mac, Fire Stick en MAG.' },
+    { q: 'Hoe lang duurt activering?', a: 'Meestal binnen 2 uur na betaling.' },
+    { q: 'Is replay inbegrepen?', a: 'Ja, tot 7 dagen terug in alle pakketten.' },
+    { q: 'Hoe bereik ik support?', a: '24/7 via WhatsApp, e-mail en telefoon.' },
+    { q: 'Meerdere apparaten?', a: 'Standaard één gelijktijdig apparaat; multi-scherm pakketten voor meer.' },
+    { q: 'VPN nodig?', a: 'Meestal niet; optioneel voor privacy.' },
+    { q: 'Welke internetsnelheid?', a: 'Vanaf ca. 10 Mbps voor HD, 25 Mbps voor 4K.' },
+  ];
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: (isFr
-      ? [
-          { q: 'Qu\'est-ce que IPTV Suisse ?', a: 'IPTV Suisse est un service de télévision par internet qui vous donne accès à plus de 37\'000 chaînes TV en direct, 40\'000+ films et 17\'000+ séries en streaming HD et 4K.' },
-          { q: 'Quels appareils sont compatibles ?', a: 'Notre service est compatible avec tous les appareils : Smart TV, Android, iOS, Windows, Mac, Fire Stick et MAG.' },
-          { q: 'Combien de temps prend l\'activation ?', a: 'L\'activation se fait en moins de 2 heures après confirmation du paiement.' },
-          { q: 'Est-ce que le replay est inclus ?', a: 'Oui, la fonction replay est incluse dans tous nos abonnements jusqu\'à 7 jours en arrière.' },
-          { q: 'Comment contacter le support ?', a: 'Notre équipe est disponible 24/7 par WhatsApp, email et téléphone avec réponse garantie en moins de 2 heures.' },
-          { q: 'Puis-je utiliser le service sur plusieurs appareils ?', a: 'Les abonnements standard permettent l\'utilisation sur 1 appareil à la fois. Pour un usage sur plusieurs écrans simultanés, consultez nos offres multi-écrans.' },
-          { q: 'L\'IPTV est-il légal en Suisse ?', a: 'En Suisse, la réception de contenus IPTV est autorisée pour un usage privé. Notre service respecte les réglementations en vigueur et propose un accès à des chaînes légitimes.' },
-          { q: 'Ai-je besoin d\'un VPN pour IPTV ?', a: 'Non, notre service fonctionne parfaitement sans VPN en Suisse. Un VPN est optionnel pour plus de confidentialité.' },
-          { q: 'Quelles chaînes suisses sont disponibles ?', a: 'Accédez à toutes les principales chaînes suisses francophones et germanophones, ainsi que des chaînes sportives, de divertissement et internationales de plus de 50 pays — soit 37\'000+ chaînes au total.' },
-          { q: 'Puis-je regarder le football en direct ?', a: 'Oui ! Accédez aux principales chaînes sportives pour regarder le football, le hockey, le tennis et bien d\'autres sports en direct. Les plus grandes compétitions européennes et suisses sont couvertes.' },
-          { q: 'Quelle vitesse internet est nécessaire ?', a: 'Une connexion de 10 Mbps suffit pour le streaming HD. Pour la 4K, nous recommandons 25 Mbps. Compatible avec Swisscom, Sunrise, Salt et tous les FAI suisses.' },
-          { q: 'Y a-t-il un essai gratuit ?', a: 'Contactez notre support par WhatsApp pour demander un test gratuit de 24h et découvrir la qualité de notre service avant de vous engager.' },
-        ]
-      : [
-          { q: 'Was ist IPTV Schweiz?', a: 'IPTV Schweiz ist ein Internet-TV-Service mit über 37\'000 Live-Kanälen, 40\'000+ Filmen und 17\'000+ Serien in HD und 4K.' },
-          { q: 'Welche Geräte sind kompatibel?', a: 'Unser Service ist mit allen Geräten kompatibel: Smart TV, Android, iOS, Windows, Mac, Fire Stick und MAG.' },
-          { q: 'Wie lange dauert die Aktivierung?', a: 'Die Aktivierung erfolgt in weniger als 2 Stunden nach Zahlungsbestätigung.' },
-          { q: 'Ist Replay enthalten?', a: 'Ja, die Replay-Funktion ist in allen Abonnements bis zu 7 Tage zurück enthalten.' },
-          { q: 'Wie erreiche ich den Support?', a: 'Unser Team ist 24/7 per WhatsApp, E-Mail und Telefon erreichbar mit garantierter Antwort in 2 Stunden.' },
-          { q: 'Kann ich den Service auf mehreren Geräten nutzen?', a: 'Standard-Abonnements ermöglichen die Nutzung auf 1 Gerät gleichzeitig. Für die gleichzeitige Nutzung auf mehreren Bildschirmen, schauen Sie sich unsere Multi-Screen-Angebote an.' },
-          { q: 'Ist IPTV in der Schweiz legal?', a: 'In der Schweiz ist der Empfang von IPTV-Inhalten für den privaten Gebrauch erlaubt. Unser Service hält sich an geltende Vorschriften und bietet Zugang zu legitimen Kanälen.' },
-          { q: 'Brauche ich ein VPN für IPTV?', a: 'Nein, unser Service funktioniert in der Schweiz perfekt ohne VPN. Ein VPN ist optional für mehr Privatsphäre.' },
-          { q: 'Welche Schweizer Kanäle sind verfügbar?', a: 'Zugang zu allen wichtigen Schweizer deutsch- und französischsprachigen Kanälen sowie Sport-, Unterhaltungs- und internationale Kanäle aus über 50 Ländern — insgesamt 37\'000+ Kanäle.' },
-          { q: 'Kann ich Fussball live schauen?', a: 'Ja! Zugang zu den wichtigsten Sportkanälen für Fussball, Hockey, Tennis und viele weitere Sportarten live. Die grössten europäischen und Schweizer Wettbewerbe sind abgedeckt.' },
-          { q: 'Welche Internetgeschwindigkeit wird benötigt?', a: 'Eine Verbindung von 10 Mbit/s reicht für HD-Streaming. Für 4K empfehlen wir 25 Mbit/s. Kompatibel mit Swisscom, Sunrise, Salt und allen Schweizer ISPs.' },
-          { q: 'Gibt es einen kostenlosen Test?', a: 'Kontaktieren Sie unseren Support per WhatsApp für einen kostenlosen 24h-Test und entdecken Sie die Qualität unseres Services bevor Sie sich entscheiden.' },
-        ]
-    ).map(({ q, a }) => ({
+    mainEntity: faqPairs.map(({ q, a }) => ({
       '@type': 'Question',
       name: q,
       acceptedAnswer: {
@@ -115,13 +93,10 @@ export default function JsonLd({ locale }: JsonLdProps) {
     })),
   };
 
-  // Service Schema — describes what we actually do (IPTV streaming subscription).
-  // Helps Google classify the business correctly vs. assuming we're an
-  // e-commerce shop selling physical goods.
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    serviceType: isFr ? 'Service IPTV' : 'IPTV-Dienst',
+    serviceType: 'IPTV-streamingabonnement',
     provider: {
       '@type': 'Organization',
       name: SITE_CONFIG.name,
@@ -129,30 +104,26 @@ export default function JsonLd({ locale }: JsonLdProps) {
     },
     areaServed: {
       '@type': 'Country',
-      name: 'Switzerland',
+      name: 'Netherlands',
     },
-    name: isFr
-      ? 'Abonnement IPTV Suisse — chaînes HD/4K, VOD et replay'
-      : 'IPTV-Abonnement Schweiz — HD/4K-Kanäle, VOD und Replay',
-    description: isFr
-      ? 'Service de télévision par internet en Suisse : 37 000+ chaînes HD et 4K, VOD avec films et séries, replay 7 jours. Compatible Smart TV, mobile, ordinateur, Fire Stick et MAG.'
-      : 'Internet-TV-Service in der Schweiz: 37 000+ HD- und 4K-Kanäle, VOD mit Filmen und Serien, 7 Tage Replay. Kompatibel mit Smart TV, Mobile, Computer, Fire Stick und MAG.',
-    offers: PLANS.map((plan) => ({
+    name: 'IPTV Nederland — zenders HD/4K, VOD en replay',
+    description:
+      'Internettelevisie in Nederland: 30.000+ zenders, 170.000+ films en series on demand en 7 dagen replay. Werkt op Smart TV, mobiel, PC en meer.',
+    offers: plans.map((plan) => ({
       '@type': 'Offer',
-      name: isFr ? plan.name_fr : plan.name_de,
+      name: plan.name_nl,
       price: plan.price,
-      priceCurrency: 'CHF',
+      priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
       url: localeUrl(locale, `/plans/${plan.slug}`),
     })),
     availableChannel: {
       '@type': 'ServiceChannel',
       serviceUrl: SITE_CONFIG.url,
-      availableLanguage: ['fr-CH', 'de-CH'],
+      availableLanguage: ['nl-NL'],
     },
   };
 
-  // LocalBusiness Schema
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
@@ -162,12 +133,12 @@ export default function JsonLd({ locale }: JsonLdProps) {
     email: SITE_CONFIG.email,
     address: {
       '@type': 'PostalAddress',
-      addressCountry: 'CH',
+      addressCountry: 'NL',
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '46.9480',
-      longitude: '7.4474',
+      latitude: '52.3676',
+      longitude: '4.9041',
     },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
@@ -175,7 +146,7 @@ export default function JsonLd({ locale }: JsonLdProps) {
       opens: '00:00',
       closes: '23:59',
     },
-    priceRange: 'CHF 35.99 - CHF 179.99',
+    priceRange,
   };
 
   return (

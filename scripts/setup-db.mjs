@@ -101,7 +101,7 @@ async function setupDatabase() {
     }
   } else {
     console.log(`   ✅ ${plans.length} plans found:`);
-    plans.forEach(p => console.log(`      - ${p.name_fr} (${p.price} CHF)`));
+    plans.forEach(p => console.log(`      - ${p.name_fr} (${p.price} EUR)`));
   }
 
   // Check leads table

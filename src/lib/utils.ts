@@ -20,24 +20,18 @@ export function getDiscount(original: number, current: number): number {
   return Math.round(((original - current) / original) * 100);
 }
 
-// ─── Locale URL helpers (as-needed prefix) ───────────────────
-// French (default) → no prefix: https://meilleur.iptv-suisse.com/path
-// German           → prefix:    https://meilleur.iptv-suisse.com/de/path
+// ─── Locale URL helpers (single locale nl, as-needed = no prefix) ──
 import { SITE_CONFIG } from './constants';
 
-export function localeUrl(locale: string, path: string = '') {
-  if (locale === 'fr') {
-    return `${SITE_CONFIG.url}${path}`;
-  }
-  return `${SITE_CONFIG.url}/${locale}${path}`;
+export function localeUrl(_locale: string, path: string = '') {
+  return `${SITE_CONFIG.url}${path}`;
 }
 
 export function localeAlternates(path: string = '') {
   return {
-    canonical: undefined as string | undefined, // set by caller
+    canonical: undefined as string | undefined,
     languages: {
-      'fr-CH': `${SITE_CONFIG.url}${path}`,
-      'de-CH': `${SITE_CONFIG.url}/de${path}`,
+      'nl-NL': `${SITE_CONFIG.url}${path}`,
       'x-default': `${SITE_CONFIG.url}${path}`,
     },
   };

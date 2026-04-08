@@ -1,16 +1,16 @@
 'use client';
 
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { SITE_CONFIG } from '@/lib/constants';
+import { NL_CITY_SLUGS_ORDERED } from '@/lib/nl-city-slugs';
 import { CITIES_DATA } from '@/lib/cities';
 
-const FOOTER_CITIES = ['geneve', 'zurich', 'lausanne', 'bern', 'basel', 'luzern', 'winterthur', 'st-gallen', 'lugano', 'fribourg', 'neuchatel', 'biel', 'thun'];
+const FOOTER_CITIES: readonly string[] = Array.from(NL_CITY_SLUGS_ORDERED);
 
 export default function Footer() {
   const t = useTranslations('footer');
   const nav = useTranslations('nav');
-  const locale = useLocale();
   const year = new Date().getFullYear();
 
   return (
@@ -20,9 +20,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 bg-swiss-red rounded swiss-cross" />
+              <div
+                className="w-7 h-7 nl-flag shrink-0"
+                aria-hidden={true}
+                suppressHydrationWarning
+              />
               <span className="text-lg font-extrabold tracking-tight">
-                IPTV<span className="text-swiss-red">SUISSE</span>
+                IPTV<span className="text-swiss-red">NEDERLAND</span>
               </span>
             </Link>
             <p className="text-sm text-white/50 leading-relaxed">
@@ -55,7 +59,7 @@ export default function Footer() {
           {/* Cities (SEO internal links) */}
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-4">
-              {locale === 'fr' ? 'Villes' : 'Städte'}
+              {t('cities')}
             </h3>
             <ul className="space-y-2.5">
               {FOOTER_CITIES.slice(0, 7).map((slug) => {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
-import { PLANS, SITE_CONFIG } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY } from '@/lib/constants';
+import { getPlans, getPlanBySlug } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
 import { BreadcrumbSchema, PlanProductSchema } from '@/components/seo/SchemaMarkup';
 import PlanPageClient from './PlanPageClient';
@@ -9,45 +10,48 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
-  return PLANS.map((plan) => ({ slug: plan.slug }));
+  const plans = await getPlans();
+  return plans.map((plan) => ({ slug: plan.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const plan = PLANS.find((p) => p.slug === slug);
+  const plan = await getPlanBySlug(slug);
 
   if (!plan) {
     return { title: 'Plan Not Found' };
   }
 
-  const isFr = locale === 'fr';
-  const name = isFr ? plan.name_fr : plan.name_de;
-  const description = isFr ? plan.description_fr : plan.description_de;
-  const deviceText = plan.devices > 1
-    ? (isFr ? ` — ${plan.devices} écrans simultanés` : ` — ${plan.devices} gleichzeitige Bildschirme`)
-    : '';
+  const name = plan.name_nl;
+  const description = plan.description_nl;
+  const deviceText =
+    plan.devices > 1 ? ` — ${plan.devices} gelijktijdige schermen` : '';
 
-  const title = isFr
-    ? `${name} - Abonnement IPTV Suisse | ${plan.price} CHF`
-    : `${name} - IPTV Abo Schweiz | ${plan.price} CHF`;
+  const planUrl = `${SITE_CONFIG.url}/plans/${slug}`;
+  const title = `${name} — IPTV Nederland | ${plan.price} ${PRICE_CURRENCY}`;
 
-  const metaDescription = isFr
-    ? `${name}${deviceText}. ${description}. +37'000 chaînes HD/4K, replay et VOD inclus. Activation en 2h, support 24/7. ${plan.price} CHF pour ${plan.duration} mois.`
-    : `${name}${deviceText}. ${description}. +37'000 HD/4K-Kanäle, Replay und VOD inklusive. Aktivierung in 2h, 24/7 Support. ${plan.price} CHF für ${plan.duration} Monate.`;
+  const metaDescription = `${name}${deviceText}. ${description}. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, replay inbegrepen. Activering binnen 2 uur, support 24/7. ${plan.price} ${PRICE_CURRENCY} voor ${plan.duration} maanden.`;
 
   return {
     title,
     description: metaDescription,
-    keywords: isFr
-      ? ['IPTV Suisse', 'abonnement IPTV', name, `IPTV ${plan.duration} mois`, 'IPTV Suisse pas cher']
-      : ['IPTV Schweiz', 'IPTV Abo', name, `IPTV ${plan.duration} Monate`, 'IPTV Schweiz günstig'],
+    keywords: [
+      'IPTV Nederland',
+      'iptv abonnement',
+      name,
+      `iptv ${plan.duration} maanden`,
+      'iptv premium nederland',
+      'iptv 4k',
+    ],
     openGraph: {
       title,
       description: metaDescription,
-      url: locale === 'fr' ? `${SITE_CONFIG.url}/plans/${slug}` : `${SITE_CONFIG.url}/de/plans/${slug}`,
+      url: planUrl,
       siteName: SITE_CONFIG.name,
-      locale: isFr ? 'fr_CH' : 'de_CH',
+      locale: 'nl_NL',
       type: 'website',
       images: [
         {
@@ -65,11 +69,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [`${SITE_CONFIG.url}${plan.image}`],
     },
     alternates: {
-      canonical: locale === 'fr' ? `${SITE_CONFIG.url}/plans/${slug}` : `${SITE_CONFIG.url}/de/plans/${slug}`,
+      canonical: planUrl,
       languages: {
-        'fr-CH': `${SITE_CONFIG.url}/plans/${slug}`,
-        'de-CH': `${SITE_CONFIG.url}/de/plans/${slug}`,
-        'x-default': `${SITE_CONFIG.url}/plans/${slug}`,
+        'nl-NL': planUrl,
+        'x-default': planUrl,
       },
     },
   };
@@ -79,21 +82,21 @@ export default async function PlanPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const plan = PLANS.find((p) => p.slug === slug);
-  const isFr = locale === 'fr';
-  const planName = plan ? (isFr ? plan.name_fr : plan.name_de) : slug;
+  const plans = await getPlans();
+  const plan = plans.find((p) => p.slug === slug);
+  const planName = plan ? plan.name_nl : slug;
 
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: isFr ? 'Accueil' : 'Startseite', url: localeUrl(locale) },
-          { name: isFr ? 'Nos Offres' : 'Angebote', url: localeUrl(locale, '/#pricing') },
+          { name: 'Home', url: localeUrl(locale) },
+          { name: 'Abonnementen', url: localeUrl(locale, '/plans') },
           { name: planName, url: localeUrl(locale, `/plans/${slug}`) },
         ]}
       />
-      <PlanProductSchema locale={locale} slug={slug} />
-      <PlanPageClient />
+      {plan && <PlanProductSchema locale={locale} plan={plan} />}
+      <PlanPageClient plans={plans} />
     </>
   );
 }

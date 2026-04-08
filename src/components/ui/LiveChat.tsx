@@ -19,30 +19,16 @@ interface Session {
 }
 
 const TEXTS = {
-  fr: {
-    title: 'Chat en direct',
-    subtitle: 'Nous répondons généralement en quelques minutes',
-    placeholder: 'Écrivez votre message...',
-    greeting: 'Bonjour ! Comment pouvons-nous vous aider ?',
-    offline: 'Nous sommes actuellement hors ligne. Laissez-nous un message !',
-    send: 'Envoyer',
-    emailLabel: 'Votre adresse e-mail',
-    emailPlaceholder: 'email@exemple.com',
-    emailStart: 'Démarrer le chat',
-    emailRequired: 'Entrez votre e-mail pour commencer',
-  },
-  de: {
-    title: 'Live-Chat',
-    subtitle: 'Wir antworten normalerweise in wenigen Minuten',
-    placeholder: 'Schreiben Sie Ihre Nachricht...',
-    greeting: 'Hallo! Wie können wir Ihnen helfen?',
-    offline: 'Wir sind derzeit offline. Hinterlassen Sie uns eine Nachricht!',
-    send: 'Senden',
-    emailLabel: 'Ihre E-Mail-Adresse',
-    emailPlaceholder: 'email@beispiel.com',
-    emailStart: 'Chat starten',
-    emailRequired: 'Geben Sie Ihre E-Mail ein, um zu beginnen',
-  },
+  title: 'Live chat',
+  subtitle: 'We reageren meestal binnen enkele minuten',
+  placeholder: 'Typ je bericht...',
+  greeting: 'Hallo! Hoe kunnen we helpen?',
+  offline: 'We zijn even offline. Laat een bericht achter!',
+  send: 'Versturen',
+  emailLabel: 'Je e-mailadres',
+  emailPlaceholder: 'email@voorbeeld.nl',
+  emailStart: 'Start chat',
+  emailRequired: 'Vul je e-mail in om te beginnen',
 };
 
 function getVisitorId(): string {
@@ -56,8 +42,8 @@ function getVisitorId(): string {
 }
 
 export default function LiveChat() {
-  const locale = useLocale() as 'fr' | 'de';
-  const t = TEXTS[locale] || TEXTS.fr;
+  const locale = useLocale();
+  const t = TEXTS;
 
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -77,7 +63,6 @@ export default function LiveChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  // Load existing session on mount
   useEffect(() => {
     const visitorId = getVisitorId();
     if (!visitorId) return;
@@ -101,7 +86,6 @@ export default function LiveChat() {
       .catch(() => {});
   }, []);
 
-  // Poll for new messages when chat is open
   useEffect(() => {
     if (!session?.id) return;
 
@@ -127,12 +111,10 @@ export default function LiveChat() {
     return () => clearInterval(poll);
   }, [session?.id, isOpen]);
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     if (isOpen) scrollToBottom();
   }, [messages, isOpen, scrollToBottom]);
 
-  // Focus appropriate input when opened
   useEffect(() => {
     if (isOpen && !isMinimized) {
       if (!emailSubmitted) {
@@ -187,7 +169,6 @@ export default function LiveChat() {
     setInput('');
     setSending(true);
 
-    // Optimistic add
     const optimistic: Message = {
       id: `temp-${Date.now()}`,
       sender: 'visitor',
@@ -223,7 +204,7 @@ export default function LiveChat() {
 
   function formatTime(dateStr: string) {
     const d = new Date(dateStr);
-    return d.toLocaleTimeString(locale === 'fr' ? 'fr-CH' : 'de-CH', {
+    return d.toLocaleTimeString('nl-NL', {
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -231,185 +212,138 @@ export default function LiveChat() {
 
   return (
     <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-3">
-      {/* Chat Window */}
       <AnimatePresence>
         {isOpen && !isMinimized && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="w-[360px] max-w-[calc(100vw-3rem)] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col"
-            style={{ height: '480px' }}
+            className="w-[min(100vw-2rem,380px)] bg-white rounded-2xl shadow-2xl border border-border overflow-hidden flex flex-col max-h-[min(70vh,520px)]"
           >
-            {/* Header */}
-            <div className="bg-[#D52B1E] px-5 py-4 flex items-center gap-3 shrink-0">
-              <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-white" />
+            <div className="bg-swiss-red text-white px-4 py-3 flex items-center justify-between shrink-0">
+              <div>
+                <div className="font-bold text-sm">{t.title}</div>
+                <div className="text-[11px] text-white/80">{t.subtitle}</div>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-white font-bold text-sm">{t.title}</h3>
-                <p className="text-white/70 text-xs truncate">{t.subtitle}</p>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setIsMinimized(true)}
+                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                  aria-label="Minimaliseren"
+                >
+                  <Minus className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                  aria-label="Sluiten"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
-              <button
-                onClick={() => setIsMinimized(true)}
-                className="text-white/70 hover:text-white transition p-1"
-              >
-                <Minus className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-white/70 hover:text-white transition p-1"
-              >
-                <X className="w-4 h-4" />
-              </button>
             </div>
 
-            {!emailSubmitted ? (
-              /* Email Collection Form */
-              <div className="flex-1 flex flex-col items-center justify-center p-6 bg-gray-50">
-                <div className="flex gap-2.5 items-end mb-6 self-start">
-                  <div className="w-7 h-7 rounded-full bg-[#D52B1E] flex items-center justify-center shrink-0">
-                    <span className="text-white text-[10px] font-bold">IS</span>
-                  </div>
-                  <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-3.5 py-2.5 shadow-sm">
-                    <p className="text-sm text-gray-700 leading-relaxed">{t.greeting}</p>
-                  </div>
-                </div>
-
-                <form onSubmit={startSession} className="w-full max-w-[280px] space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700">
-                    {t.emailLabel}
-                  </label>
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[200px]">
+              {!emailSubmitted ? (
+                <form onSubmit={startSession} className="space-y-3">
+                  <p className="text-sm text-text-secondary">{t.emailRequired}</p>
+                  <label className="block text-xs font-medium text-text-muted">{t.emailLabel}</label>
                   <input
                     ref={emailInputRef}
                     type="email"
-                    required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder={t.emailPlaceholder}
-                    className="w-full px-3.5 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#D52B1E]/40 focus:ring-1 focus:ring-[#D52B1E]/20 transition"
+                    className="w-full px-3 py-2 rounded-lg border border-border text-sm"
                   />
                   <button
                     type="submit"
-                    className="w-full py-2.5 bg-[#D52B1E] hover:bg-[#B82318] text-white font-semibold text-sm rounded-xl transition"
+                    className="w-full py-2.5 bg-swiss-red text-white text-sm font-semibold rounded-lg hover:bg-swiss-red-dark"
                   >
                     {t.emailStart}
                   </button>
-                  <p className="text-[11px] text-gray-400 text-center">{t.emailRequired}</p>
                 </form>
-              </div>
-            ) : (
-              <>
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-                  {/* Greeting */}
-                  <div className="flex gap-2.5 items-end">
-                    <div className="w-7 h-7 rounded-full bg-[#D52B1E] flex items-center justify-center shrink-0">
-                      <span className="text-white text-[10px] font-bold">IS</span>
-                    </div>
-                    <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-3.5 py-2.5 max-w-[80%] shadow-sm">
-                      <p className="text-sm text-gray-700 leading-relaxed">{t.greeting}</p>
-                    </div>
-                  </div>
-
-                  {messages.map(msg => (
+              ) : (
+                <>
+                  {messages.length === 0 && (
+                    <p className="text-sm text-text-secondary">{t.greeting}</p>
+                  )}
+                  {messages.map(m => (
                     <div
-                      key={msg.id}
-                      className={`flex gap-2.5 items-end ${
-                        msg.sender === 'visitor' ? 'flex-row-reverse' : ''
-                      }`}
+                      key={m.id}
+                      className={`flex ${m.sender === 'visitor' ? 'justify-end' : 'justify-start'}`}
                     >
-                      {msg.sender === 'admin' && (
-                        <div className="w-7 h-7 rounded-full bg-[#D52B1E] flex items-center justify-center shrink-0">
-                          <span className="text-white text-[10px] font-bold">IS</span>
-                        </div>
-                      )}
                       <div
-                        className={`rounded-2xl px-3.5 py-2.5 max-w-[80%] shadow-sm ${
-                          msg.sender === 'visitor'
-                            ? 'bg-[#D52B1E] text-white rounded-br-md'
-                            : 'bg-white border border-gray-200 rounded-bl-md'
+                        className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${
+                          m.sender === 'visitor'
+                            ? 'bg-swiss-red text-white rounded-br-sm'
+                            : 'bg-bg text-text rounded-bl-sm'
                         }`}
                       >
-                        <p className={`text-sm leading-relaxed ${
-                          msg.sender === 'visitor' ? 'text-white' : 'text-gray-700'
-                        }`}>
-                          {msg.body}
-                        </p>
-                        <p className={`text-[10px] mt-1 ${
-                          msg.sender === 'visitor' ? 'text-white/60' : 'text-gray-400'
-                        }`}>
-                          {formatTime(msg.created_at)}
+                        <p className="whitespace-pre-wrap break-words">{m.body}</p>
+                        <p
+                          className={`text-[10px] mt-1 ${
+                            m.sender === 'visitor' ? 'text-white/70' : 'text-text-muted'
+                          }`}
+                        >
+                          {formatTime(m.created_at)}
                         </p>
                       </div>
                     </div>
                   ))}
                   <div ref={messagesEndRef} />
-                </div>
+                </>
+              )}
+            </div>
 
-                {/* Input */}
-                <form
-                  onSubmit={sendMessage}
-                  className="p-3 border-t border-gray-200 bg-white flex gap-2 shrink-0"
+            {emailSubmitted && session && (
+              <form onSubmit={sendMessage} className="p-3 border-t border-border flex gap-2 shrink-0">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  placeholder={t.placeholder}
+                  className="flex-1 px-3 py-2 rounded-lg border border-border text-sm min-w-0"
+                />
+                <button
+                  type="submit"
+                  disabled={sending || !input.trim()}
+                  className="p-2 rounded-lg bg-swiss-red text-white disabled:opacity-50"
+                  aria-label={t.send}
                 >
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    placeholder={t.placeholder}
-                    className="flex-1 px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#D52B1E]/40 focus:ring-1 focus:ring-[#D52B1E]/20 transition"
-                  />
-                  <button
-                    type="submit"
-                    disabled={!input.trim() || sending}
-                    className="w-10 h-10 bg-[#D52B1E] hover:bg-[#B82318] disabled:opacity-40 disabled:hover:bg-[#D52B1E] rounded-xl flex items-center justify-center transition shrink-0"
-                  >
-                    <Send className="w-4 h-4 text-white" />
-                  </button>
-                </form>
-              </>
+                  <Send className="w-4 h-4" />
+                </button>
+              </form>
             )}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Minimized Bar */}
-      <AnimatePresence>
-        {isOpen && isMinimized && (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            onClick={() => setIsMinimized(false)}
-            className="bg-[#D52B1E] text-white rounded-full px-5 py-3 shadow-lg flex items-center gap-2.5 hover:bg-[#B82318] transition"
-          >
-            <MessageCircle className="w-4 h-4" />
-            <span className="text-sm font-semibold">{t.title}</span>
-            {hasNewMessage && (
-              <span className="w-2.5 h-2.5 bg-white rounded-full animate-pulse" />
-            )}
-          </motion.button>
-        )}
-      </AnimatePresence>
-
-      {/* FAB Button */}
-      {!isOpen && (
-        <motion.button
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 1.5, type: 'spring', stiffness: 260, damping: 20 }}
-          onClick={openChat}
-          className="w-14 h-14 bg-[#D52B1E] hover:bg-[#B82318] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 relative"
-          aria-label="Live Chat"
+      {isOpen && isMinimized && (
+        <button
+          type="button"
+          onClick={() => setIsMinimized(false)}
+          className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-lg border border-border text-sm font-medium text-text"
         >
-          <MessageCircle className="w-6 h-6 text-white" />
-          {hasNewMessage && (
-            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse" />
-          )}
-          <span className="absolute inset-0 rounded-full bg-[#D52B1E] animate-ping opacity-20" />
-        </motion.button>
+          <MessageCircle className="w-4 h-4 text-swiss-red" />
+          {t.title}
+          {hasNewMessage && <span className="w-2 h-2 rounded-full bg-swiss-red animate-pulse" />}
+        </button>
+      )}
+
+      {!isOpen && (
+        <button
+          type="button"
+          onClick={openChat}
+          className="relative flex items-center gap-2 px-4 py-3 bg-swiss-red text-white rounded-full shadow-lg hover:bg-swiss-red-dark transition-colors text-sm font-semibold"
+        >
+          <MessageCircle className="w-5 h-5" />
+          {t.title}
+          {hasNewMessage && <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-white border-2 border-swiss-red" />}
+        </button>
       )}
     </div>
   );

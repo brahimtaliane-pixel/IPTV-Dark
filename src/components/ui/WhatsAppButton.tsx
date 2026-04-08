@@ -4,18 +4,15 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
-import { useLocale } from 'next-intl';
 
 export default function WhatsAppButton() {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-  const locale = useLocale();
 
-  const message = locale === 'fr'
-    ? 'Bonjour ! Je suis intéressé(e) par vos abonnements IPTV.'
-    : 'Hallo! Ich interessiere mich für Ihre IPTV-Abonnements.';
+  const message =
+    'Hallo! Ik heb interesse in jullie IPTV-abonnementen.';
 
   const whatsappUrl = `${SITE_CONFIG.whatsapp}?text=${encodeURIComponent(message)}`;
-  const tooltipText = locale === 'fr' ? 'Besoin d\'aide ? Écrivez-nous !' : 'Brauchen Sie Hilfe? Schreiben Sie uns!';
+  const tooltipText = 'Hulp nodig? Stuur ons een bericht!';
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
@@ -42,7 +39,7 @@ export default function WhatsAppButton() {
               rel="noopener noreferrer"
               className="mt-3 inline-block text-xs font-semibold text-[#25D366] hover:underline"
             >
-              {locale === 'fr' ? 'Démarrer le chat →' : 'Chat starten →'}
+              Start chat →
             </a>
             {/* Arrow */}
             <div className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-r border-b border-border rotate-45" />

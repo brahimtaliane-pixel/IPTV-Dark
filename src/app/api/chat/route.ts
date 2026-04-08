@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
           visitor_id,
           visitor_email: visitor_email || null,
           page_url: page_url || null,
-          locale: locale || 'fr',
+          locale: locale || 'nl',
         })
         .select()
         .single();
