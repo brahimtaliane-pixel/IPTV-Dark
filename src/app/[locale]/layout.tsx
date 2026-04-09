@@ -98,7 +98,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages}>
       <GoogleAnalytics />
       <Header />
-      <main className="min-h-screen bg-bg text-text">{children}</main>
+      <main className="min-h-screen min-w-0 overflow-x-clip bg-bg text-text">{children}</main>
       <Footer />
       <WhatsAppButton whatsappUrl={contact.whatsappUrl} />
       <LiveChat />

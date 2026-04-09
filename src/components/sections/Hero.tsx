@@ -14,8 +14,10 @@ export default function Hero({ statValues }: { statValues: SiteStatsSnapshot }) 
 
   return (
     <section className="relative bg-white pt-32 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
-      {/* Subtle red gradient blob top-right */}
-      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-swiss-red/[0.04] rounded-full blur-[100px] pointer-events-none" />
+      {/* Subtle red gradient blob — wrapper contains blur so it cannot expand horizontal scroll */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-swiss-red/[0.04] rounded-full blur-[100px]" />
+      </div>
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">

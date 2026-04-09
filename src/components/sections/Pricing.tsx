@@ -10,7 +10,7 @@ export default async function Pricing({ plans }: { plans: SitePlan[] }) {
   const t = await getTranslations('pricing');
 
   return (
-    <section id="pricing" className="py-14 lg:py-20 bg-bg">
+    <section id="pricing" className="py-14 lg:py-20 bg-bg overflow-x-clip">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-14">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-3">
