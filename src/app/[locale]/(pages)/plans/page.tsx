@@ -13,7 +13,7 @@ import {
   Headphones,
   Star,
 } from 'lucide-react';
-import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY, PRICE_CURRENCY_SYMBOL, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
 import { localeUrl, formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
 import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
@@ -27,7 +27,7 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
-  const title = `IPTV Nederland abonnementen — alle HD/4K-pakketten vanaf 35,99 ${PRICE_CURRENCY}`;
+  const title = `IPTV Nederland abonnementen — alle HD/4K-pakketten vanaf 35,99 ${PRICE_CURRENCY_SYMBOL}`;
   const description =
     'Alle IPTV Nederland-pakketten op een rij: 1, 2, 3 of 4 schermen, looptijd 3, 6 of 12 maanden. 30.000+ zenders HD/4K, 170.000+ films en series on demand, 7 dagen replay. Activering binnen 2 uur.';
 
@@ -95,9 +95,9 @@ const PAGE_COPY = {
   groupTitlePre: 'Pakketten',
   durationLabel: '{count} maanden',
   monthlyPrefix: 'dat is',
-  monthlySuffix: ` ${PRICE_CURRENCY} per maand`,
+  monthlySuffix: ` ${PRICE_CURRENCY_SYMBOL} per maand`,
   bestSeller: 'Populair',
-  savingsLabel: `je bespaart {amount} ${PRICE_CURRENCY}`,
+  savingsLabel: `je bespaart {amount} ${PRICE_CURRENCY_SYMBOL}`,
   viewDetails: 'Bekijk details',
   ctaSection: 'Twijfel je welk pakket je nodig hebt?',
   ctaSectionDesc:
@@ -112,7 +112,7 @@ const FAQS_NL = [
   {
     question: 'Wat kosten IPTV-abonnementen?',
     answer:
-      `Onze IPTV Nederland-pakketten starten vanaf 35,99 ${PRICE_CURRENCY} voor 3 maanden (1 scherm) tot 179,99 ${PRICE_CURRENCY} voor 12 maanden op 4 schermen. Alles inclusief 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay.`,
+      `Onze IPTV Nederland-pakketten starten vanaf 35,99 ${PRICE_CURRENCY_SYMBOL} voor 3 maanden (1 scherm) tot 179,99 ${PRICE_CURRENCY_SYMBOL} voor 12 maanden op 4 schermen. Alles inclusief 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay.`,
   },
   {
     question: 'Wat is het verschil tussen 1, 2, 3 en 4 schermen?',
@@ -122,7 +122,7 @@ const FAQS_NL = [
   {
     question: 'Welk pakket heeft de beste prijs-kwaliteit?',
     answer:
-      `Het 12-maanden abonnement (1 scherm) voor 59,99 ${PRICE_CURRENCY} is onze meest gekozen optie — rond 5 ${PRICE_CURRENCY} per maand. Voor gezinnen is 2 schermen / 12 maanden (89,99 ${PRICE_CURRENCY}) vaak de beste deal op jaarbasis.`,
+      `Het 12-maanden abonnement (1 scherm) voor 59,99 ${PRICE_CURRENCY_SYMBOL} is onze meest gekozen optie — rond 5 ${PRICE_CURRENCY_SYMBOL} per maand. Voor gezinnen is 2 schermen / 12 maanden (89,99 ${PRICE_CURRENCY_SYMBOL}) vaak de beste deal op jaarbasis.`,
   },
   {
     question: 'Is er een contract of automatische verlenging?',
@@ -300,14 +300,14 @@ export default async function PlansHubPage({ params }: Props) {
                         <div className="mb-4">
                           {plan.original_price && (
                             <div className="text-sm text-text-muted line-through mb-0.5">
-                              {formatPrice(plan.original_price)} {PRICE_CURRENCY}
+                              {formatPrice(plan.original_price)} {PRICE_CURRENCY_SYMBOL}
                             </div>
                           )}
                           <div className="flex items-baseline gap-1.5">
                             <span className="text-3xl font-extrabold text-text">
                               {formatPrice(plan.price)}
                             </span>
-                            <span className="text-sm font-medium text-text-muted">{PRICE_CURRENCY}</span>
+                            <span className="text-sm font-medium text-text-muted">{PRICE_CURRENCY_SYMBOL}</span>
                             {discount > 0 && (
                               <span className="ml-1 bg-success text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
                                 -{discount}%

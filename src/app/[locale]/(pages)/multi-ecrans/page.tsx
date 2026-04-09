@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title =
     'IPTV multi-scherm — 2, 3 of 4 schermen tegelijk | IPTV Nederland';
   const description =
-    'IPTV Nederland multi-scherm pakketten: kijk op 2, 3 of 4 apparaten tegelijk. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, 7 dagen replay. Vanaf 53,99 EUR.';
+    'IPTV Nederland multi-scherm pakketten: kijk op 2, 3 of 4 apparaten tegelijk. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, 7 dagen replay. Vanaf 53,99 €.';
 
   return {
     title,

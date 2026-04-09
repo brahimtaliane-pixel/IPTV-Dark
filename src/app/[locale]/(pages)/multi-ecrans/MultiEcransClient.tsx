@@ -19,7 +19,7 @@ import {
   Mail,
   Play,
 } from 'lucide-react';
-import { PRICE_CURRENCY } from '@/lib/constants';
+import { PRICE_CURRENCY_SYMBOL } from '@/lib/constants';
 import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getMonthlyPrice, getDiscount, cn } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
@@ -222,7 +222,7 @@ export default function MultiEcransClient({ plans }: { plans: SitePlan[] }) {
                       {plan.original_price && (
                         <div className="mb-0.5">
                           <span className={cn('text-sm line-through', isBest ? 'text-white/50' : 'text-text-muted')}>
-                            {formatPrice(plan.original_price)} {PRICE_CURRENCY}
+                            {formatPrice(plan.original_price)} {PRICE_CURRENCY_SYMBOL}
                           </span>
                         </div>
                       )}
@@ -231,12 +231,12 @@ export default function MultiEcransClient({ plans }: { plans: SitePlan[] }) {
                           {formatPrice(plan.price)}
                         </span>
                         <span className={cn('text-sm font-medium', isBest ? 'text-white/70' : 'text-text-muted')}>
-                          {PRICE_CURRENCY}
+                          {PRICE_CURRENCY_SYMBOL}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <span className={cn('text-xs', isBest ? 'text-white/60' : 'text-text-muted')}>
-                          {getMonthlyPrice(plan.price, plan.duration)} {PRICE_CURRENCY}{pt('perMonth')}
+                          {getMonthlyPrice(plan.price, plan.duration)} {PRICE_CURRENCY_SYMBOL}{pt('perMonth')}
                         </span>
                         {discount > 0 && (
                           <span className={cn(

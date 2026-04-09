@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { MapPin, Check, ArrowRight, Tv, Zap, Headphones, Wifi, Globe } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
-import { PRICE_CURRENCY, SITE_CONFIG, type SiteStatsSnapshot } from '@/lib/constants';
+import { PRICE_CURRENCY_SYMBOL, SITE_CONFIG, type SiteStatsSnapshot } from '@/lib/constants';
 import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getDiscount } from '@/lib/utils';
 import { NL_CITY_SLUGS_ORDERED, NL_CITY_SLUGS } from '@/lib/nl-city-slugs';
@@ -237,7 +237,7 @@ export default function CityPageClient({
                   <div className="text-sm font-semibold mb-3">{plan.name_nl}</div>
                   <div className="flex items-baseline gap-1 mb-1">
                     <span className="text-3xl font-extrabold">{formatPrice(plan.price)}</span>
-                    <span className="text-sm opacity-80">{PRICE_CURRENCY}</span>
+                    <span className="text-sm opacity-80">{PRICE_CURRENCY_SYMBOL}</span>
                     {discount > 0 && (
                       <span
                         className={`text-xs font-bold px-1.5 py-0.5 rounded ml-1 ${plan.is_popular ? 'bg-white/20' : 'bg-success text-white'}`}
@@ -248,7 +248,7 @@ export default function CityPageClient({
                   </div>
                   {plan.original_price && (
                     <div className={`text-xs line-through mb-3 ${plan.is_popular ? 'text-white/60' : 'text-text-muted'}`}>
-                      {formatPrice(plan.original_price)} {PRICE_CURRENCY}
+                      {formatPrice(plan.original_price)} {PRICE_CURRENCY_SYMBOL}
                     </div>
                   )}
                   <Link

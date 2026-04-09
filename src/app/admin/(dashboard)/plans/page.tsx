@@ -209,7 +209,7 @@ export default function PlansPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-500 mb-1">Price (EUR)</label>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Price (€)</label>
                       <input
                         type="number"
                         step="0.01"
@@ -323,9 +323,9 @@ export default function PlansPage() {
                 </div>
 
                 <div className="text-right mr-4">
-                  <p className="text-2xl font-bold text-gray-900">{plan.price} <span className="text-sm font-normal text-gray-400">EUR</span></p>
+                  <p className="text-2xl font-bold text-gray-900">{plan.price} <span className="text-sm font-normal text-gray-400">€</span></p>
                   {plan.original_price && (
-                    <p className="text-xs text-gray-400 line-through">{plan.original_price} EUR</p>
+                    <p className="text-xs text-gray-400 line-through">{plan.original_price} €</p>
                   )}
                 </div>
 

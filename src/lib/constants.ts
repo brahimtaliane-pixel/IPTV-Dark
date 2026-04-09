@@ -41,11 +41,14 @@ export const SITE_CONFIG = {
   locales: ['nl'] as const,
 } as const;
 
-/** ISO 4217 — plan prices, UI labels, and JSON-LD offers */
+/** ISO 4217 — JSON-LD `priceCurrency`, APIs, structured data (keep as `EUR`) */
 export const PRICE_CURRENCY = 'EUR' as const;
 
-/** Schema.org LocalBusiness priceRange (min–max from PLANS) */
-export const SCHEMA_PRICE_RANGE = 'EUR 35.99 - EUR 179.99' as const;
+/** Euro sign for on-page UI, emails, and human-readable meta text */
+export const PRICE_CURRENCY_SYMBOL = '€' as const;
+
+/** Schema.org LocalBusiness `priceRange` (display string) */
+export const SCHEMA_PRICE_RANGE = '€ 35.99 - € 179.99' as const;
 
 /**
  * JSON-LD `Offer.priceValidUntil` — must be deterministic for SSR/caching.

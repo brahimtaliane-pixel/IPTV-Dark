@@ -1,4 +1,10 @@
-import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
+import {
+  SITE_CONFIG,
+  PRICE_CURRENCY,
+  PRICE_CURRENCY_SYMBOL,
+  SCHEMA_PRICE_RANGE,
+  SCHEMA_PRICE_VALID_UNTIL,
+} from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
 import type { SitePlan } from '@/lib/get-plans';
 
@@ -13,7 +19,7 @@ export default function JsonLd({ locale, plans, phone }: JsonLdProps) {
   const prices = plans.map((p) => p.price);
   const priceRange =
     prices.length > 0
-      ? `${PRICE_CURRENCY} ${Math.min(...prices)} - ${PRICE_CURRENCY} ${Math.max(...prices)}`
+      ? `${PRICE_CURRENCY_SYMBOL} ${Math.min(...prices)} - ${PRICE_CURRENCY_SYMBOL} ${Math.max(...prices)}`
       : SCHEMA_PRICE_RANGE;
   const organizationSchema = {
     '@context': 'https://schema.org',

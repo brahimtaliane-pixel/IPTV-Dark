@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { SITE_CONFIG, PRICE_CURRENCY } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY_SYMBOL } from '@/lib/constants';
 
 export const runtime = 'edge';
 export const alt = 'IPTV Nederland — zenders HD/4K, VOD en replay';
@@ -98,7 +98,7 @@ export default async function OGImage() {
             fontWeight: 700,
           }}
         >
-          {`Vanaf 35,99 ${PRICE_CURRENCY}`}
+          {`Vanaf 35,99 ${PRICE_CURRENCY_SYMBOL}`}
         </div>
 
         <div

@@ -3,7 +3,7 @@
 // ============================================================
 
 import { Resend } from 'resend';
-import { SITE_CONFIG, PRICE_CURRENCY } from './constants';
+import { SITE_CONFIG, PRICE_CURRENCY_SYMBOL } from './constants';
 import { getSiteContact } from './get-site-contact';
 
 // Lazy init — avoids crash at build time when RESEND_API_KEY is not yet set
@@ -68,7 +68,7 @@ export async function sendPaymentLinkEmail(data: LeadEmailData) {
           Looptijd: ${data.planDuration} maanden
         </div>
         <div style="font-size:28px;font-weight:800;color:#D52B1E;margin:12px 0 0;">
-          ${data.planPrice} ${PRICE_CURRENCY}
+          ${data.planPrice} ${PRICE_CURRENCY_SYMBOL}
         </div>
       </div>
       
@@ -130,7 +130,7 @@ export async function sendAdminNotification(data: LeadEmailData) {
       <tr><td style="padding:6px 0;color:#999;">E-mail</td><td style="padding:6px 0;">${data.email}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Telefoon</td><td style="padding:6px 0;">${data.phone}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Pakket</td><td style="padding:6px 0;font-weight:700;">${data.planName}</td></tr>
-      <tr><td style="padding:6px 0;color:#999;">Prijs</td><td style="padding:6px 0;color:#D52B1E;font-weight:700;">${data.planPrice} ${PRICE_CURRENCY}</td></tr>
+      <tr><td style="padding:6px 0;color:#999;">Prijs</td><td style="padding:6px 0;color:#D52B1E;font-weight:700;">${data.planPrice} ${PRICE_CURRENCY_SYMBOL}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Taal</td><td style="padding:6px 0;">${data.locale.toUpperCase()}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Datum</td><td style="padding:6px 0;">${new Date().toLocaleString('nl-NL')}</td></tr>
     </table>

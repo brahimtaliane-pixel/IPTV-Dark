@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
-import { SITE_CONFIG, PRICE_CURRENCY } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY_SYMBOL } from '@/lib/constants';
 import { getPlans, getPlanBySlug, getPlanCheckoutSnapshot } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
 import { BreadcrumbSchema, PlanProductSchema } from '@/components/seo/SchemaMarkup';
@@ -31,9 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     plan.devices > 1 ? ` — ${plan.devices} gelijktijdige schermen` : '';
 
   const planUrl = `${SITE_CONFIG.url}/plans/${slug}`;
-  const title = `${name} — IPTV Nederland | ${plan.price} ${PRICE_CURRENCY}`;
+  const title = `${name} — IPTV Nederland | ${plan.price} ${PRICE_CURRENCY_SYMBOL}`;
 
-  const metaDescription = `${name}${deviceText}. ${description}. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, replay inbegrepen. Activering binnen 2 uur, support 24/7. ${plan.price} ${PRICE_CURRENCY} voor ${plan.duration} maanden.`;
+  const metaDescription = `${name}${deviceText}. ${description}. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, replay inbegrepen. Activering binnen 2 uur, support 24/7. ${plan.price} ${PRICE_CURRENCY_SYMBOL} voor ${plan.duration} maanden.`;
 
   return {
     title,

@@ -23,7 +23,7 @@ import {
   Star,
   MessageCircle,
 } from 'lucide-react';
-import { PRICE_CURRENCY } from '@/lib/constants';
+import { PRICE_CURRENCY_SYMBOL } from '@/lib/constants';
 import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
@@ -77,7 +77,7 @@ function StickyCTA({
               <h3 className="text-text font-bold text-sm sm:text-base hidden sm:block">{planName}</h3>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl sm:text-3xl font-extrabold text-text">{formatPrice(price)}</span>
-                <span className="text-sm font-bold text-text-muted">{PRICE_CURRENCY}</span>
+                <span className="text-sm font-bold text-text-muted">{PRICE_CURRENCY_SYMBOL}</span>
               </div>
             </div>
             <div className="flex flex-wrap items-center justify-end gap-2">
@@ -314,7 +314,7 @@ export default function PlanPageClient({
                   {plan.original_price && (
                     <div className="mb-1">
                       <span className="text-base text-text-muted line-through">
-                        {formatPrice(plan.original_price)} {PRICE_CURRENCY}
+                        {formatPrice(plan.original_price)} {PRICE_CURRENCY_SYMBOL}
                       </span>
                     </div>
                   )}
@@ -322,7 +322,7 @@ export default function PlanPageClient({
                   {/* Current price */}
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-4xl sm:text-5xl font-extrabold text-text">{formatPrice(plan.price)}</span>
-                    <span className="text-lg font-bold text-text-muted">{PRICE_CURRENCY}</span>
+                    <span className="text-lg font-bold text-text-muted">{PRICE_CURRENCY_SYMBOL}</span>
                     {discount > 0 && (
                       <span className="ml-2 bg-success text-white text-xs font-bold px-2 py-0.5 rounded">
                         -{discount}%
@@ -677,11 +677,11 @@ export default function PlanPageClient({
                   <div className="mb-4">
                     {p.original_price && (
                       <div className="text-sm text-text-muted line-through mb-0.5">
-                        {formatPrice(p.original_price)} {PRICE_CURRENCY}
+                        {formatPrice(p.original_price)} {PRICE_CURRENCY_SYMBOL}
                       </div>
                     )}
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-extrabold text-text">{formatPrice(p.price)} {PRICE_CURRENCY}</span>
+                      <span className="text-2xl font-extrabold text-text">{formatPrice(p.price)} {PRICE_CURRENCY_SYMBOL}</span>
                       {otherDiscount > 0 && (
                         <span className="bg-success text-white text-xs font-bold px-2 py-0.5 rounded">
                           -{otherDiscount}%
