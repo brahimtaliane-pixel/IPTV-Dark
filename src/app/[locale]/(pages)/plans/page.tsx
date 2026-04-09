@@ -13,7 +13,7 @@ import {
   Headphones,
   Star,
 } from 'lucide-react';
-import { SITE_CONFIG, PRICE_CURRENCY } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
 import { localeUrl, formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
 import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
@@ -23,8 +23,6 @@ type Props = {
 };
 
 export const dynamic = 'force-dynamic';
-
-const PRICE_VALID_UNTIL = '2026-12-31';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
@@ -176,8 +174,12 @@ export default async function PlansHubPage({ params }: Props) {
       price: plan.price,
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
-      priceValidUntil: PRICE_VALID_UNTIL,
+      priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
       url: localeUrl(locale, `/plans/${plan.slug}`),
+      seller: {
+        '@type': 'Organization',
+        name: SITE_CONFIG.name,
+      },
     },
   }));
 

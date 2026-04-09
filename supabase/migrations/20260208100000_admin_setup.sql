@@ -17,13 +17,13 @@ CREATE POLICY "Service role full access admin_settings" ON admin_settings FOR AL
 
 -- Insert default settings
 INSERT INTO admin_settings (key, value) VALUES 
-  ('admin_email', 'isaac@meilleur.iptvsuisse.ch'),
-  ('notification_email', 'isaac@meilleur.iptvsuisse.ch'),
-  ('resend_from_name', 'IPTV Suisse'),
-  ('resend_from_domain', 'meilleur.iptvsuisse.ch'),
+  ('admin_email', 'contact@nederlandsiptv.com'),
+  ('notification_email', 'contact@nederlandsiptv.com'),
+  ('resend_from_name', 'IPTV Nederland'),
+  ('resend_from_domain', 'nederlandsiptv.com'),
   ('auto_send_payment_email', 'true'),
-  ('whatsapp_number', '+41XXXXXXXXX'),
-  ('phone_number', '+41 XX XXX XX XX')
+  ('whatsapp_number', '+31XXXXXXXXX'),
+  ('phone_number', '+31 XX XXX XX XX')
 ON CONFLICT (key) DO NOTHING;
 
 -- Add payment_link column to plans if not exists (should already exist)

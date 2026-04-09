@@ -17,17 +17,27 @@ export default function LeadForm({ planId, planName, isOpen, onClose }: LeadForm
   const locale = useLocale();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
+    setApiError(null);
     try {
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, plan_id: planId, plan_name: planName, locale }),
       });
-      if (!res.ok) throw new Error();
+      const body = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        details?: string;
+      };
+      if (!res.ok) {
+        setApiError(body.details ?? body.error ?? null);
+        setStatus('error');
+        return;
+      }
       setStatus('success');
     } catch {
       setStatus('error');
@@ -89,9 +99,14 @@ export default function LeadForm({ planId, planName, isOpen, onClose }: LeadForm
                     ))}
 
                     {status === 'error' && (
-                      <div className="flex items-center gap-2 px-3 py-2 bg-red-50 border border-red-200 rounded-lg">
-                        <AlertCircle className="w-4 h-4 text-swiss-red shrink-0" />
-                        <span className="text-sm text-swiss-red">{t('error')}</span>
+                      <div className="space-y-1 px-3 py-2 bg-red-50 border border-red-200 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <AlertCircle className="w-4 h-4 text-swiss-red shrink-0" />
+                          <span className="text-sm text-swiss-red">{t('error')}</span>
+                        </div>
+                        {apiError && (
+                          <p className="text-xs text-red-700/90 pl-6 break-words">{apiError}</p>
+                        )}
                       </div>
                     )}
 

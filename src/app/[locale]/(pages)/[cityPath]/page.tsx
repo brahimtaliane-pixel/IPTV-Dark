@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG, STATS } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
+import { getSiteContact } from '@/lib/get-site-contact';
 import { localeUrl } from '@/lib/utils';
 import { CITIES_DATA, ALL_CITY_SLUGS } from '@/lib/cities';
 import { NL_CITY_SLUGS } from '@/lib/nl-city-slugs';
@@ -28,16 +29,15 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, cityPath } = await params;
+  const { cityPath } = await params;
   const citySlug = parseCitySlug(cityPath);
   const city = citySlug ? CITIES_DATA[citySlug] : null;
 
   if (!city || !citySlug) {
-    return { title: 'City Not Found' };
+    return { title: `Stad niet gevonden | ${SITE_CONFIG.name}` };
   }
 
-  const isNl = locale === 'nl';
-  const meta = isNl ? city.meta_fr : city.meta_de;
+  const meta = city.meta_nl;
   const cityUrl = `${SITE_CONFIG.url}/iptv-${citySlug}`;
 
   return {
@@ -87,12 +87,12 @@ export default async function CityPage({ params }: Props) {
 
   const city = CITIES_DATA[citySlug];
   const cityName = city.name;
-  const plans = await getPlans();
+  const [plans, contact] = await Promise.all([getPlans(), getSiteContact()]);
 
   const isNlCity = NL_CITY_SLUGS.has(citySlug);
   const cityFaqs = [
     {
-      question: `Hoe werkt IPTV Nederland in ${cityName}?`,
+      question: `Hoe werkt ${SITE_CONFIG.name} in ${cityName}?`,
       answer: `Overal in ${cityName} kijken met internet vanaf ongeveer 10 Mbps. Meer dan 30.000 zenders in HD/4K; activering meestal binnen 2 uur.`,
     },
     {
@@ -115,7 +115,7 @@ export default async function CityPage({ params }: Props) {
           { name: `IPTV ${cityName}`, url: localeUrl(locale, `/iptv-${citySlug}`) },
         ]}
       />
-      <CitySchema locale={locale} citySlug={citySlug} />
+      <CitySchema locale={locale} citySlug={citySlug} telephone={contact.phone} />
       <FAQSchema faqs={cityFaqs} />
       <CityPageClient
         citySlug={citySlug}

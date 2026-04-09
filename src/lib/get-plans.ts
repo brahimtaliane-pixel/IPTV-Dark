@@ -2,6 +2,8 @@ import { unstable_noStore as noStore } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
 import { PLANS as STATIC_PLANS } from '@/lib/constants';
 
+export type CheckoutMode = 'form_only' | 'direct_only';
+
 export type SitePlan = {
   id: string;
   slug: string;
@@ -11,6 +13,7 @@ export type SitePlan = {
   devices: number;
   features: string[];
   payment_link: string;
+  checkout_mode: CheckoutMode;
   is_popular: boolean;
   is_active: boolean;
   name_nl: string;
@@ -30,6 +33,7 @@ type DbPlanRow = {
   devices: number;
   features: string[] | null;
   payment_link: string | null;
+  checkout_mode: string | null;
   is_popular: boolean;
   is_active: boolean;
   name_fr: string;
@@ -43,8 +47,18 @@ function imageForSlug(slug: string): string {
   return s?.image ?? '/images/plans/abonnement-iptv-3-mois.png';
 }
 
+function normalizeCheckoutMode(
+  raw: string | null | undefined,
+  paymentLink?: string
+): CheckoutMode {
+  if (raw === 'form_only' || raw === 'direct_only') return raw;
+  if (raw === 'both') return paymentLink?.trim() ? 'direct_only' : 'form_only';
+  return 'form_only';
+}
+
 function rowToSitePlan(row: DbPlanRow): SitePlan {
   const canonical = STATIC_PLANS.find((s) => s.slug === row.slug);
+  const paymentLink = row.payment_link ?? '';
   return {
     id: row.id,
     slug: row.slug,
@@ -53,26 +67,22 @@ function rowToSitePlan(row: DbPlanRow): SitePlan {
     original_price: row.original_price != null ? Number(row.original_price) : undefined,
     devices: row.devices,
     features: Array.isArray(row.features) ? row.features : [],
-    payment_link: row.payment_link ?? '',
+    payment_link: paymentLink,
+    checkout_mode: normalizeCheckoutMode(row.checkout_mode, paymentLink),
     is_popular: row.is_popular,
     is_active: row.is_active,
-    // Prefer canonical Dutch titles for known slugs (avoids SSR/CSR drift vs admin "name_fr"); DB still drives price/links
-    name_nl: canonical?.name_nl ?? row.name_fr,
-    name_de: canonical?.name_de ?? row.name_de,
-    description_nl:
-      row.description_fr?.trim() !== '' && row.description_fr != null
-        ? row.description_fr
-        : (canonical?.description_nl ?? ''),
-    description_de:
-      row.description_de?.trim() !== '' && row.description_de != null
-        ? row.description_de
-        : (canonical?.description_de ?? ''),
+    // DB wins for marketing copy (admin edits `name_fr` / `description_fr` = NL); fall back to constants when empty
+    name_nl: row.name_fr?.trim() || canonical?.name_nl || '',
+    name_de: row.name_de?.trim() || canonical?.name_de || '',
+    description_nl: row.description_fr?.trim() || canonical?.description_nl || '',
+    description_de: row.description_de?.trim() || canonical?.description_de || '',
     image: imageForSlug(row.slug),
     created_at: new Date().toISOString(),
   };
 }
 
 function staticToSitePlan(p: (typeof STATIC_PLANS)[number]): SitePlan {
+  const paymentLink = p.payment_link ?? '';
   return {
     id: String(p.id),
     slug: p.slug,
@@ -81,7 +91,8 @@ function staticToSitePlan(p: (typeof STATIC_PLANS)[number]): SitePlan {
     original_price: p.original_price,
     devices: p.devices,
     features: [...p.features],
-    payment_link: p.payment_link ?? '',
+    payment_link: paymentLink,
+    checkout_mode: normalizeCheckoutMode(undefined, paymentLink),
     is_popular: p.is_popular,
     is_active: p.is_active,
     name_nl: p.name_nl,
@@ -123,6 +134,20 @@ export async function getPlans(): Promise<SitePlan[]> {
 export async function getPlanBySlug(slug: string): Promise<SitePlan | undefined> {
   const plans = await getPlans();
   return plans.find((p) => p.slug === slug);
+}
+
+/** Plan page CTA: compute once on the server and pass as props to avoid hydration mismatches. */
+export function getPlanCheckoutSnapshot(plan: SitePlan): {
+  showDirect: boolean;
+  directHref: string;
+} {
+  const link = plan.payment_link?.trim() ?? '';
+  const hasLink = link.length > 0;
+  const mode = plan.checkout_mode;
+  const forceFormOnly = mode === 'direct_only' && !hasLink;
+  const showDirect = hasLink && !forceFormOnly && mode === 'direct_only';
+  const directHref = showDirect ? link : '';
+  return { showDirect, directHref };
 }
 
 /** Homepage pricing strip: 3 mo, popular (usually 12 mo), 6 mo — computed on the server only */

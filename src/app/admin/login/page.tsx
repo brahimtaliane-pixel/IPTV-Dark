@@ -40,9 +40,9 @@ export default function AdminLoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 bg-[#D52B1E] rounded-xl mb-4">
-            <span className="text-white font-bold text-xl">IS</span>
+            <span className="text-white font-bold text-xl">IN</span>
           </div>
-          <h1 className="text-xl font-bold text-gray-900">IPTV Suisse Admin</h1>
+          <h1 className="text-xl font-bold text-gray-900">IPTV Nederland Admin</h1>
           <p className="text-sm text-gray-500 mt-1">Sign in to manage your site</p>
         </div>
 
@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#D52B1E]/20 focus:border-[#D52B1E] transition bg-gray-50"
-              placeholder="admin@meilleur.iptv-suisse.com"
+              placeholder="contact@nederlandsiptv.com"
               required
             />
           </div>
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
         </form>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Protected admin area &bull; meilleur.iptv-suisse.com
+          Protected admin area &bull; nederlandsiptv.com
         </p>
       </div>
     </div>

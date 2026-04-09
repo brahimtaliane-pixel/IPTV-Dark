@@ -1,13 +1,15 @@
-import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
 import type { SitePlan } from '@/lib/get-plans';
 
 interface JsonLdProps {
   locale: string;
   plans: SitePlan[];
+  /** From admin_settings — keeps JSON-LD in sync with contact page */
+  phone: string;
 }
 
-export default function JsonLd({ locale, plans }: JsonLdProps) {
+export default function JsonLd({ locale, plans, phone }: JsonLdProps) {
   const prices = plans.map((p) => p.price);
   const priceRange =
     prices.length > 0
@@ -23,9 +25,9 @@ export default function JsonLd({ locale, plans }: JsonLdProps) {
       'IPTV-service in Nederland — 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay op al je apparaten.',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: SITE_CONFIG.phone,
+      telephone: phone,
       contactType: 'customer service',
-      availableLanguage: ['Dutch'],
+      availableLanguage: ['nl-NL', 'nl'],
       areaServed: 'NL',
     },
     address: {
@@ -43,8 +45,6 @@ export default function JsonLd({ locale, plans }: JsonLdProps) {
     inLanguage: 'nl-NL',
   };
 
-  const priceValidUntil = '2026-12-31';
-
   const productSchemas = plans.map((plan) => ({
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -60,7 +60,7 @@ export default function JsonLd({ locale, plans }: JsonLdProps) {
       price: plan.price,
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
-      priceValidUntil,
+      priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
       seller: {
         '@type': 'Organization',
         name: SITE_CONFIG.name,
@@ -129,7 +129,7 @@ export default function JsonLd({ locale, plans }: JsonLdProps) {
     '@type': 'LocalBusiness',
     name: SITE_CONFIG.name,
     url: SITE_CONFIG.url,
-    telephone: SITE_CONFIG.phone,
+    telephone: phone,
     email: SITE_CONFIG.email,
     address: {
       '@type': 'PostalAddress',

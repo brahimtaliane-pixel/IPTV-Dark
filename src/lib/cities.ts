@@ -8,7 +8,8 @@ export interface CityData {
   population: string;
   neighborhoods_fr: string[];
   neighborhoods_de: string[];
-  meta_fr: { title: string; description: string; h1: string; intro: string };
+  /** Dutch — primary locale for IPTV Nederland (pages + JSON-LD). */
+  meta_nl: { title: string; description: string; h1: string; intro: string };
   meta_de: { title: string; description: string; h1: string; intro: string };
 }
 
@@ -19,17 +20,19 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '200,000+',
     neighborhoods_fr: ['Carouge', 'Lancy', 'Vernier', 'Meyrin', 'Onex', 'Thônex'],
     neighborhoods_de: ['Carouge', 'Lancy', 'Vernier', 'Meyrin', 'Onex', 'Thônex'],
-    meta_fr: {
-      title: 'IPTV Genève - Meilleur Abonnement IPTV à Genève 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Genève. +30\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Genève dès 35.99 EUR. Compatible Swisscom, Sunrise, Salt.',
-      h1: 'IPTV Genève — Votre Service IPTV Premium',
-      intro: 'Profitez du meilleur service IPTV à Genève avec plus de 30\'000 chaînes en HD et 4K. Notre équipe basée en Suisse offre un support client réactif et une activation rapide pour tous les résidents de Genève et du canton. Que vous soyez à Carouge, Lancy, Vernier ou Meyrin, notre abonnement IPTV Suisse fonctionne parfaitement avec tous les fournisseurs internet locaux.',
+    meta_nl: {
+      title: 'IPTV Genève | IPTV Nederland — 30.000+ zenders HD/4K 2026 | Vanaf 35,99 EUR',
+      description:
+        'Premium IPTV in Genève en Zwitserland: 30.000+ HD/4K-zenders, films en series on demand. Activatie binnen 2 uur, support 24/7. Werkt met Swisscom, Sunrise, Salt en andere providers.',
+      h1: 'IPTV Genève — premium tv streamen',
+      intro:
+        'Het beste IPTV-aanbod voor Genève en het kanton: meer dan 30.000 zenders in HD en 4K, snelle activering en betrouwbare streams. Ideaal voor kijkers in Carouge, Lancy, Vernier en Meyrin — IPTV Nederland sluit aan op jouw internetverbinding.',
     },
     meta_de: {
       title: 'IPTV Genf - Bestes IPTV-Abo in Genf 2026 | Ab 35.99 EUR',
       description: 'Premium IPTV-Service in Genf. +30\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Genf ab 35.99 EUR. Kompatibel mit Swisscom, Sunrise, Salt.',
       h1: 'IPTV Genf — Ihr Premium IPTV-Service',
-      intro: 'Geniessen Sie den besten IPTV-Service in Genf mit über 30\'000 Kanälen in HD und 4K. Unser in der Schweiz ansässiges Team bietet reaktionsschnellen Kundensupport und schnelle Aktivierung für alle Einwohner von Genf und dem Kanton. Ob in Carouge, Lancy, Vernier oder Meyrin — unser IPTV Schweiz Abo funktioniert einwandfrei mit allen lokalen Internetanbietern.',
+      intro: 'Geniessen Sie den besten IPTV-Service in Genf mit über 30\'000 Kanälen in HD und 4K. Unser in der Schweiz ansässiges Team bietet reaktionsschnellen Kundensupport und schnelle Aktivierung für alle Einwohner von Genf und dem Kanton. Ob in Carouge, Lancy, Vernier oder Meyrin — unser IPTV Nederland Abo funktioniert einwandfrei mit allen lokalen Internetanbietern.',
     },
   },
   zurich: {
@@ -38,17 +41,19 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '430,000+',
     neighborhoods_fr: ['Zurich-Ville', 'Winterthur', 'Oerlikon', 'Altstetten', 'Seebach'],
     neighborhoods_de: ['Zürich-Stadt', 'Winterthur', 'Oerlikon', 'Altstetten', 'Seebach'],
-    meta_fr: {
-      title: 'IPTV Zurich - Meilleur Abonnement IPTV à Zurich 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Zurich. +30\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Zurich dès 35.99 EUR. Compatible Swisscom, Sunrise, UPC.',
-      h1: 'IPTV Zurich — Votre Service IPTV Premium',
-      intro: 'Découvrez le meilleur service IPTV à Zurich avec plus de 30\'000 chaînes en HD et 4K. Que vous soyez à Zurich-Ville, Winterthur, Oerlikon ou dans le canton, profitez d\'un streaming fluide et d\'un support client 24/7. Notre abonnement IPTV Suisse est compatible avec Swisscom, Sunrise, UPC et tous les FAI de la région zurichoise.',
+    meta_nl: {
+      title: 'IPTV Zürich | IPTV Nederland — beste IPTV Zürich 2026 | Vanaf 35,99 EUR',
+      description:
+        'Premium IPTV in Zürich: 30.000+ HD/4K-zenders, grote VOD-bibliotheek, activatie binnen 2 uur. Compatibel met Swisscom, Sunrise, UPC en andere Zwitserse providers.',
+      h1: 'IPTV Zürich — jouw premium IPTV-service',
+      intro:
+        'IPTV Nederland voor Zürich en omgeving: meer dan 30.000 zenders in HD/4K, vloeiend streamen en 24/7 ondersteuning. Werkt in de stad, Winterthur, Oerlikon en heel kanton Zürich met alle grote internetproviders.',
     },
     meta_de: {
       title: 'IPTV Zürich - Bestes IPTV-Abo in Zürich 2026 | Ab 35.99 EUR',
       description: 'Premium IPTV-Service in Zürich. +30\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Zürich ab 35.99 EUR. Kompatibel mit Swisscom, Sunrise, UPC.',
       h1: 'IPTV Zürich — Ihr Premium IPTV-Service',
-      intro: 'Entdecken Sie den besten IPTV-Service in Zürich mit über 30\'000 Kanälen in HD und 4K. Ob in der Stadt Zürich, Winterthur, Oerlikon oder im Kanton — geniessen Sie flüssiges Streaming und 24/7 Kundensupport. Unser IPTV Schweiz Abo ist kompatibel mit Swisscom, Sunrise, UPC und allen ISPs der Region Zürich.',
+      intro: 'Entdecken Sie den besten IPTV-Service in Zürich mit über 30\'000 Kanälen in HD und 4K. Ob in der Stadt Zürich, Winterthur, Oerlikon oder im Kanton — geniessen Sie flüssiges Streaming und 24/7 Kundensupport. Unser IPTV Nederland Abo ist kompatibel mit Swisscom, Sunrise, UPC und allen ISPs der Region Zürich.',
     },
   },
   lausanne: {
@@ -57,17 +62,19 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '140,000+',
     neighborhoods_fr: ['Ouchy', 'Flon', 'Pully', 'Renens', 'Morges', 'Vevey'],
     neighborhoods_de: ['Ouchy', 'Flon', 'Pully', 'Renens', 'Morges', 'Vevey'],
-    meta_fr: {
-      title: 'IPTV Lausanne - Meilleur Abonnement IPTV à Lausanne 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Lausanne. +30\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Lausanne dès 35.99 EUR. Compatible tous FAI.',
-      h1: 'IPTV Lausanne — Votre Service IPTV Premium',
-      intro: 'Le meilleur service IPTV à Lausanne et dans tout le canton de Vaud. Plus de 30\'000 chaînes TV, 170\'000+ films et séries on demand en streaming HD/4K avec une activation rapide et un support francophone. Que vous habitiez à Ouchy, Flon, Pully, Renens ou Morges, profitez d\'un abonnement IPTV Suisse haute qualité compatible Swisscom, Sunrise et Salt.',
+    meta_nl: {
+      title: 'IPTV Lausanne | IPTV Nederland — Vaud & Lausanne 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Lausanne: 30.000+ zenders HD/4K, 170.000+ films en series on demand. Snelle activatie, support 24/7. Werkt met Swisscom, Sunrise, Salt en andere providers.',
+      h1: 'IPTV Lausanne — premium entertainment',
+      intro:
+        'IPTV Nederland voor Lausanne en kanton Vaud: volledig aanbod live tv, VOD en replay in HD/4K. Snel geactiveerd; geschikt voor Ouchy, Flon, Pully, Renens, Morges en omgeving.',
     },
     meta_de: {
       title: 'IPTV Lausanne - Bestes IPTV-Abo in Lausanne 2026 | Ab 35.99 EUR',
       description: 'Premium IPTV-Service in Lausanne. +30\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Lausanne ab 35.99 EUR. Kompatibel mit allen ISPs.',
       h1: 'IPTV Lausanne — Ihr Premium IPTV-Service',
-      intro: 'Der beste IPTV-Service in Lausanne und im gesamten Kanton Waadt. Über 30\'000 TV-Kanäle, 170\'000+ Filme und Serien on demand in HD/4K-Streaming mit schneller Aktivierung und französischsprachigem Support. Ob in Ouchy, Flon, Pully, Renens oder Morges — geniessen Sie ein hochwertiges IPTV Schweiz Abo, kompatibel mit Swisscom, Sunrise und Salt.',
+      intro: 'Der beste IPTV-Service in Lausanne und im gesamten Kanton Waadt. Über 30\'000 TV-Kanäle, 170\'000+ Filme und Serien on demand in HD/4K-Streaming mit schneller Aktivierung und französischsprachigem Support. Ob in Ouchy, Flon, Pully, Renens oder Morges — geniessen Sie ein hochwertiges IPTV Nederland Abo, kompatibel mit Swisscom, Sunrise und Salt.',
     },
   },
   bern: {
@@ -76,17 +83,19 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '135,000+',
     neighborhoods_fr: ['Berne-Ville', 'Köniz', 'Ostermundigen', 'Muri bei Bern', 'Bümpliz'],
     neighborhoods_de: ['Bern-Stadt', 'Köniz', 'Ostermundigen', 'Muri bei Bern', 'Bümpliz'],
-    meta_fr: {
-      title: 'IPTV Berne - Meilleur Abonnement IPTV à Berne 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Berne. +30\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Berne dès 35.99 EUR. Compatible Swisscom, Sunrise.',
-      h1: 'IPTV Berne — Votre Service IPTV Premium',
-      intro: 'Profitez du meilleur service IPTV à Berne, la capitale suisse. Plus de 30\'000 chaînes HD/4K avec support bilingue français-allemand et activation rapide dans tout le canton de Berne. Que vous soyez à Köniz, Ostermundigen, Muri bei Bern ou Bümpliz, notre abonnement IPTV Suisse fonctionne avec tous les fournisseurs internet de la région bernoise.',
+    meta_nl: {
+      title: 'IPTV Bern | IPTV Nederland — IPTV in de bondsstad 2026 | Vanaf 35,99 EUR',
+      description:
+        'Premium IPTV in Bern: 30.000+ zenders HD/4K, VOD en replay. Activatie binnen 2 uur, 24/7 support. Compatibel met Swisscom, Sunrise en andere providers in kanton Bern.',
+      h1: 'IPTV Bern — streamen in hart van Zwitserland',
+      intro:
+        'IPTV Nederland voor Bern en heel kanton Bern: meer dan 30.000 zenders, meertalige support en snelle activering. Werkt in Köniz, Ostermundigen, Muri bei Bern, Bümpliz en elders met alle gangbare internetproviders.',
     },
     meta_de: {
       title: 'IPTV Bern - Bestes IPTV-Abo in Bern 2026 | Ab 35.99 EUR',
       description: 'Premium IPTV-Service in Bern. +30\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Bern ab 35.99 EUR. Kompatibel mit Swisscom, Sunrise.',
       h1: 'IPTV Bern — Ihr Premium IPTV-Service',
-      intro: 'Geniessen Sie den besten IPTV-Service in Bern, der Schweizer Hauptstadt. Über 30\'000 HD/4K-Kanäle mit zweisprachigem Deutsch-Französisch-Support und schneller Aktivierung im gesamten Kanton Bern. Ob in Köniz, Ostermundigen, Muri bei Bern oder Bümpliz — unser IPTV Schweiz Abo funktioniert mit allen Internetanbietern der Region Bern.',
+      intro: 'Geniessen Sie den besten IPTV-Service in Bern, der Schweizer Hauptstadt. Über 30\'000 HD/4K-Kanäle mit zweisprachigem Deutsch-Französisch-Support und schneller Aktivierung im gesamten Kanton Bern. Ob in Köniz, Ostermundigen, Muri bei Bern oder Bümpliz — unser IPTV Nederland Abo funktioniert mit allen Internetanbietern der Region Bern.',
     },
   },
   basel: {
@@ -95,17 +104,19 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '180,000+',
     neighborhoods_fr: ['Bâle-Ville', 'Riehen', 'Binningen', 'Allschwil', 'Reinach'],
     neighborhoods_de: ['Basel-Stadt', 'Riehen', 'Binningen', 'Allschwil', 'Reinach'],
-    meta_fr: {
-      title: 'IPTV Bâle - Meilleur Abonnement IPTV à Bâle 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Bâle. +30\'000 chaînes HD/4K, films et séries. Activation en 2h, support 24/7. Meilleur abonnement IPTV Bâle dès 35.99 EUR. Compatible tous FAI.',
-      h1: 'IPTV Bâle — Votre Service IPTV Premium',
-      intro: 'Le meilleur service IPTV à Bâle et dans la région trinationale. Plus de 30\'000 chaînes suisses, françaises, allemandes et internationales en HD/4K. Que vous habitiez à Riehen, Binningen, Allschwil ou Reinach, profitez d\'un abonnement IPTV Suisse premium compatible avec Swisscom, Sunrise, Salt et UPC.',
+    meta_nl: {
+      title: 'IPTV Basel | IPTV Nederland — drielandenregio 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Basel: 30.000+ zenders (Zwitsers, Duits, Frans, internationaal) in HD/4K. Snel geactiveerd, 24/7 support. Geschikt voor Swisscom, Sunrise, Salt, UPC.',
+      h1: 'IPTV Basel — premium streaming',
+      intro:
+        'IPTV Nederland voor Basel en de regio: groot zenderaanbod en stabiele streams. Werkt in Riehen, Binningen, Allschwil, Reinach en elders met alle grote providers.',
     },
     meta_de: {
       title: 'IPTV Basel - Bestes IPTV-Abo in Basel 2026 | Ab 35.99 EUR',
       description: 'Premium IPTV-Service in Basel. +30\'000 HD/4K-Kanäle, Filme und Serien. Aktivierung in 2h, 24/7 Support. Bestes IPTV-Abo Basel ab 35.99 EUR. Kompatibel mit allen ISPs.',
       h1: 'IPTV Basel — Ihr Premium IPTV-Service',
-      intro: 'Der beste IPTV-Service in Basel und der Dreiländerregion. Über 30\'000 Schweizer, deutsche, französische und internationale Kanäle in HD/4K. Ob in Riehen, Binningen, Allschwil oder Reinach — geniessen Sie ein Premium IPTV Schweiz Abo, kompatibel mit Swisscom, Sunrise, Salt und UPC.',
+      intro: 'Der beste IPTV-Service in Basel und der Dreiländerregion. Über 30\'000 Schweizer, deutsche, französische und internationale Kanäle in HD/4K. Ob in Riehen, Binningen, Allschwil oder Reinach — geniessen Sie ein Premium IPTV Nederland Abo, kompatibel mit Swisscom, Sunrise, Salt und UPC.',
     },
   },
   // ── New cities for long-tail SEO ────────────────────────
@@ -115,17 +126,19 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '137,000+',
     neighborhoods_fr: ['Winterthour-Ville', 'Töss', 'Wülflingen', 'Seen'],
     neighborhoods_de: ['Winterthur-Stadt', 'Töss', 'Wülflingen', 'Seen'],
-    meta_fr: {
-      title: 'IPTV Winterthour - Abonnement IPTV à Winterthour 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Winterthour. +30\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Winterthour dès 35.99 EUR.',
-      h1: 'IPTV Winterthour — Votre Service IPTV Premium',
-      intro: 'Profitez du meilleur service IPTV à Winterthour, deuxième plus grande ville du canton de Zurich. Plus de 30\'000 chaînes en HD et 4K, VOD avec 170\'000+ films et séries on demand. Notre abonnement IPTV Suisse est activé en moins de 2 heures et fonctionne avec tous les FAI de Winterthour.',
+    meta_nl: {
+      title: 'IPTV Winterthur | IPTV Nederland — kanton Zürich 2026 | Vanaf 35,99 EUR',
+      description:
+        'Premium IPTV in Winterthur: 30.000+ HD/4K-zenders, grote VOD. Activatie binnen 2 uur, 24/7 support. Werkt met alle providers in Winterthur en omgeving.',
+      h1: 'IPTV Winterthur — jouw IPTV in het kanton Zürich',
+      intro:
+        'IPTV Nederland voor Winterthur, de tweede stad van kanton Zürich: meer dan 30.000 zenders, 170.000+ titels on demand en snelle activering. Compatibel met alle internetproviders ter plaatse.',
     },
     meta_de: {
       title: 'IPTV Winterthur - IPTV-Abo in Winterthur 2026 | Ab 35.99 EUR',
       description: 'Premium IPTV-Service in Winterthur. +30\'000 HD/4K-Kanäle. Aktivierung in 2h, 24/7 Support. IPTV-Abo Winterthur ab 35.99 EUR.',
       h1: 'IPTV Winterthur — Ihr Premium IPTV-Service',
-      intro: 'Geniessen Sie den besten IPTV-Service in Winterthur, der zweitgrössten Stadt im Kanton Zürich. Über 30\'000 Kanäle in HD und 4K, VOD mit 170\'000+ Filmen und Serien on demand. Unser IPTV Schweiz Abo wird in weniger als 2 Stunden aktiviert und funktioniert mit allen ISPs in Winterthur.',
+      intro: 'Geniessen Sie den besten IPTV-Service in Winterthur, der zweitgrössten Stadt im Kanton Zürich. Über 30\'000 Kanäle in HD und 4K, VOD mit 170\'000+ Filmen und Serien on demand. Unser IPTV Nederland Abo wird in weniger als 2 Stunden aktiviert und funktioniert mit allen ISPs in Winterthur.',
     },
   },
   'st-gallen': {
@@ -134,11 +147,13 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '80,000+',
     neighborhoods_fr: ['Saint-Gall-Ville', 'Rorschach', 'Gossau', 'Herisau'],
     neighborhoods_de: ['St. Gallen-Stadt', 'Rorschach', 'Gossau', 'Herisau'],
-    meta_fr: {
-      title: 'IPTV Saint-Gall - Abonnement IPTV à Saint-Gall 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Saint-Gall. +30\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Saint-Gall dès 35.99 EUR.',
-      h1: 'IPTV Saint-Gall — Votre Service IPTV Premium',
-      intro: 'Découvrez le meilleur service IPTV à Saint-Gall et en Suisse orientale. Plus de 30\'000 chaînes en HD et 4K, films et séries illimités. Activation rapide en 2 heures et support 24/7 pour tous les résidents de Saint-Gall, Rorschach, Gossau et Herisau.',
+    meta_nl: {
+      title: 'IPTV St. Gallen | IPTV Nederland — Oost-Zwitserland 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in St. Gallen: 30.000+ zenders HD/4K, onbeperkte films en series. Activatie in ca. 2 uur, 24/7 support voor St. Gallen, Rorschach, Gossau en Herisau.',
+      h1: 'IPTV St. Gallen — premium in Oost-Zwitserland',
+      intro:
+        'IPTV Nederland voor St. Gallen en de regio: groot zenderaanbod, snelle levering en betrouwbare streams voor heel de Oost-Zwitserse markt.',
     },
     meta_de: {
       title: 'IPTV St. Gallen - IPTV-Abo in St. Gallen 2026 | Ab 35.99 EUR',
@@ -153,11 +168,13 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '65,000+',
     neighborhoods_fr: ['Lugano-Ville', 'Paradiso', 'Massagno', 'Viganello'],
     neighborhoods_de: ['Lugano-Stadt', 'Paradiso', 'Massagno', 'Viganello'],
-    meta_fr: {
-      title: 'IPTV Lugano - Abonnement IPTV à Lugano 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Lugano. +30\'000 chaînes HD/4K, chaînes italiennes incluses. Activation en 2h. Abonnement IPTV Lugano dès 35.99 EUR.',
-      h1: 'IPTV Lugano — Votre Service IPTV Premium',
-      intro: 'Le meilleur service IPTV à Lugano et au Tessin. Plus de 30\'000 chaînes incluant toutes les chaînes suisses, italiennes et internationales en HD et 4K. Activation en 2 heures pour tous les résidents de Lugano, Paradiso et Massagno.',
+    meta_nl: {
+      title: 'IPTV Lugano | IPTV Nederland — Ticino & Italië 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Lugano: Zwitsers, Italiaans en internationaal aanbod in HD/4K. Activatie binnen 2 uur. Ideaal voor Tessin en Italiaanse zenders.',
+      h1: 'IPTV Lugano — streamen in het Tessin',
+      intro:
+        'IPTV Nederland voor Lugano en omgeving: meer dan 30.000 zenders, waaronder Zwitsers en Italiaans aanbod. Snel actief in Lugano, Paradiso en Massagno.',
     },
     meta_de: {
       title: 'IPTV Lugano - IPTV-Abo in Lugano 2026 | Ab 35.99 EUR',
@@ -172,11 +189,13 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '55,000+',
     neighborhoods_fr: ['Bienne-Ville', 'Nidau', 'Brügg', 'Port'],
     neighborhoods_de: ['Biel-Stadt', 'Nidau', 'Brügg', 'Port'],
-    meta_fr: {
-      title: 'IPTV Bienne - Abonnement IPTV à Bienne 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Bienne. +30\'000 chaînes HD/4K, support bilingue FR/DE. Activation en 2h. Abonnement IPTV Bienne dès 35.99 EUR.',
-      h1: 'IPTV Bienne — Votre Service IPTV Premium',
-      intro: 'Profitez du meilleur service IPTV à Bienne, la plus grande ville bilingue de Suisse. Plus de 30\'000 chaînes francophones et germanophones en HD/4K. Support bilingue et activation rapide pour Bienne, Nidau et la région.',
+    meta_nl: {
+      title: 'IPTV Biel/Bienne | IPTV Nederland — tweetalig FR/DE 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Biel/Bienne: 30.000+ zenders HD/4K, Franstalig en Duitstalig aanbod. Snelle activatie, meertalige support. Regio Biel, Nidau en omstreken.',
+      h1: 'IPTV Biel — premium in tweetalig Zwitserland',
+      intro:
+        'IPTV Nederland voor de grootste tweetalige stad van Zwitserland: Frans- en Duitstalige zenders in HD/4K, snelle setup voor Biel, Nidau en de regio.',
     },
     meta_de: {
       title: 'IPTV Biel - IPTV-Abo in Biel 2026 | Ab 35.99 EUR',
@@ -191,11 +210,13 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '82,000+',
     neighborhoods_fr: ['Lucerne-Ville', 'Emmen', 'Horw', 'Kriens'],
     neighborhoods_de: ['Luzern-Stadt', 'Emmen', 'Horw', 'Kriens'],
-    meta_fr: {
-      title: 'IPTV Lucerne - Abonnement IPTV à Lucerne 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Lucerne. +30\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Lucerne dès 35.99 EUR.',
-      h1: 'IPTV Lucerne — Votre Service IPTV Premium',
-      intro: 'Découvrez le meilleur service IPTV à Lucerne et en Suisse centrale. Plus de 30\'000 chaînes HD/4K, 170\'000+ films et séries on demand. Activation rapide et support 24/7 pour Lucerne, Emmen, Horw et Kriens.',
+    meta_nl: {
+      title: 'IPTV Luzern | IPTV Nederland — Centraal-Zwitserland 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Luzern: 30.000+ HD/4K-zenders, 170.000+ films en series on demand. Activatie binnen 2 uur, 24/7 support in Luzern, Emmen, Horw en Kriens.',
+      h1: 'IPTV Luzern — jouw IPTV in het Vierwoudstedenmeer',
+      intro:
+        'IPTV Nederland voor Luzern en Midden-Zwitserland: volledig pakket live tv en VOD, snelle activering en ondersteuning voor stad en regio.',
     },
     meta_de: {
       title: 'IPTV Luzern - IPTV-Abo in Luzern 2026 | Ab 35.99 EUR',
@@ -210,11 +231,13 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '40,000+',
     neighborhoods_fr: ['Fribourg-Ville', 'Villars-sur-Glâne', 'Givisiez', 'Granges-Paccot'],
     neighborhoods_de: ['Freiburg-Stadt', 'Villars-sur-Glâne', 'Givisiez', 'Granges-Paccot'],
-    meta_fr: {
-      title: 'IPTV Fribourg - Abonnement IPTV à Fribourg 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Fribourg. +30\'000 chaînes HD/4K, support bilingue. Activation en 2h. Abonnement IPTV Fribourg dès 35.99 EUR.',
-      h1: 'IPTV Fribourg — Votre Service IPTV Premium',
-      intro: 'Le meilleur service IPTV à Fribourg, ville bilingue au cœur de la Suisse. Plus de 30\'000 chaînes francophones et germanophones en HD/4K. Support bilingue 24/7, activation en 2 heures pour Fribourg, Villars-sur-Glâne et toute la région.',
+    meta_nl: {
+      title: 'IPTV Fribourg | IPTV Nederland — tweetalig FR/DE 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Fribourg: 30.000+ zenders HD/4K, Franstalig en Duitstalig aanbod. Activatie binnen 2 uur, 24/7 meertalige support.',
+      h1: 'IPTV Fribourg — premium in het hart van Zwitserland',
+      intro:
+        'IPTV Nederland voor Fribourg en regio: Frans- en Duitstalige zenders, snelle activering voor Fribourg, Villars-sur-Glâne en heel het kanton.',
     },
     meta_de: {
       title: 'IPTV Freiburg - IPTV-Abo in Freiburg 2026 | Ab 35.99 EUR',
@@ -229,11 +252,13 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '35,000+',
     neighborhoods_fr: ['Neuchâtel-Ville', 'La Chaux-de-Fonds', 'Le Locle', 'Peseux'],
     neighborhoods_de: ['Neuenburg-Stadt', 'La Chaux-de-Fonds', 'Le Locle', 'Peseux'],
-    meta_fr: {
-      title: 'IPTV Neuchâtel - Abonnement IPTV à Neuchâtel 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Neuchâtel. +30\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Neuchâtel dès 35.99 EUR.',
-      h1: 'IPTV Neuchâtel — Votre Service IPTV Premium',
-      intro: 'Profitez du meilleur service IPTV à Neuchâtel et dans tout le canton. Plus de 30\'000 chaînes en HD/4K, 170\'000+ films et séries on demand et replay intégré. Activation rapide pour Neuchâtel, La Chaux-de-Fonds et Le Locle. Support francophone 24/7.',
+    meta_nl: {
+      title: 'IPTV Neuchâtel | IPTV Nederland — kanton Neuchâtel 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Neuchâtel: 30.000+ zenders HD/4K, 170.000+ films en series, replay. Snel geactiveerd; 24/7 support voor Neuchâtel, La Chaux-de-Fonds en Le Locle.',
+      h1: 'IPTV Neuchâtel — Franstalig Zwitserland',
+      intro:
+        'IPTV Nederland voor Neuchâtel en heel het kanton: volledig aanbod, Franstalige ondersteuning en snelle installatie in de belangrijkste steden.',
     },
     meta_de: {
       title: 'IPTV Neuenburg - IPTV-Abo in Neuenburg 2026 | Ab 35.99 EUR',
@@ -248,11 +273,13 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '45,000+',
     neighborhoods_fr: ['Thoune-Ville', 'Steffisburg', 'Spiez', 'Heimberg'],
     neighborhoods_de: ['Thun-Stadt', 'Steffisburg', 'Spiez', 'Heimberg'],
-    meta_fr: {
-      title: 'IPTV Thoune - Abonnement IPTV à Thoune 2026 | Dès 35.99 EUR',
-      description: 'Service IPTV premium à Thoune. +30\'000 chaînes HD/4K. Activation en 2h, support 24/7. Abonnement IPTV Thoune dès 35.99 EUR.',
-      h1: 'IPTV Thoune — Votre Service IPTV Premium',
-      intro: 'Le meilleur service IPTV à Thoune et dans l\'Oberland bernois. Plus de 30\'000 chaînes en HD/4K avec activation rapide. Compatible avec tous les FAI de la région de Thoune, Steffisburg, Spiez et Heimberg.',
+    meta_nl: {
+      title: 'IPTV Thun | IPTV Nederland — Berner Oberland 2026 | Vanaf 35,99 EUR',
+      description:
+        'IPTV in Thun: 30.000+ HD/4K-zenders. Activatie binnen 2 uur, 24/7 support. Geschikt voor Thun, Steffisburg, Spiez, Heimberg en Berner Oberland.',
+      h1: 'IPTV Thun — streamen in het Berner Oberland',
+      intro:
+        'IPTV Nederland voor Thun en de regio: stabiele streams en snelle activering met alle gangbare internetproviders in het Oberland.',
     },
     meta_de: {
       title: 'IPTV Thun - IPTV-Abo in Thun 2026 | Ab 35.99 EUR',
@@ -268,7 +295,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '900,000+',
     neighborhoods_fr: ['Centrum', 'Noord', 'Zuid', 'Oost', 'West'],
     neighborhoods_de: ['Centrum', 'Noord', 'Zuid', 'Oost', 'West'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Amsterdam | IPTV Nederland — 30.000+ zenders HD/4K 2026',
       description: 'IPTV in Amsterdam: 30.000+ zenders, 170.000+ films en series on demand, replay. Activatie binnen 2 uur. KPN, Ziggo, T-Mobile, glasvezel. Nederlandstalige support.',
       h1: 'IPTV Amsterdam — premium TV op elk apparaat',
@@ -287,7 +314,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '650,000+',
     neighborhoods_fr: ['Centrum', 'Kralingen', 'Feijenoord', 'Hillegersberg', 'Schiedam'],
     neighborhoods_de: ['Centrum', 'Kralingen', 'Feijenoord', 'Hillegersberg', 'Schiedam'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Rotterdam | IPTV Nederland — streaming Zuid-Holland',
       description: 'IPTV Rotterdam: duizenden zenders HD/4K, replay, VOD. Ziggo, KPN, glasvezel. Activering snel geregeld.',
       h1: 'IPTV Rotterdam — jouw entertainment',
@@ -306,7 +333,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '550,000+',
     neighborhoods_fr: ['Centrum', 'Scheveningen', 'Loosduinen', 'Escamp', 'Laak'],
     neighborhoods_de: ['Centrum', 'Scheveningen', 'Loosduinen', 'Escamp', 'Laak'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Den Haag | IPTV Nederland — Scheveningen & regio',
       description: 'IPTV Den Haag: premium TV, 30.000+ zenders, 170.000+ films en series, replay. Werkt overal in de regio Haaglanden.',
       h1: 'IPTV Den Haag — thuis en onderweg',
@@ -325,7 +352,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '360,000+',
     neighborhoods_fr: ['Binnenstad', 'Overvecht', 'Leidsche Rijn', 'Vleuten', 'Nieuwegein'],
     neighborhoods_de: ['Binnenstad', 'Overvecht', 'Leidsche Rijn', 'Vleuten', 'Nieuwegein'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Utrecht | IPTV Nederland — centraal Nederland',
       description: 'IPTV Utrecht: glasvezel en kabel, 30.000+ zenders, grote VOD. Activering binnen 2 uur.',
       h1: 'IPTV Utrecht — midden in het land',
@@ -344,7 +371,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '240,000+',
     neighborhoods_fr: ['Centrum', 'Woensel', 'Stratum', 'Gestel', 'Veldhoven'],
     neighborhoods_de: ['Centrum', 'Woensel', 'Stratum', 'Gestel', 'Veldhoven'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Eindhoven | IPTV Nederland — Brainport regio',
       description: 'IPTV Eindhoven: HD/4K, sport, films. Ziggo, KPN, glasvezel in Brabant.',
       h1: 'IPTV Eindhoven — Brainport kijkt mee',
@@ -363,7 +390,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '235,000+',
     neighborhoods_fr: ['Centrum', 'Helpman', 'Vinkhuizen', 'Hoogkerk', 'Haren'],
     neighborhoods_de: ['Centrum', 'Helpman', 'Vinkhuizen', 'Hoogkerk', 'Haren'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Groningen | IPTV Nederland — noorden',
       description: 'IPTV Groningen: volledig aanbod, ook voor studenten en expats. Snelle levering.',
       h1: 'IPTV Groningen — het noorden online',
@@ -382,7 +409,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '225,000+',
     neighborhoods_fr: ['Centrum', 'Reeshof', 'Udenhout', 'Berkel-Enschot'],
     neighborhoods_de: ['Centrum', 'Reeshof', 'Udenhout', 'Berkel-Enschot'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Tilburg | IPTV Nederland — Brabant',
       description: 'IPTV Tilburg: premium pakketten, multi-scherm, VOD.',
       h1: 'IPTV Tilburg',
@@ -401,7 +428,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '220,000+',
     neighborhoods_fr: ['Centrum', 'Almere Stad', 'Almere Buiten', 'Poort'],
     neighborhoods_de: ['Centrum', 'Almere Stad', 'Almere Buiten', 'Poort'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Almere | IPTV Nederland — Flevoland',
       description: 'IPTV Almere: glasvezelvriendelijk, snelle activatie, alle zenders.',
       h1: 'IPTV Almere',
@@ -420,7 +447,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '120,000+',
     neighborhoods_fr: ['Centrum', 'Wyck', 'Heer', 'Randwyck'],
     neighborhoods_de: ['Centrum', 'Wyck', 'Heer', 'Randwyck'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Maastricht | IPTV Nederland — Zuid-Limburg',
       description: 'IPTV Maastricht: Belgische en Nederlandse zenders, sport, cultuur.',
       h1: 'IPTV Maastricht',
@@ -439,7 +466,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '165,000+',
     neighborhoods_fr: ['Centrum', 'Schalkwijk', 'Overveen', 'Spaarndam'],
     neighborhoods_de: ['Centrum', 'Schalkwijk', 'Overveen', 'Spaarndam'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Haarlem | IPTV Nederland — Kennemerland',
       description: 'IPTV Haarlem: regionale en landelijke zenders in HD/4K.',
       h1: 'IPTV Haarlem',
@@ -458,7 +485,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '165,000+',
     neighborhoods_fr: ['Centrum', 'Velp', 'Duiven', 'Elst'],
     neighborhoods_de: ['Centrum', 'Velp', 'Duiven', 'Elst'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Arnhem | IPTV Nederland — Gelderland',
       description: 'IPTV Arnhem: Veluwe en regio, sport en nieuws.',
       h1: 'IPTV Arnhem',
@@ -477,7 +504,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '130,000+',
     neighborhoods_fr: ['Centrum', 'Assendorp', 'Diezerpoort', 'Hattem'],
     neighborhoods_de: ['Centrum', 'Assendorp', 'Diezerpoort', 'Hattem'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Zwolle | IPTV Nederland — Overijssel',
       description: 'IPTV Zwolle: noordoost Nederland, snelle support.',
       h1: 'IPTV Zwolle',
@@ -496,7 +523,7 @@ export const CITIES_DATA: Record<string, CityData> = {
     population: '185,000+',
     neighborhoods_fr: ['Centrum', 'Princenhage', 'Teteringen', 'Oosterhout'],
     neighborhoods_de: ['Centrum', 'Princenhage', 'Teteringen', 'Oosterhout'],
-    meta_fr: {
+    meta_nl: {
       title: 'IPTV Breda | IPTV Nederland — West-Brabant',
       description: 'IPTV Breda: grote stad, volledig IPTV-aanbod.',
       h1: 'IPTV Breda',

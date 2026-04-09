@@ -12,6 +12,7 @@ import CityLinks from '@/components/sections/CityLinks';
 import CTA from '@/components/sections/CTA';
 import JsonLd from '@/components/sections/JsonLd';
 import { getPlans, selectHomePricingPlans } from '@/lib/get-plans';
+import { getSiteContact } from '@/lib/get-site-contact';
 import { STATS } from '@/lib/constants';
 
 type Props = {
@@ -24,12 +25,12 @@ export const dynamic = 'force-dynamic';
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const plans = await getPlans();
+  const [plans, contact] = await Promise.all([getPlans(), getSiteContact()]);
   const homePricingPlans = selectHomePricingPlans(plans);
 
   return (
     <>
-      <JsonLd locale={locale} plans={plans} />
+      <JsonLd locale={locale} plans={plans} phone={contact.phone} />
       <Hero
         statValues={{
           channels: STATS.channels,

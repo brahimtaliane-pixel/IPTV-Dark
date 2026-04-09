@@ -102,17 +102,25 @@ export default function Hero({ statValues }: { statValues: SiteStatsSnapshot }) 
             className="relative hidden lg:block"
           >
             <div className="relative group">
-              {/* Subtle glow behind image */}
-              <div className="absolute inset-0 bg-swiss-red/[0.04] rounded-2xl blur-3xl scale-105 opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
-
-              <Image
-                src="/images/hero-devices.png"
-                alt={t('imageAlt')}
-                width={1024}
-                height={683}
-                className="relative w-full h-auto object-contain drop-shadow-xl transform transition-transform duration-500 group-hover:scale-[1.02]"
-                priority
+              {/* Soft tint behind cutout */}
+              <div
+                className="absolute inset-0 bg-swiss-red/[0.04] rounded-[2rem] blur-3xl scale-95 opacity-70 pointer-events-none"
+                aria-hidden
               />
+
+              {/* unoptimized: serve raw PNG so alpha is preserved (Next AVIF/WebP pipeline can show black where transparent). */}
+              <div className="relative bg-transparent">
+                <Image
+                  src="/images/hero-devices.png"
+                  alt={t('imageAlt')}
+                  width={612}
+                  height={408}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="relative w-full h-auto object-contain bg-transparent transition-transform duration-500 group-hover:scale-[1.01]"
+                  priority
+                  unoptimized
+                />
+              </div>
 
               {/* Floating badge */}
               <motion.div

@@ -1,18 +1,25 @@
 // Run: node scripts/setup-db.mjs
-// This script sets up the Supabase database schema
+// Requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local
 
 import { createClient } from '@supabase/supabase-js';
-import { readFileSync } from 'fs';
+import { loadEnvFiles } from './load-env.mjs';
 
-const supabaseUrl = 'https://rzyutwarhhmkkxgrtqto.supabase.co';
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6eXV0d2FyaGhta2t4Z3J0cXRvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDUzNzY2MCwiZXhwIjoyMDg2MTEzNjYwfQ.uD1y_V8COvLvGxWHkyF6_AhEHcdCMZzQZBlyvFBbo2U';
+loadEnvFiles();
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !serviceRoleKey) {
+  console.error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local');
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, serviceRoleKey, {
   db: { schema: 'public' },
 });
 
 async function setupDatabase() {
-  console.log('🔧 Setting up IPTV Suisse database...\n');
+  console.log('🔧 Setting up IPTV Nederland database...\n');
 
   // Test connection
   console.log('1. Testing connection...');
@@ -20,8 +27,9 @@ async function setupDatabase() {
   
   if (testError && testError.code === '42P01') {
     console.log('   → Tables don\'t exist yet. You need to run the SQL schema manually.\n');
+    const ref = new URL(supabaseUrl).hostname.replace('.supabase.co', '');
     console.log('   📋 Please go to your Supabase SQL Editor:');
-    console.log('   https://supabase.com/dashboard/project/rzyutwarhhmkkxgrtqto/sql/new\n');
+    console.log(`   https://supabase.com/dashboard/project/${ref}/sql/new\n`);
     console.log('   Then paste and run the contents of: supabase/schema.sql\n');
     
     // Try alternative: use the rpc to check
@@ -51,7 +59,7 @@ async function setupDatabase() {
     
     const { error: insertError } = await supabase.from('plans').insert([
       {
-        slug: 'abonnement-iptv-3-mois',
+        slug: 'abonnement-iptv-3-maanden',
         duration: 3,
         price: 25.00,
         original_price: 45.00,
@@ -65,7 +73,7 @@ async function setupDatabase() {
         sort_order: 1,
       },
       {
-        slug: 'abonnement-iptv-6-mois',
+        slug: 'abonnement-iptv-6-maanden',
         duration: 6,
         price: 35.00,
         original_price: 70.00,
@@ -79,7 +87,7 @@ async function setupDatabase() {
         sort_order: 3,
       },
       {
-        slug: 'abonnement-iptv-12-mois',
+        slug: 'abonnement-iptv-12-maanden',
         duration: 12,
         price: 59.99,
         original_price: 119.99,

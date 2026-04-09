@@ -2,11 +2,37 @@
 // IPTV Nederland - Constants & Configuration
 // ============================================================
 
+/** Single source for public URL/email so SSR and client bundles stay in sync (avoids hydration mismatches). */
+const DEFAULT_PUBLIC_ORIGIN = 'https://nederlandsiptv.com';
+
+function resolvePublicOrigin(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!raw) return DEFAULT_PUBLIC_ORIGIN;
+  try {
+    return new URL(raw).origin;
+  } catch {
+    return DEFAULT_PUBLIC_ORIGIN;
+  }
+}
+
+function hostnameFromOrigin(origin: string): string {
+  try {
+    return new URL(origin).hostname;
+  } catch {
+    return 'nederlandsiptv.com';
+  }
+}
+
+const _publicOrigin = resolvePublicOrigin();
+const _publicHost = hostnameFromOrigin(_publicOrigin);
+const _contactEmail =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || `contact@${_publicHost}`;
+
 export const SITE_CONFIG = {
   name: 'IPTV Nederland',
-  domain: 'iptv-nederland.com',
-  url: 'https://iptv-nederland.com',
-  email: 'contact@iptv-nederland.com',
+  domain: _publicHost,
+  url: _publicOrigin,
+  email: _contactEmail,
   // TODO: Replace with real phone number before go-live
   phone: '+31 XX XXX XX XX',
   // TODO: Replace with real WhatsApp number before go-live
@@ -20,6 +46,12 @@ export const PRICE_CURRENCY = 'EUR' as const;
 
 /** Schema.org LocalBusiness priceRange (min–max from PLANS) */
 export const SCHEMA_PRICE_RANGE = 'EUR 35.99 - EUR 179.99' as const;
+
+/**
+ * JSON-LD `Offer.priceValidUntil` — must be deterministic for SSR/caching.
+ * Update periodically when pricing or campaigns change.
+ */
+export const SCHEMA_PRICE_VALID_UNTIL = '2026-12-31' as const;
 
 // City slugs live in `./nl-city-slugs` (small file — safe for Client Components)
 export { CITIES, NL_CITY_SLUGS_ORDERED, NL_CITY_SLUGS } from './nl-city-slugs';
@@ -43,14 +75,14 @@ export const PLANS = [
   // ── 1 Screen Plans ──────────────────────────────────────
   {
     id: '1',
-    slug: 'abonnement-iptv-3-mois',
+    slug: 'abonnement-iptv-3-maanden',
     duration: 3,
     price: 35.99,
     original_price: 51.41,
     devices: 1,
     is_popular: false,
     is_active: true,
-    payment_link: 'https://iptvsuisse.ch/standard',
+    payment_link: '',
     image: '/images/plans/abonnement-iptv-3-mois.png',
     name_nl: 'IPTV-abonnement 3 maanden',
     name_de: 'IPTV Abo 3 Monate',
@@ -61,14 +93,14 @@ export const PLANS = [
   },
   {
     id: '2',
-    slug: 'abonnement-iptv-6-mois',
+    slug: 'abonnement-iptv-6-maanden',
     duration: 6,
     price: 44.99,
     original_price: 64.27,
     devices: 1,
     is_popular: false,
     is_active: true,
-    payment_link: 'https://iptvsuisse.ch/express',
+    payment_link: '',
     image: '/images/plans/abonnement-iptv-6-mois.png',
     name_nl: 'IPTV-abonnement 6 maanden',
     name_de: 'IPTV Abo 6 Monate',
@@ -79,14 +111,14 @@ export const PLANS = [
   },
   {
     id: '3',
-    slug: 'abonnement-iptv-12-mois',
+    slug: 'abonnement-iptv-12-maanden',
     duration: 12,
     price: 59.99,
     original_price: 85.70,
     devices: 1,
     is_popular: true,
     is_active: true,
-    payment_link: 'https://supremeiptv.ch/Premium',
+    payment_link: '',
     image: '/images/plans/abonnement-iptv-12-mois.png',
     name_nl: 'IPTV-abonnement 12 maanden',
     name_de: 'IPTV Abo 12 Monate',
@@ -98,7 +130,7 @@ export const PLANS = [
   // ── 2 Screens Plans ─────────────────────────────────────
   {
     id: '4',
-    slug: '2-ecrans-3-mois',
+    slug: '2-schermen-3-maanden',
     duration: 3,
     price: 53.99,
     original_price: 77.13,
@@ -116,7 +148,7 @@ export const PLANS = [
   },
   {
     id: '5',
-    slug: '2-ecrans-6-mois',
+    slug: '2-schermen-6-maanden',
     duration: 6,
     price: 67.99,
     original_price: 97.13,
@@ -134,7 +166,7 @@ export const PLANS = [
   },
   {
     id: '6',
-    slug: '2-ecrans-12-mois',
+    slug: '2-schermen-12-maanden',
     duration: 12,
     price: 89.99,
     original_price: 128.56,
@@ -153,7 +185,7 @@ export const PLANS = [
   // ── 3 Screens Plans ─────────────────────────────────────
   {
     id: '7',
-    slug: '3-ecrans-3-mois',
+    slug: '3-schermen-3-maanden',
     duration: 3,
     price: 80.99,
     original_price: 115.70,
@@ -171,7 +203,7 @@ export const PLANS = [
   },
   {
     id: '8',
-    slug: '3-ecrans-6-mois',
+    slug: '3-schermen-6-maanden',
     duration: 6,
     price: 101.99,
     original_price: 145.70,
@@ -189,7 +221,7 @@ export const PLANS = [
   },
   {
     id: '9',
-    slug: '3-ecrans-12-mois',
+    slug: '3-schermen-12-maanden',
     duration: 12,
     price: 134.99,
     original_price: 192.84,
@@ -208,7 +240,7 @@ export const PLANS = [
   // ── 4 Screens Plans ─────────────────────────────────────
   {
     id: '10',
-    slug: '4-ecrans-3-mois',
+    slug: '4-schermen-3-maanden',
     duration: 3,
     price: 107.99,
     original_price: 154.27,
@@ -226,7 +258,7 @@ export const PLANS = [
   },
   {
     id: '11',
-    slug: '4-ecrans-6-mois',
+    slug: '4-schermen-6-maanden',
     duration: 6,
     price: 134.99,
     original_price: 192.84,
@@ -235,16 +267,16 @@ export const PLANS = [
     is_active: true,
     payment_link: '',
     image: '/images/plans/4-ecrans-6-mois.png',
-    name_nl: '4 Écrans 6 Mois',
+    name_nl: '4 schermen — 6 maanden',
     name_de: '4 Bildschirme 6 Monate',
-    description_nl: '6 mois sur 4 écrans pour toute la maison',
+    description_nl: 'Zes maanden op vier schermen voor het hele huishouden',
     description_de: '6 Monate auf 4 Bildschirmen für das ganze Haus',
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     created_at: new Date().toISOString(),
   },
   {
     id: '12',
-    slug: '4-ecrans-12-mois',
+    slug: '4-schermen-12-maanden',
     duration: 12,
     price: 179.99,
     original_price: 257.13,

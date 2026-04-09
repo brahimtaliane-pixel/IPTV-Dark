@@ -37,11 +37,20 @@ export async function GET() {
   });
 
   // Add env var status (don't reveal the actual keys)
-  settings['resend_configured'] = process.env.RESEND_API_KEY ? 'true' : 'false';
-  settings['ga_configured'] = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? 'true' : 'false';
-  settings['crisp_configured'] = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID ? 'true' : 'false';
+  settings['resend_configured'] = process.env.RESEND_API_KEY?.trim() ? 'true' : 'false';
+  settings['ga_configured'] = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
+    ? 'true'
+    : 'false';
+  settings['crisp_configured'] = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID?.trim() ? 'true' : 'false';
 
-  return NextResponse.json({ settings });
+  return NextResponse.json(
+    { settings },
+    {
+      headers: {
+        'Cache-Control': 'no-store, must-revalidate',
+      },
+    },
+  );
 }
 
 // PATCH — Update settings
@@ -54,9 +63,17 @@ export async function PATCH(request: NextRequest) {
   const updates = await request.json();
 
   for (const [key, value] of Object.entries(updates)) {
-    await supabase
-      .from('admin_settings')
-      .upsert({ key, value: value as string, updated_at: new Date().toISOString() });
+    const { error } = await supabase.from('admin_settings').upsert(
+      {
+        key,
+        value: String(value ?? ''),
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'key' },
+    );
+    if (error) {
+      return NextResponse.json({ error: error.message, key }, { status: 500 });
+    }
   }
 
   return NextResponse.json({ success: true });

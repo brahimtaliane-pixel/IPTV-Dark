@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { legacyPlanSlugRedirects } from './src/lib/plan-slugs';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
@@ -44,10 +45,18 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // ─── Rewrites ────────────────────────────────────────────
+  /** Many clients still request `/favicon.ico` first; serve the same NL mark as `public/favicon.svg`. */
+  async rewrites() {
+    return [{ source: '/favicon.ico', destination: '/favicon.svg' }];
+  },
+
   // ─── Redirects ───────────────────────────────────────────
   async redirects() {
     return [
-      // Old WordPress URL patterns → new routes (no /fr prefix needed, it's the default)
+      ...legacyPlanSlugRedirects(),
+      // Subscription landing URLs → pricing (branded + legacy WordPress)
+      { source: '/abonnement-iptv-nederland', destination: '/#pricing', permanent: true },
       { source: '/abonnement-iptv-suisse', destination: '/#pricing', permanent: true },
       { source: '/iptv-plan/:slug', destination: '/plans/:slug', permanent: true },
       { source: '/guide-dinstallation-iptv', destination: '/installation', permanent: true },

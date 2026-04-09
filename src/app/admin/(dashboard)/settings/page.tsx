@@ -8,9 +8,10 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/admin/settings')
+    fetch('/api/admin/settings', { cache: 'no-store' })
       .then(res => res.json())
       .then(data => { setSettings(data.settings || {}); setLoading(false); })
       .catch(() => setLoading(false));
@@ -215,6 +216,9 @@ export default function SettingsPage() {
             <CheckCircle size={14} />
             Settings saved successfully
           </span>
+        )}
+        {saveError && (
+          <span className="text-sm text-red-600 max-w-md">{saveError}</span>
         )}
       </div>
     </div>

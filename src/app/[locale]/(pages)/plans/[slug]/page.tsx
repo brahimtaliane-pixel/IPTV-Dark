@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG, PRICE_CURRENCY } from '@/lib/constants';
-import { getPlans, getPlanBySlug } from '@/lib/get-plans';
+import { getPlans, getPlanBySlug, getPlanCheckoutSnapshot } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
 import { BreadcrumbSchema, PlanProductSchema } from '@/components/seo/SchemaMarkup';
 import PlanPageClient from './PlanPageClient';
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const plan = await getPlanBySlug(slug);
 
   if (!plan) {
-    return { title: 'Plan Not Found' };
+    return { title: `Pakket niet gevonden | ${SITE_CONFIG.name}` };
   }
 
   const name = plan.name_nl;
@@ -85,6 +85,7 @@ export default async function PlanPage({ params }: Props) {
   const plans = await getPlans();
   const plan = plans.find((p) => p.slug === slug);
   const planName = plan ? plan.name_nl : slug;
+  const checkout = plan ? getPlanCheckoutSnapshot(plan) : { showDirect: false, directHref: '' };
 
   return (
     <>
@@ -96,7 +97,7 @@ export default async function PlanPage({ params }: Props) {
         ]}
       />
       {plan && <PlanProductSchema locale={locale} plan={plan} />}
-      <PlanPageClient plans={plans} />
+      <PlanPageClient plans={plans} checkout={checkout} />
     </>
   );
 }

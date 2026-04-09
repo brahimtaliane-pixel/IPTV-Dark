@@ -1,161 +1,163 @@
 import { createClient } from '@supabase/supabase-js';
+import { loadEnvFiles } from './load-env.mjs';
 
-const supabase = createClient(
-  'https://rzyutwarhhmkkxgrtqto.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6eXV0d2FyaGhta2t4Z3J0cXRvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDUzNzY2MCwiZXhwIjoyMDg2MTEzNjYwfQ.uD1y_V8COvLvGxWHkyF6_AhEHcdCMZzQZBlyvFBbo2U'
-);
+loadEnvFiles();
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !serviceRoleKey) {
+  console.error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local');
+  process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, serviceRoleKey);
+
+// DB columns are name_fr / description_fr but content is Dutch (primary locale for this site); name_de / description_de = German
 const ALL_PLANS = [
   // ── 1 Screen Plans ──
   {
-    slug: 'abonnement-iptv-3-mois',
+    slug: 'abonnement-iptv-3-maanden',
     duration: 3, price: 35.99, original_price: 51.41, devices: 1,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 1,
-    name_fr: 'Abonnement IPTV 3 Mois', name_de: 'IPTV Abo 3 Monate',
-    description_fr: 'Idéal pour découvrir notre service premium',
+    name_fr: 'IPTV-abonnement 3 maanden', name_de: 'IPTV Abo 3 Monate',
+    description_fr: 'Ideaal om onze premium service uit te proberen',
     description_de: 'Ideal zum Entdecken unseres Premium-Service',
-    payment_link: 'https://iptvsuisse.ch/standard',
+    payment_link: '',
   },
   {
-    slug: 'abonnement-iptv-6-mois',
+    slug: 'abonnement-iptv-6-maanden',
     duration: 6, price: 44.99, original_price: 64.27, devices: 1,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 2,
-    name_fr: 'Abonnement IPTV 6 Mois', name_de: 'IPTV Abo 6 Monate',
-    description_fr: "L'équilibre parfait entre durée et prix",
+    name_fr: 'IPTV-abonnement 6 maanden', name_de: 'IPTV Abo 6 Monate',
+    description_fr: 'De beste balans tussen looptijd en prijs',
     description_de: 'Die perfekte Balance zwischen Dauer und Preis',
-    payment_link: 'https://iptvsuisse.ch/express',
+    payment_link: '',
   },
   {
-    slug: 'abonnement-iptv-12-mois',
-    duration: 12, price: 59.99, original_price: 85.70, devices: 1,
+    slug: 'abonnement-iptv-12-maanden',
+    duration: 12, price: 59.99, original_price: 85.7, devices: 1,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     is_popular: true, is_active: true, sort_order: 3,
-    name_fr: 'Abonnement IPTV 12 Mois', name_de: 'IPTV Abo 12 Monate',
-    description_fr: 'Notre meilleur rapport qualité-prix — Recommandé',
+    name_fr: 'IPTV-abonnement 12 maanden', name_de: 'IPTV Abo 12 Monate',
+    description_fr: 'Onze beste prijs-kwaliteit — aanbevolen',
     description_de: 'Unser bestes Preis-Leistungs-Verhältnis — Empfohlen',
-    payment_link: 'https://supremeiptv.ch/Premium',
+    payment_link: '',
   },
   // ── 2 Screens Plans ──
   {
-    slug: '2-ecrans-3-mois',
+    slug: '2-schermen-3-maanden',
     duration: 3, price: 53.99, original_price: 77.13, devices: 2,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 4,
-    name_fr: '2 Écrans 3 Mois', name_de: '2 Bildschirme 3 Monate',
-    description_fr: 'Partagez votre abonnement sur 2 appareils simultanément',
+    name_fr: '2 schermen — 3 maanden', name_de: '2 Bildschirme 3 Monate',
+    description_fr: 'Deel je abonnement op 2 apparaten tegelijk',
     description_de: 'Teilen Sie Ihr Abo auf 2 Geräten gleichzeitig',
     payment_link: '',
   },
   {
-    slug: '2-ecrans-6-mois',
+    slug: '2-schermen-6-maanden',
     duration: 6, price: 67.99, original_price: 97.13, devices: 2,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 5,
-    name_fr: '2 Écrans 6 Mois', name_de: '2 Bildschirme 6 Monate',
-    description_fr: '6 mois de streaming sur 2 écrans',
+    name_fr: '2 schermen — 6 maanden', name_de: '2 Bildschirme 6 Monate',
+    description_fr: 'Zes maanden streamen op twee schermen',
     description_de: '6 Monate Streaming auf 2 Bildschirmen',
     payment_link: '',
   },
   {
-    slug: '2-ecrans-12-mois',
+    slug: '2-schermen-12-maanden',
     duration: 12, price: 89.99, original_price: 128.56, devices: 2,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     is_popular: false, is_active: true, sort_order: 6,
-    name_fr: '2 Écrans 12 Mois', name_de: '2 Bildschirme 12 Monate',
-    description_fr: 'Le meilleur prix pour 2 écrans — 1 an complet',
+    name_fr: '2 schermen — 12 maanden', name_de: '2 Bildschirme 12 Monate',
+    description_fr: 'Beste prijs voor twee schermen — een vol jaar',
     description_de: 'Bester Preis für 2 Bildschirme — 1 ganzes Jahr',
     payment_link: '',
   },
   // ── 3 Screens Plans ──
   {
-    slug: '3-ecrans-3-mois',
-    duration: 3, price: 80.99, original_price: 115.70, devices: 3,
+    slug: '3-schermen-3-maanden',
+    duration: 3, price: 80.99, original_price: 115.7, devices: 3,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 7,
-    name_fr: '3 Écrans 3 Mois', name_de: '3 Bildschirme 3 Monate',
-    description_fr: 'Pour toute la famille — 3 appareils simultanés',
+    name_fr: '3 schermen — 3 maanden', name_de: '3 Bildschirme 3 Monate',
+    description_fr: 'Voor het hele gezin — drie apparaten tegelijk',
     description_de: 'Für die ganze Familie — 3 gleichzeitige Geräte',
     payment_link: '',
   },
   {
-    slug: '3-ecrans-6-mois',
-    duration: 6, price: 101.99, original_price: 145.70, devices: 3,
+    slug: '3-schermen-6-maanden',
+    duration: 6, price: 101.99, original_price: 145.7, devices: 3,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 8,
-    name_fr: '3 Écrans 6 Mois', name_de: '3 Bildschirme 6 Monate',
-    description_fr: '6 mois pour 3 écrans — idéal pour les familles',
+    name_fr: '3 schermen — 6 maanden', name_de: '3 Bildschirme 6 Monate',
+    description_fr: 'Zes maanden voor drie schermen — ideaal voor gezinnen',
     description_de: '6 Monate für 3 Bildschirme — ideal für Familien',
     payment_link: '',
   },
   {
-    slug: '3-ecrans-12-mois',
+    slug: '3-schermen-12-maanden',
     duration: 12, price: 134.99, original_price: 192.84, devices: 3,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     is_popular: false, is_active: true, sort_order: 9,
-    name_fr: '3 Écrans 12 Mois', name_de: '3 Bildschirme 12 Monate',
-    description_fr: '1 an complet pour 3 écrans — meilleur prix familial',
+    name_fr: '3 schermen — 12 maanden', name_de: '3 Bildschirme 12 Monate',
+    description_fr: 'Een vol jaar voor drie schermen — beste gezinsdeal',
     description_de: '1 ganzes Jahr für 3 Bildschirme — bester Familienpreis',
     payment_link: '',
   },
   // ── 4 Screens Plans ──
   {
-    slug: '4-ecrans-3-mois',
+    slug: '4-schermen-3-maanden',
     duration: 3, price: 107.99, original_price: 154.27, devices: 4,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 10,
-    name_fr: '4 Écrans 3 Mois', name_de: '4 Bildschirme 3 Monate',
-    description_fr: 'Maximum de connexions — 4 appareils simultanés',
+    name_fr: '4 schermen — 3 maanden', name_de: '4 Bildschirme 3 Monate',
+    description_fr: 'Maximaal parallel — vier apparaten tegelijk',
     description_de: 'Maximale Verbindungen — 4 gleichzeitige Geräte',
     payment_link: '',
   },
   {
-    slug: '4-ecrans-6-mois',
+    slug: '4-schermen-6-maanden',
     duration: 6, price: 134.99, original_price: 192.84, devices: 4,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7'],
     is_popular: false, is_active: true, sort_order: 11,
-    name_fr: '4 Écrans 6 Mois', name_de: '4 Bildschirme 6 Monate',
-    description_fr: '6 mois sur 4 écrans pour toute la maison',
+    name_fr: '4 schermen — 6 maanden', name_de: '4 Bildschirme 6 Monate',
+    description_fr: 'Zes maanden op vier schermen voor het hele huishouden',
     description_de: '6 Monate auf 4 Bildschirmen für das ganze Haus',
     payment_link: '',
   },
   {
-    slug: '4-ecrans-12-mois',
+    slug: '4-schermen-12-maanden',
     duration: 12, price: 179.99, original_price: 257.13, devices: 4,
     features: ['premium_server', 'all_channels', 'hd_4k', 'replay_vod', 'all_devices', 'support_24_7', 'free_updates'],
     is_popular: false, is_active: true, sort_order: 12,
-    name_fr: '4 Écrans 12 Mois', name_de: '4 Bildschirme 12 Monate',
-    description_fr: 'Offre ultime — 4 écrans pendant 1 an complet',
+    name_fr: '4 schermen — 12 maanden', name_de: '4 Bildschirme 12 Monate',
+    description_fr: 'Topdeal — vier schermen voor een vol jaar',
     description_de: 'Ultimatives Angebot — 4 Bildschirme für 1 ganzes Jahr',
     payment_link: '',
   },
 ];
 
 async function seedPlans() {
-  console.log('🔧 Seeding all 12 plans...\n');
+  console.log('🔧 Upserting all 12 plans (NL primary; by slug)...\n');
 
-  // Delete existing plans first
-  const { error: deleteError } = await supabase.from('plans').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-  if (deleteError) {
-    console.log('⚠️  Could not clear existing plans:', deleteError.message);
-  } else {
-    console.log('✅ Cleared existing plans');
-  }
-
-  // Insert all plans
-  const { data, error } = await supabase.from('plans').insert(ALL_PLANS).select();
+  const { data, error } = await supabase
+    .from('plans')
+    .upsert(ALL_PLANS, { onConflict: 'slug' })
+    .select();
 
   if (error) {
-    console.error('❌ Error inserting plans:', error.message);
+    console.error('❌ Error upserting plans:', error.message);
     return;
   }
 
-  console.log(`\n✅ Inserted ${data.length} plans:\n`);
+  console.log(`\n✅ Upserted ${data.length} plans:\n`);
 
-  // Group by devices
   const groups = {};
-  data.forEach(p => {
+  data.forEach((p) => {
     const key = `${p.devices} Screen${p.devices > 1 ? 's' : ''}`;
     if (!groups[key]) groups[key] = [];
     groups[key].push(p);
@@ -163,7 +165,7 @@ async function seedPlans() {
 
   for (const [group, plans] of Object.entries(groups)) {
     console.log(`── ${group} ──`);
-    plans.forEach(p => {
+    plans.forEach((p) => {
       const popular = p.is_popular ? ' ⭐ POPULAR' : '';
       const link = p.payment_link ? ' 🔗' : ' ⚠️ no payment link';
       console.log(`   ${p.name_fr}: ${p.price} EUR (was ${p.original_price} EUR)${popular}${link}`);
@@ -171,7 +173,7 @@ async function seedPlans() {
     console.log('');
   }
 
-  console.log('🎉 Done! All 12 plans are now in the database.');
+  console.log('🎉 Done! All 12 plans are now in the database (Dutch + German).');
 }
 
 seedPlans().catch(console.error);

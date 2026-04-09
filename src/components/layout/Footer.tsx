@@ -52,7 +52,15 @@ export default function Footer() {
             <ul className="space-y-2.5">
               <li><Link href="/contact" className="text-sm text-white/60 hover:text-white transition-colors">{nav('contact')}</Link></li>
               <li><Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors">{nav('about')}</Link></li>
-              <li><a href={`mailto:${SITE_CONFIG.email}`} className="text-sm text-white/60 hover:text-white transition-colors">{SITE_CONFIG.email}</a></li>
+              <li>
+                <a
+                  href={`mailto:${SITE_CONFIG.email}`}
+                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  suppressHydrationWarning
+                >
+                  {SITE_CONFIG.email}
+                </a>
+              </li>
             </ul>
           </div>
 

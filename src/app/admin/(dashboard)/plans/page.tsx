@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { Save, Plus, Trash2, Star, Eye, EyeOff, Link2 } from 'lucide-react';
 
+type CheckoutMode = 'form_only' | 'direct_only';
+
 interface Plan {
   id: string;
   slug: string;
@@ -12,6 +14,7 @@ interface Plan {
   devices: number;
   features: string[];
   payment_link: string | null;
+  checkout_mode?: CheckoutMode;
   is_popular: boolean;
   is_active: boolean;
   name_fr: string;
@@ -30,23 +33,43 @@ export default function PlansPage() {
 
   useEffect(() => { fetchPlans(); }, []);
 
+  function normalizePlanRow(p: Plan): Plan {
+    const link = (p.payment_link ?? '').trim();
+    const raw = String(p.checkout_mode ?? 'form_only');
+    const mode: CheckoutMode =
+      raw === 'both' ? (link ? 'direct_only' : 'form_only') : raw === 'direct_only' ? 'direct_only' : 'form_only';
+    return { ...p, checkout_mode: mode };
+  }
+
   async function fetchPlans() {
     setLoading(true);
     const res = await fetch('/api/admin/plans');
     const data = await res.json();
-    setPlans(data.plans || []);
+    const raw = (data.plans || []) as Plan[];
+    setPlans(raw.map(normalizePlanRow));
     setLoading(false);
   }
 
   async function savePlan(plan: Plan) {
+    const link = (plan.payment_link ?? '').trim();
+    const mode = plan.checkout_mode ?? 'form_only';
+    if (mode === 'direct_only' && !link) {
+      alert('Direct checkout needs a non-empty payment link. Add a link or choose “Lead form only”.');
+      return;
+    }
     setSaving(plan.id);
     const { id, ...rest } = plan;
-    await fetch('/api/admin/plans', {
+    const res = await fetch('/api/admin/plans', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, ...rest }),
     });
+    const data = await res.json().catch(() => ({}));
     setSaving(null);
+    if (!res.ok) {
+      alert(typeof data.error === 'string' ? data.error : 'Save failed');
+      return;
+    }
     setEditingPlan(null);
     fetchPlans();
   }
@@ -61,12 +84,13 @@ export default function PlansPage() {
       features: ['premium_server', 'all_channels', 'hd_4k'],
       is_popular: false,
       is_active: false,
-      name_fr: 'Nouveau Plan',
+      name_fr: 'Nieuw plan',
       name_de: 'Neuer Plan',
       description_fr: '',
       description_de: '',
       sort_order: plans.length + 1,
       payment_link: '',
+      checkout_mode: 'form_only' as CheckoutMode,
     };
 
     await fetch('/api/admin/plans', {
@@ -135,7 +159,7 @@ export default function PlansPage() {
               <div className="p-6 space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Name (FR)</label>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Name (NL)</label>
                     <input
                       value={editingPlan.name_fr}
                       onChange={e => setEditingPlan({ ...editingPlan, name_fr: e.target.value })}
@@ -151,7 +175,7 @@ export default function PlansPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Description (FR)</label>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Description (NL)</label>
                     <input
                       value={editingPlan.description_fr || ''}
                       onChange={e => setEditingPlan({ ...editingPlan, description_fr: e.target.value })}
@@ -207,18 +231,44 @@ export default function PlansPage() {
                   </div>
                 </div>
 
-                {/* Payment Link */}
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1">
-                    <Link2 size={12} className="inline mr-1" />
-                    Payment Link (Stripe, PayPal, etc.)
-                  </label>
-                  <input
-                    value={editingPlan.payment_link || ''}
-                    onChange={e => setEditingPlan({ ...editingPlan, payment_link: e.target.value })}
-                    placeholder="https://buy.stripe.com/..."
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono"
-                  />
+                {/* Plan page: form vs direct — shown first so it’s easy to find */}
+                <div className="pt-4 border-t border-gray-200 space-y-3">
+                  <h4 className="text-sm font-semibold text-gray-900">Plan page checkout</h4>
+                  <p className="text-xs text-gray-500">
+                    Controls the button on public URLs like <span className="font-mono text-gray-600">/plans/jouw-slug</span>: either collect leads first or send people straight to pay.
+                  </p>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Checkout behavior</label>
+                    <select
+                      value={editingPlan.checkout_mode ?? 'form_only'}
+                      onChange={e =>
+                        setEditingPlan({
+                          ...editingPlan,
+                          checkout_mode: e.target.value as CheckoutMode,
+                        })
+                      }
+                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-white shadow-sm"
+                    >
+                      <option value="form_only">Lead form first (details → payment link by e-mail)</option>
+                      <option value="direct_only">Direct to payment (redirect to URL below immediately)</option>
+                    </select>
+                    <p className="text-[11px] text-gray-500 mt-1.5">
+                      <strong>Direct to payment</strong> needs a payment URL in the field below (Stripe, PayPal, etc.).
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">
+                      <Link2 size={12} className="inline mr-1" />
+                      Payment link URL
+                    </label>
+                    <input
+                      value={editingPlan.payment_link || ''}
+                      onChange={e => setEditingPlan({ ...editingPlan, payment_link: e.target.value })}
+                      placeholder="https://buy.stripe.com/..."
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -266,6 +316,9 @@ export default function PlansPage() {
                         No payment link
                       </span>
                     )}
+                    <span className="text-gray-500">
+                      Checkout: {(plan.checkout_mode ?? 'form_only') === 'direct_only' ? 'Direct' : 'Lead form'}
+                    </span>
                   </div>
                 </div>
 
@@ -292,7 +345,7 @@ export default function PlansPage() {
                     {plan.is_active ? <Eye size={16} /> : <EyeOff size={16} />}
                   </button>
                   <button
-                    onClick={() => setEditingPlan({ ...plan })}
+                    onClick={() => setEditingPlan(normalizePlanRow(plan))}
                     className="px-3 py-1.5 text-xs font-medium text-[#D52B1E] bg-red-50 rounded-lg hover:bg-red-100 transition"
                   >
                     Edit

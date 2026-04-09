@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Admin - IPTV Suisse',
+  title: 'Admin - IPTV Nederland',
   robots: 'noindex, nofollow',
 };
 

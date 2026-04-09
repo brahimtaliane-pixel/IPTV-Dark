@@ -4,6 +4,7 @@
 
 import { Resend } from 'resend';
 import { SITE_CONFIG, PRICE_CURRENCY } from './constants';
+import { getSiteContact } from './get-site-contact';
 
 // Lazy init — avoids crash at build time when RESEND_API_KEY is not yet set
 let _resend: Resend | null = null;
@@ -30,7 +31,8 @@ interface LeadEmailData {
 
 // ─── Payment Link Email to Customer ─────────────────────────
 export async function sendPaymentLinkEmail(data: LeadEmailData) {
-  const trackingUrl = `${SITE_CONFIG.url}/api/track-click?lead=${data.leadId}&redirect=${encodeURIComponent(data.paymentLink)}`;
+  const contact = await getSiteContact();
+  const paymentUrl = data.paymentLink;
 
   const subject = `Je betaallink – ${data.planName}`;
 
@@ -71,7 +73,7 @@ export async function sendPaymentLinkEmail(data: LeadEmailData) {
       </div>
       
       <div style="text-align:center;margin:0 0 24px;">
-        <a href="${trackingUrl}" style="display:inline-block;background:#D52B1E;color:#fff;text-decoration:none;padding:14px 40px;border-radius:8px;font-size:16px;font-weight:700;letter-spacing:0.5px;">
+        <a href="${paymentUrl}" style="display:inline-block;background:#D52B1E;color:#fff;text-decoration:none;padding:14px 40px;border-radius:8px;font-size:16px;font-weight:700;letter-spacing:0.5px;">
           NAAR BETALING
         </a>
       </div>
@@ -89,7 +91,7 @@ export async function sendPaymentLinkEmail(data: LeadEmailData) {
         <p style="margin:0;">
           <a href="mailto:${SITE_CONFIG.email}" style="color:#D52B1E;text-decoration:none;font-size:13px;">${SITE_CONFIG.email}</a>
           <span style="color:#ccc;margin:0 8px;">|</span>
-          <a href="${SITE_CONFIG.whatsapp}" style="color:#D52B1E;text-decoration:none;font-size:13px;">WhatsApp</a>
+          <a href="${contact.whatsappUrl}" style="color:#D52B1E;text-decoration:none;font-size:13px;">WhatsApp</a>
         </p>
       </div>
     </div>

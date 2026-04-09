@@ -1,44 +1,94 @@
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { SITE_CONFIG } from '@/lib/constants';
+import { localeUrl } from '@/lib/utils';
+import { BreadcrumbSchema } from '@/components/seo/SchemaMarkup';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string }> };
 
+const PRIVACY_URL = `${SITE_CONFIG.url}/privacy`;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return { title: locale === 'nl' ? 'Politique de confidentialité' : 'Datenschutz', alternates: { canonical: locale === 'nl' ? `${SITE_CONFIG.url}/privacy` : `${SITE_CONFIG.url}/de/privacy`, languages: { 'fr-CH': `${SITE_CONFIG.url}/privacy`, 'de-CH': `${SITE_CONFIG.url}/de/privacy`, 'x-default': `${SITE_CONFIG.url}/privacy` } } };
+  const t = await getTranslations({ locale, namespace: 'privacyPage' });
+  const title = t('title');
+  const description = t('metaDescription');
+  return {
+    title,
+    description,
+    keywords: [
+      'privacybeleid',
+      'IPTV Nederland',
+      'avg',
+      'gegevensbescherming',
+      'cookies',
+    ],
+    openGraph: {
+      title,
+      description,
+      url: PRIVACY_URL,
+      siteName: SITE_CONFIG.name,
+      locale: 'nl_NL',
+      type: 'website',
+    },
+    twitter: { card: 'summary_large_image', title, description },
+    alternates: {
+      canonical: PRIVACY_URL,
+      languages: {
+        'nl-NL': PRIVACY_URL,
+        'x-default': PRIVACY_URL,
+      },
+    },
+  };
 }
 
 export default async function PrivacyPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const isNl = locale === 'nl';
+  const t = await getTranslations({ locale, namespace: 'privacyPage' });
 
-  const sections = isNl ? [
-    { title: '1. Collecte des données', content: 'Nous collectons les informations que vous nous fournissez directement : nom, adresse email, numéro de téléphone. Ces données sont nécessaires pour traiter votre commande et activer votre abonnement.' },
-    { title: '2. Utilisation des données', content: 'Vos données sont utilisées exclusivement pour : le traitement de vos commandes, l\'activation de votre service, le support client et les communications relatives à votre abonnement.' },
-    { title: '3. Protection des données', content: 'Nous prenons la sécurité de vos données au sérieux. Toutes les données sont chiffrées et stockées de manière sécurisée conformément aux normes suisses de protection des données.' },
-    { title: '4. Contact', content: `Pour toute question concernant vos données, contactez-nous à ${SITE_CONFIG.email}.` },
-  ] : [
-    { title: '1. Datenerhebung', content: 'Wir erheben die Informationen, die Sie uns direkt zur Verfügung stellen: Name, E-Mail-Adresse, Telefonnummer. Diese Daten sind für die Bearbeitung Ihrer Bestellung und die Aktivierung Ihres Abonnements erforderlich.' },
-    { title: '2. Verwendung der Daten', content: 'Ihre Daten werden ausschliesslich verwendet für: die Verarbeitung Ihrer Bestellungen, die Aktivierung Ihres Services, den Kundensupport und Mitteilungen zu Ihrem Abonnement.' },
-    { title: '3. Datenschutz', content: 'Wir nehmen die Sicherheit Ihrer Daten ernst. Alle Daten werden verschlüsselt und gemäss den schweizerischen Datenschutzstandards sicher gespeichert.' },
-    { title: '4. Kontakt', content: `Bei Fragen zu Ihren Daten kontaktieren Sie uns unter ${SITE_CONFIG.email}.` },
+  const sections = [
+    { title: t('s1Title'), body: t('s1Body') },
+    { title: t('s2Title'), body: t('s2Body') },
+    { title: t('s3Title'), body: t('s3Body') },
+    { title: t('s4Title'), body: t('s4Body') },
+    { title: t('s5Title'), body: t('s5Body') },
+    { title: t('s6Title'), body: t('s6Body') },
+    { title: t('s7Title'), body: t('s7Body') },
+    { title: t('s8Title'), body: t('s8Body', { email: SITE_CONFIG.email }) },
   ];
 
   return (
-    <div className="pt-28 pb-20 bg-white">
-      <div className="max-w-2xl mx-auto px-5 sm:px-8">
-        <h1 className="text-3xl font-extrabold text-text tracking-tight mb-8">{isNl ? 'Politique de confidentialité' : 'Datenschutzerklärung'}</h1>
-        <div className="bg-bg rounded-xl border border-border p-6 sm:p-8 space-y-6">
-          {sections.map((s) => (
-            <section key={s.title}>
-              <h2 className="text-base font-bold text-text mb-2">{s.title}</h2>
-              <p className="text-sm text-text-muted leading-relaxed">{s.content}</p>
-            </section>
-          ))}
+    <>
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: localeUrl(locale) },
+          { name: t('breadcrumb'), url: localeUrl(locale, '/privacy') },
+        ]}
+      />
+      <div className="pt-28 pb-20 bg-white">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8">
+          <div className="text-center mb-10 sm:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/8 rounded-full border border-swiss-red/15 mb-5">
+              <span className="text-xs font-semibold text-swiss-red uppercase tracking-wide">{t('badge')}</span>
+            </div>
+            <p className="text-sm font-semibold text-swiss-red mb-2">{SITE_CONFIG.name}</p>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-4">{t('title')}</h1>
+            <p className="text-text-secondary leading-relaxed">{t('subtitle')}</p>
+          </div>
+
+          <p className="text-sm text-text-secondary leading-relaxed mb-8">{t('intro')}</p>
+
+          <div className="bg-bg rounded-xl border border-border p-6 sm:p-8 space-y-8">
+            {sections.map((s) => (
+              <section key={s.title}>
+                <h2 className="text-base font-bold text-text mb-2">{s.title}</h2>
+                <p className="text-sm text-text-muted leading-relaxed">{s.body}</p>
+              </section>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

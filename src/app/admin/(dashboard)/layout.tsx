@@ -114,7 +114,7 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
             <div className="w-8 h-8 bg-[#D52B1E] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xs">IS</span>
             </div>
-            <span className="font-bold text-gray-900 text-sm">IPTV Suisse</span>
+            <span className="font-bold text-gray-900 text-sm">IPTV Nederland</span>
           </Link>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-gray-400">
             <X size={20} />

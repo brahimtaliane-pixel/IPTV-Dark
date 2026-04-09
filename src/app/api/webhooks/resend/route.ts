@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
+import { SITE_CONFIG } from '@/lib/constants';
 
 // POST — Resend inbound email webhook
-// Webhook URL: https://meilleur.iptv-suisse.com/api/webhooks/resend
+// Webhook URL: {NEXT_PUBLIC_SITE_URL}/api/webhooks/resend
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -42,8 +43,8 @@ export async function POST(request: NextRequest) {
 
     // Parse to field
     const toEmail = Array.isArray(data.to)
-      ? (typeof data.to[0] === 'string' ? data.to[0] : data.to[0]?.email || 'contact@meilleur.iptv-suisse.com')
-      : (typeof data.to === 'string' ? data.to : 'contact@meilleur.iptv-suisse.com');
+      ? (typeof data.to[0] === 'string' ? data.to[0] : data.to[0]?.email || SITE_CONFIG.email)
+      : (typeof data.to === 'string' ? data.to : SITE_CONFIG.email);
 
     const subject = data.subject || '(Pas de sujet)';
     const emailId = data.email_id || data.id || null;

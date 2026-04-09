@@ -4,6 +4,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { SITE_CONFIG } from '@/lib/constants';
+import { getSiteContact } from '@/lib/get-site-contact';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
@@ -15,6 +16,9 @@ type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 };
+
+/** Contact info must not be prerendered/cached from build-time fallbacks */
+export const dynamic = 'force-dynamic';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -88,6 +92,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const contact = await getSiteContact();
 
   return (
     <NextIntlClientProvider messages={messages}>
@@ -95,7 +100,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <Header />
       <main className="min-h-screen bg-bg text-text">{children}</main>
       <Footer />
-      <WhatsAppButton />
+      <WhatsAppButton whatsappUrl={contact.whatsappUrl} />
       <LiveChat />
       <VisitorTracker />
     </NextIntlClientProvider>

@@ -4,10 +4,21 @@ import { sendPaymentLinkEmail, sendAdminNotification } from '@/lib/resend';
 import { PLANS as STATIC_PLANS } from '@/lib/constants';
 import { formatPrice } from '@/lib/utils';
 
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { name, email, phone, plan_id, plan_name, locale = 'nl' } = body;
+
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('Leads API: missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 503 }
+      );
+    }
 
     // Validate required fields
     if (!name || !email || !phone || !plan_id || !plan_name) {
@@ -32,58 +43,86 @@ export async function POST(request: NextRequest) {
     let planPrice = '0';
     let planDuration = 0;
     let paymentLink = '';
+    let resolvedPlanUuid: string | null = null;
 
-    let leadId = crypto.randomUUID();
+    const supabase = createServerClient();
 
-    // ─── Save to Supabase ────────────────────────────────
-    try {
-      const supabase = createServerClient();
+    // Resolve plan: UI sends static ids ('1','2') or a real UUID from DB
+    let dbPlan: {
+      id: string;
+      price: number;
+      duration: number;
+      payment_link: string | null;
+      slug: string;
+    } | null = null;
 
-      const { data: dbPlan } = await supabase
+    if (UUID_RE.test(String(plan_id))) {
+      const { data } = await supabase
         .from('plans')
-        .select('price, duration, payment_link, slug')
+        .select('id, price, duration, payment_link, slug')
         .eq('id', plan_id)
         .maybeSingle();
-
-      if (dbPlan) {
-        planPrice = formatPrice(Number(dbPlan.price));
-        planDuration = dbPlan.duration;
-        paymentLink = dbPlan.payment_link ?? '';
-      } else {
-        const fallback = STATIC_PLANS.find((p) => String(p.id) === String(plan_id));
-        if (fallback) {
-          planPrice = formatPrice(fallback.price);
-          planDuration = fallback.duration;
-          paymentLink = fallback.payment_link ?? '';
-        }
+      dbPlan = data;
+    } else {
+      const fallback = STATIC_PLANS.find((p) => String(p.id) === String(plan_id));
+      if (fallback) {
+        const { data } = await supabase
+          .from('plans')
+          .select('id, price, duration, payment_link, slug')
+          .eq('slug', fallback.slug)
+          .maybeSingle();
+        dbPlan = data;
       }
-
-      const { data, error } = await supabase
-        .from('leads')
-        .insert({
-          plan_name,
-          customer_name: name,
-          email,
-          phone,
-          locale,
-          status: 'pending',
-          payment_link: paymentLink,
-          ip_address: ip,
-          user_agent: userAgent,
-        })
-        .select('id')
-        .single();
-
-      if (error) {
-        console.error('Supabase insert error:', error);
-        // Continue even if DB fails — still send email
-      } else if (data) {
-        leadId = data.id;
-      }
-    } catch (dbError) {
-      console.error('Supabase connection error:', dbError);
-      // Continue — don't block the flow
     }
+
+    if (dbPlan) {
+      resolvedPlanUuid = dbPlan.id;
+      planPrice = formatPrice(Number(dbPlan.price));
+      planDuration = dbPlan.duration;
+      paymentLink = dbPlan.payment_link ?? '';
+    } else {
+      const fallback = STATIC_PLANS.find((p) => String(p.id) === String(plan_id));
+      if (fallback) {
+        planPrice = formatPrice(fallback.price);
+        planDuration = fallback.duration;
+        paymentLink = fallback.payment_link ?? '';
+      }
+    }
+
+    const insertPayload: Record<string, unknown> = {
+      plan_name,
+      customer_name: name,
+      email,
+      phone,
+      locale,
+      status: 'pending',
+      payment_link: paymentLink,
+      ip_address: ip,
+      user_agent: userAgent,
+    };
+    if (resolvedPlanUuid) {
+      insertPayload.plan_id = resolvedPlanUuid;
+    }
+
+    const { data: inserted, error: insertError } = await supabase
+      .from('leads')
+      .insert(insertPayload)
+      .select('id')
+      .single();
+
+    if (insertError) {
+      console.error('Supabase insert error:', insertError);
+      return NextResponse.json(
+        {
+          error:
+            'Could not save your request. Check that Supabase has the `leads` table and `SUPABASE_SERVICE_ROLE_KEY` is set on the server.',
+          details: process.env.NODE_ENV === 'development' ? insertError.message : undefined,
+        },
+        { status: 500 }
+      );
+    }
+
+    const leadId = inserted!.id;
 
     // ─── Send Emails ─────────────────────────────────────
     const emailData = {
@@ -99,27 +138,18 @@ export async function POST(request: NextRequest) {
     };
 
     try {
-      // Send payment link email to customer
       const emailResult = await sendPaymentLinkEmail(emailData);
 
       if (emailResult.success) {
-        // Update lead status to email_sent
-        try {
-          const supabase = createServerClient();
-          await supabase
-            .from('leads')
-            .update({ status: 'email_sent', email_sent_at: new Date().toISOString() })
-            .eq('id', leadId);
-        } catch {
-          // Non-blocking
-        }
+        await supabase
+          .from('leads')
+          .update({ status: 'email_sent', email_sent_at: new Date().toISOString() })
+          .eq('id', leadId);
       }
 
-      // Send admin notification (non-blocking)
       sendAdminNotification(emailData).catch(() => {});
     } catch (emailError) {
       console.error('Email sending error:', emailError);
-      // Lead is saved, email failed — that's okay
     }
 
     return NextResponse.json(

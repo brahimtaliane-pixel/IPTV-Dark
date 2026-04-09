@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import crypto from 'crypto';
+import { SITE_CONFIG } from '@/lib/constants';
 
-const ADMIN_EMAIL = 'isaac@meilleur.iptv-suisse.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL?.trim() || SITE_CONFIG.email;
 const ADMIN_PASSWORD = 'Karimisaac2311@';
-const SESSION_SECRET = process.env.SUPABASE_SERVICE_ROLE_KEY || 'fallback-secret-key';
+const SESSION_SECRET =
+  process.env.ADMIN_SESSION_SECRET ?? process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
 
 function createToken(email: string): string {
   const payload = JSON.stringify({ email, exp: Date.now() + 24 * 60 * 60 * 1000 }); // 24h
@@ -33,6 +35,13 @@ export async function POST(request: NextRequest) {
 
     if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+    }
+
+    if (!SESSION_SECRET) {
+      return NextResponse.json(
+        { error: 'Server misconfigured: set SUPABASE_SERVICE_ROLE_KEY or ADMIN_SESSION_SECRET' },
+        { status: 500 },
+      );
     }
 
     const token = createToken(email);

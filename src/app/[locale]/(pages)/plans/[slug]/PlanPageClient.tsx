@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Check,
@@ -33,16 +33,19 @@ import LeadForm from '@/components/ui/LeadForm';
 function StickyCTA({
   planName,
   price,
-  onSubscribe,
-  ctaLabel,
+  onOpenForm,
+  isDirectCheckout,
+  directHref,
 }: {
   planName: string;
   price: number;
-  onSubscribe: () => void;
-  ctaLabel: string;
+  onOpenForm: () => void;
+  /** When true, single CTA links to payment; otherwise opens lead form */
+  isDirectCheckout: boolean;
+  directHref: string;
 }) {
+  const t = useTranslations('planPage');
   const [visible, setVisible] = useState(false);
-  const heroRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const priceSection = document.getElementById('plan-price-card');
@@ -77,12 +80,24 @@ function StickyCTA({
                 <span className="text-sm font-bold text-text-muted">{PRICE_CURRENCY}</span>
               </div>
             </div>
-            <button
-              onClick={onSubscribe}
-              className="px-6 py-2.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
-            >
-              {ctaLabel}
-            </button>
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              {isDirectCheckout ? (
+                <a
+                  href={directHref}
+                  className="px-6 py-2.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+                >
+                  {t('payDirectly')}
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  onClick={onOpenForm}
+                  className="px-6 py-2.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+                >
+                  {t('subscribeNow')}
+                </button>
+              )}
+            </div>
           </div>
         </motion.div>
       )}
@@ -135,7 +150,13 @@ function FAQItem({
 }
 
 // ─── Main Page ───────────────────────────────────────────────
-export default function PlanPageClient({ plans }: { plans: SitePlan[] }) {
+export default function PlanPageClient({
+  plans,
+  checkout,
+}: {
+  plans: SitePlan[];
+  checkout: { showDirect: boolean; directHref: string };
+}) {
   const t = useTranslations('planPage');
   const pt = useTranslations('pricing');
   const params = useParams();
@@ -165,6 +186,8 @@ export default function PlanPageClient({ plans }: { plans: SitePlan[] }) {
   const sameDevicePlans = plans.filter((p) => p.slug !== slug && p.devices === plan.devices);
   const otherDevicePlans = plans.filter((p) => p.slug !== slug && p.devices !== plan.devices);
   const otherPlans = [...sameDevicePlans, ...otherDevicePlans].slice(0, 4);
+
+  const { showDirect, directHref } = checkout;
 
   const keyFeatures = [
     { icon: Tv, label: t('feat_channels'), desc: t('feat_channelsDesc') },
@@ -314,13 +337,25 @@ export default function PlanPageClient({ plans }: { plans: SitePlan[] }) {
                     )}
                   </div>
 
-                  {/* CTA */}
-                  <button
-                    onClick={() => setIsLeadFormOpen(true)}
-                    className="mt-4 w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
-                  >
-                    {t('subscribeNow')}
-                  </button>
+                  {/* CTA — admin chooses form OR direct per plan */}
+                  <div className="mt-4 w-full">
+                    {showDirect ? (
+                      <a
+                        href={directHref}
+                        className="block w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide text-center"
+                      >
+                        {t('payDirectly')}
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setIsLeadFormOpen(true)}
+                        className="w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
+                      >
+                        {t('subscribeNow')}
+                      </button>
+                    )}
+                  </div>
                 </motion.div>
               </div>
 
@@ -461,12 +496,24 @@ export default function PlanPageClient({ plans }: { plans: SitePlan[] }) {
                   </div>
 
                   {/* CTA */}
-                  <button
-                    onClick={() => setIsLeadFormOpen(true)}
-                    className="mt-5 w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
-                  >
-                    {t('subscribeNow')}
-                  </button>
+                  <div className="mt-5 w-full">
+                    {showDirect ? (
+                      <a
+                        href={directHref}
+                        className="block w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide text-center"
+                      >
+                        {t('payDirectly')}
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setIsLeadFormOpen(true)}
+                        className="w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
+                      >
+                        {t('subscribeNow')}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -765,8 +812,9 @@ export default function PlanPageClient({ plans }: { plans: SitePlan[] }) {
       <StickyCTA
         planName={name}
         price={plan.price}
-        onSubscribe={() => setIsLeadFormOpen(true)}
-        ctaLabel={t('subscribeNow')}
+        onOpenForm={() => setIsLeadFormOpen(true)}
+        isDirectCheckout={showDirect}
+        directHref={directHref}
       />
 
       {/* Lead Form Modal */}

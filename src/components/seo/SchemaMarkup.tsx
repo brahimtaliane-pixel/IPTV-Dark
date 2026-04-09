@@ -1,4 +1,4 @@
-import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE } from '@/lib/constants';
+import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
 import { NL_CITY_SLUGS } from '@/lib/nl-city-slugs';
 import type { SitePlan } from '@/lib/get-plans';
 import { CITIES_DATA } from '@/lib/cities';
@@ -30,12 +30,6 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   );
 }
 
-// Hardcoded price validity end date — must be deterministic so SSR output is
-// stable across requests. Non-deterministic JSON-LD breaks Vercel's edge cache
-// and triggers Google "Temporary processing error" on structured data.
-// Bump this date manually each quarter.
-const PRICE_VALID_UNTIL = '2026-12-31';
-
 // ─── Product Schema for Plan Detail ────────────────────────
 export function PlanProductSchema({
   locale,
@@ -63,7 +57,7 @@ export function PlanProductSchema({
       price: plan.price,
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
-      priceValidUntil: PRICE_VALID_UNTIL,
+      priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
       seller: {
         '@type': 'Organization',
         name: SITE_CONFIG.name,
@@ -140,9 +134,11 @@ const CITY_GEO: Record<string, { lat: string; lng: string }> = {
 export function CitySchema({
   locale,
   citySlug,
+  telephone,
 }: {
   locale: string;
   citySlug: string;
+  telephone: string;
 }) {
   const city = CITIES_DATA[citySlug];
   const geo = CITY_GEO[citySlug];
@@ -153,9 +149,9 @@ export function CitySchema({
     '@type': 'LocalBusiness',
     name: `${SITE_CONFIG.name} ${city.name}`,
     url: localeUrl(locale, `/iptv-${citySlug}`),
-    telephone: SITE_CONFIG.phone,
+    telephone,
     email: SITE_CONFIG.email,
-    description: city.meta_fr.description,
+    description: city.meta_nl.description,
     address: {
       '@type': 'PostalAddress',
       addressLocality: city.name,
@@ -213,8 +209,12 @@ export function MultiScreenSchema({
       price: plan.price,
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
-      priceValidUntil: PRICE_VALID_UNTIL,
+      priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
       url: localeUrl(locale, `/plans/${plan.slug}`),
+      seller: {
+        '@type': 'Organization',
+        name: SITE_CONFIG.name,
+      },
     },
   }));
 
