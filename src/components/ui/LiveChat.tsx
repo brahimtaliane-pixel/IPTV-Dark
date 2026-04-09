@@ -16,6 +16,7 @@ interface Session {
   id: string;
   visitor_id: string;
   status: string;
+  visitor_email?: string | null;
 }
 
 const TEXTS = {
@@ -29,7 +30,30 @@ const TEXTS = {
   emailPlaceholder: 'email@voorbeeld.nl',
   emailStart: 'Start chat',
   emailRequired: 'Vul je e-mail in om te beginnen',
+  typeBelow: 'Typ je bericht hieronder',
+  sendFailed: 'Verzenden mislukt. Probeer opnieuw of neem contact op via WhatsApp.',
+  sessionFailed: 'Chat kon niet starten. Controleer je e-mail of probeer later opnieuw.',
+  notConfigured: 'Chat is tijdelijk niet beschikbaar. Gebruik WhatsApp of e-mail.',
+  /** Shown when Supabase has no chat_* tables (migration not applied) */
+  chatDbMissing:
+    'Live chat is nog niet geactiveerd op de server. Gebruik WhatsApp of e-mail — of probeer later opnieuw.',
 };
+
+/** Turn raw API/PostgREST errors into short copy for visitors */
+function mapChatApiError(raw: string | undefined, t: typeof TEXTS): string {
+  if (!raw) return t.sessionFailed;
+  const lower = raw.toLowerCase();
+  if (
+    lower.includes('could not find the table') ||
+    lower.includes('schema cache') ||
+    (lower.includes('relation') && lower.includes('does not exist')) ||
+    lower.includes('chat_sessions') ||
+    lower.includes('chat_messages')
+  ) {
+    return t.chatDbMissing;
+  }
+  return raw;
+}
 
 function getVisitorId(): string {
   if (typeof window === 'undefined') return '';
@@ -53,6 +77,7 @@ export default function LiveChat() {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [sending, setSending] = useState(false);
+  const [chatError, setChatError] = useState<string | null>(null);
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -75,16 +100,47 @@ export default function LiveChat() {
 
     fetch(`/api/chat?visitor_id=${visitorId}`)
       .then(r => r.json())
-      .then(data => {
+      .then(async (data) => {
         if (data.session) {
           setSession(data.session);
           setMessages(data.messages || []);
-          setEmailSubmitted(true);
           lastMessageCount.current = data.messages?.length || 0;
+          setEmailSubmitted(true);
+          if (data.session.visitor_email) {
+            setEmail(data.session.visitor_email);
+            localStorage.setItem('chat_visitor_email', data.session.visitor_email);
+          }
+          return;
+        }
+        // Saved email but no open session — create one so the composer can send messages
+        const emailFromLs = localStorage.getItem('chat_visitor_email');
+        if (
+          emailFromLs &&
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailFromLs)
+        ) {
+          try {
+            const res = await fetch('/api/chat', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action: 'create_session',
+                visitor_id: visitorId,
+                visitor_email: emailFromLs,
+                page_url: typeof window !== 'undefined' ? window.location.href : '',
+                locale,
+              }),
+            });
+            const created = await res.json();
+            if (created.session) {
+              setSession(created.session);
+            }
+          } catch {
+            /* ignore */
+          }
         }
       })
       .catch(() => {});
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     if (!session?.id) return;
@@ -129,6 +185,7 @@ export default function LiveChat() {
     setIsOpen(true);
     setIsMinimized(false);
     setHasNewMessage(false);
+    setChatError(null);
   }
 
   async function startSession(e?: React.FormEvent) {
@@ -136,10 +193,8 @@ export default function LiveChat() {
     const trimmed = email.trim();
     if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return;
 
-    localStorage.setItem('chat_visitor_email', trimmed);
-    setEmailSubmitted(true);
-
     const visitorId = getVisitorId();
+    setChatError(null);
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -152,18 +207,72 @@ export default function LiveChat() {
           locale,
         }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setChatError(
+          res.status === 503
+            ? t.notConfigured
+            : mapChatApiError(data.error, t)
+        );
+        return;
+      }
       if (data.session) {
+        localStorage.setItem('chat_visitor_email', trimmed);
+        setEmailSubmitted(true);
         setSession(data.session);
+      } else {
+        setChatError(mapChatApiError(data.error, t));
       }
     } catch {
-      // silently fail
+      setChatError(t.sessionFailed);
     }
   }
 
   async function sendMessage(e?: React.FormEvent) {
     e?.preventDefault();
-    if (!input.trim() || !session?.id || sending) return;
+    if (!input.trim() || sending) return;
+    setChatError(null);
+
+    let activeSession = session;
+    if (!activeSession?.id) {
+      const visitorId = getVisitorId();
+      const mail =
+        email.trim() || localStorage.getItem('chat_visitor_email') || '';
+      if (!mail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return;
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'create_session',
+            visitor_id: visitorId,
+            visitor_email: mail,
+            page_url: window.location.href,
+            locale,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          setChatError(
+            res.status === 503
+              ? t.notConfigured
+              : mapChatApiError(data.error, t)
+          );
+          return;
+        }
+        if (data.session) {
+          activeSession = data.session;
+          setSession(data.session);
+        } else {
+          setChatError(mapChatApiError(data.error, t));
+          return;
+        }
+      } catch {
+        setChatError(t.sessionFailed);
+        return;
+      }
+    }
 
     const msgBody = input.trim();
     setInput('');
@@ -184,19 +293,38 @@ export default function LiveChat() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'send_message',
-          session_id: session.id,
+          session_id: activeSession!.id,
           sender: 'visitor',
           body: msgBody,
         }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setMessages(prev => prev.filter(m => m.id !== optimistic.id));
+        lastMessageCount.current = Math.max(0, lastMessageCount.current - 1);
+        setInput(msgBody);
+        setChatError(
+          res.status === 503
+            ? t.notConfigured
+            : mapChatApiError(data.error, t) || t.sendFailed
+        );
+        return;
+      }
       if (data.message) {
         setMessages(prev =>
           prev.map(m => (m.id === optimistic.id ? data.message : m))
         );
+      } else {
+        setMessages(prev => prev.filter(m => m.id !== optimistic.id));
+        lastMessageCount.current = Math.max(0, lastMessageCount.current - 1);
+        setInput(msgBody);
+        setChatError(t.sendFailed);
       }
     } catch {
-      // keep optimistic message
+      setMessages(prev => prev.filter(m => m.id !== optimistic.id));
+      lastMessageCount.current = Math.max(0, lastMessageCount.current - 1);
+      setInput(msgBody);
+      setChatError(t.sendFailed);
     } finally {
       setSending(false);
     }
@@ -218,7 +346,7 @@ export default function LiveChat() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="w-[min(100vw-2rem,380px)] bg-white rounded-2xl shadow-2xl border border-border overflow-hidden flex flex-col max-h-[min(70vh,520px)]"
+            className="w-[min(100vw-2rem,380px)] min-h-[300px] bg-white rounded-2xl shadow-2xl border border-border overflow-hidden flex flex-col max-h-[min(70vh,520px)]"
           >
             <div className="bg-swiss-red text-white px-4 py-3 flex items-center justify-between shrink-0">
               <div>
@@ -245,7 +373,7 @@ export default function LiveChat() {
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[200px]">
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3">
               {!emailSubmitted ? (
                 <form onSubmit={startSession} className="space-y-3">
                   <p className="text-sm text-text-secondary">{t.emailRequired}</p>
@@ -254,7 +382,10 @@ export default function LiveChat() {
                     ref={emailInputRef}
                     type="email"
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => {
+                      setEmail(e.target.value);
+                      setChatError(null);
+                    }}
                     placeholder={t.emailPlaceholder}
                     className="w-full px-3 py-2 rounded-lg border border-border text-sm"
                   />
@@ -264,11 +395,19 @@ export default function LiveChat() {
                   >
                     {t.emailStart}
                   </button>
+                  {chatError && (
+                    <p className="text-xs text-red-600" role="alert">
+                      {chatError}
+                    </p>
+                  )}
                 </form>
               ) : (
                 <>
                   {messages.length === 0 && (
-                    <p className="text-sm text-text-secondary">{t.greeting}</p>
+                    <div className="space-y-1">
+                      <p className="text-sm text-text-secondary">{t.greeting}</p>
+                      <p className="text-xs text-text-muted">{t.typeBelow}</p>
+                    </div>
                   )}
                   {messages.map(m => (
                     <div
@@ -298,20 +437,40 @@ export default function LiveChat() {
               )}
             </div>
 
-            {emailSubmitted && session && (
-              <form onSubmit={sendMessage} className="p-3 border-t border-border flex gap-2 shrink-0">
+            {emailSubmitted && chatError && (
+              <div
+                className="px-3 py-2 bg-red-50 text-red-800 text-xs border-t border-red-100 shrink-0"
+                role="alert"
+              >
+                {chatError}
+              </div>
+            )}
+
+            {emailSubmitted && (
+              <form
+                onSubmit={sendMessage}
+                className="p-3 border-t border-border bg-white flex gap-2 shrink-0"
+              >
+                <label className="sr-only" htmlFor="live-chat-input">
+                  {t.placeholder}
+                </label>
                 <input
+                  id="live-chat-input"
                   ref={inputRef}
                   type="text"
                   value={input}
-                  onChange={e => setInput(e.target.value)}
+                  onChange={e => {
+                    setInput(e.target.value);
+                    setChatError(null);
+                  }}
                   placeholder={t.placeholder}
-                  className="flex-1 px-3 py-2 rounded-lg border border-border text-sm min-w-0"
+                  autoComplete="off"
+                  className="flex-1 px-3 py-2.5 rounded-lg border border-border text-sm min-w-0 text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-swiss-red/30 focus:border-swiss-red"
                 />
                 <button
                   type="submit"
                   disabled={sending || !input.trim()}
-                  className="p-2 rounded-lg bg-swiss-red text-white disabled:opacity-50"
+                  className="shrink-0 px-3 py-2 rounded-lg bg-swiss-red text-white disabled:opacity-50 hover:bg-swiss-red-dark transition-colors"
                   aria-label={t.send}
                 >
                   <Send className="w-4 h-4" />

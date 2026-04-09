@@ -21,3 +21,21 @@ export function createServerClient() {
     },
   });
 }
+
+/**
+ * Chat API: prefer service role, fall back to anon key.
+ * `chat_*` RLS policies allow anon insert/select so messaging works even if the service key is missing in env.
+ */
+export function createChatServerClient() {
+  const key =
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+  if (!supabaseUrl || !key) return null;
+  return createClient(supabaseUrl, key, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  });
+}
