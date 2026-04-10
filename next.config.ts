@@ -5,6 +5,10 @@ import { legacyPlanSlugRedirects } from './src/lib/plan-slugs';
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

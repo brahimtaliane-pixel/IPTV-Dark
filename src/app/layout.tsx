@@ -17,6 +17,8 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+  adjustFontFallback: true,
+  preload: true,
 });
 
 export default function RootLayout({

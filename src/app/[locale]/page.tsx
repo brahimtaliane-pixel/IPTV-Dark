@@ -1,16 +1,19 @@
+import nextDynamic from 'next/dynamic';
 import { setRequestLocale } from 'next-intl/server';
 import Hero from '@/components/sections/Hero';
-import Features from '@/components/sections/Features';
-import HowItWorks from '@/components/sections/HowItWorks';
-import WhyUs from '@/components/sections/WhyUs';
 import Pricing from '@/components/sections/Pricing';
-import MultiScreenBanner from '@/components/sections/MultiScreenBanner';
-import Testimonials from '@/components/sections/Testimonials';
-import DeviceCompatibility from '@/components/sections/DeviceCompatibility';
-import FAQ from '@/components/sections/FAQ';
-import CityLinks from '@/components/sections/CityLinks';
-import CTA from '@/components/sections/CTA';
 import JsonLd from '@/components/sections/JsonLd';
+
+/** Code-split below the fold — smaller initial JS (Framer, Lucide per chunk). */
+const Features = nextDynamic(() => import('@/components/sections/Features'));
+const MultiScreenBanner = nextDynamic(() => import('@/components/sections/MultiScreenBanner'));
+const DeviceCompatibility = nextDynamic(() => import('@/components/sections/DeviceCompatibility'));
+const HowItWorks = nextDynamic(() => import('@/components/sections/HowItWorks'));
+const WhyUs = nextDynamic(() => import('@/components/sections/WhyUs'));
+const Testimonials = nextDynamic(() => import('@/components/sections/Testimonials'));
+const FAQ = nextDynamic(() => import('@/components/sections/FAQ'));
+const CityLinks = nextDynamic(() => import('@/components/sections/CityLinks'));
+const CTA = nextDynamic(() => import('@/components/sections/CTA'));
 import { getPlans, selectHomePricingPlans } from '@/lib/get-plans';
 import { getSiteContact } from '@/lib/get-site-contact';
 import { STATS } from '@/lib/constants';
