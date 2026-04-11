@@ -1,4 +1,6 @@
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
+import { ArrowRight, Home } from 'lucide-react';
 import FAQ from '@/components/sections/FAQ';
 import { SITE_CONFIG } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
@@ -42,6 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function FAQPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations('faq');
 
   const allFaqs = [
     {
@@ -88,6 +91,23 @@ export default async function FAQPage({ params }: Props) {
       <div className="pt-20">
         <FAQ showAll />
       </div>
+
+      <section className="py-14 lg:py-16 bg-bg border-t border-border" aria-labelledby="faq-home-cta">
+        <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center">
+          <h2 id="faq-home-cta" className="text-2xl sm:text-3xl font-extrabold text-text tracking-tight mb-3">
+            {t('homeSectionTitle')}
+          </h2>
+          <p className="text-text-secondary text-sm sm:text-base leading-relaxed mb-8">{t('homeSectionSubtitle')}</p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+          >
+            <Home className="w-4 h-4" aria-hidden />
+            {t('homeSectionCta')}
+            <ArrowRight className="w-4 h-4" aria-hidden />
+          </Link>
+        </div>
+      </section>
     </>
   );
 }

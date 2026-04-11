@@ -1,5 +1,4 @@
 import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
-import { NL_CITY_SLUGS } from '@/lib/nl-city-slugs';
 import type { SitePlan } from '@/lib/get-plans';
 import { CITIES_DATA } from '@/lib/cities';
 import { localeUrl } from '@/lib/utils';
@@ -103,19 +102,6 @@ export function FAQSchema({
 
 // ─── City LocalBusiness Schema ─────────────────────────────
 const CITY_GEO: Record<string, { lat: string; lng: string }> = {
-  geneve: { lat: '46.2044', lng: '6.1432' },
-  zurich: { lat: '47.3769', lng: '8.5417' },
-  lausanne: { lat: '46.5197', lng: '6.6323' },
-  bern: { lat: '46.9480', lng: '7.4474' },
-  basel: { lat: '47.5596', lng: '7.5886' },
-  winterthur: { lat: '47.5006', lng: '8.7292' },
-  'st-gallen': { lat: '47.4245', lng: '9.3767' },
-  lugano: { lat: '46.0037', lng: '8.9511' },
-  biel: { lat: '47.1368', lng: '7.2467' },
-  luzern: { lat: '47.0502', lng: '8.3093' },
-  fribourg: { lat: '46.8065', lng: '7.1620' },
-  neuchatel: { lat: '46.9900', lng: '6.9293' },
-  thun: { lat: '46.7580', lng: '7.6280' },
   amsterdam: { lat: '52.3676', lng: '4.9041' },
   rotterdam: { lat: '51.9244', lng: '4.4777' },
   'den-haag': { lat: '52.0705', lng: '4.3007' },
@@ -156,7 +142,7 @@ export function CitySchema({
       '@type': 'PostalAddress',
       addressLocality: city.name,
       addressRegion: city.canton,
-      addressCountry: NL_CITY_SLUGS.has(citySlug) ? 'NL' : 'CH',
+      addressCountry: 'NL',
     },
     geo: {
       '@type': 'GeoCoordinates',

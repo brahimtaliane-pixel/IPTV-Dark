@@ -1,6 +1,7 @@
 import nextDynamic from 'next/dynamic';
 import { setRequestLocale } from 'next-intl/server';
 import Hero from '@/components/sections/Hero';
+import HomeContact from '@/components/sections/HomeContact';
 import Pricing from '@/components/sections/Pricing';
 import JsonLd from '@/components/sections/JsonLd';
 
@@ -45,12 +46,13 @@ export default async function HomePage({ params }: Props) {
       <Features />
       <Pricing plans={homePricingPlans} />
       <MultiScreenBanner />
-      <DeviceCompatibility />
       <HowItWorks />
+      <DeviceCompatibility />
       <WhyUs />
       <Testimonials />
       <FAQ />
       <CityLinks />
+      <HomeContact contact={contact} />
       <CTA />
     </>
   );

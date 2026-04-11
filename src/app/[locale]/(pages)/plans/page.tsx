@@ -14,7 +14,7 @@ import {
   Star,
 } from 'lucide-react';
 import { SITE_CONFIG, PRICE_CURRENCY, PRICE_CURRENCY_SYMBOL, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
-import { getPlans } from '@/lib/get-plans';
+import { getPlans, type SitePlan } from '@/lib/get-plans';
 import { localeUrl, formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
 import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import BrandMark from '@/components/ui/BrandMark';
@@ -109,39 +109,57 @@ const PAGE_COPY = {
   faqIntro: 'Wat je wilt weten voordat je een IPTV Nederland-abonnement kiest.',
 };
 
-const FAQS_NL = [
-  {
-    question: 'Wat kosten IPTV-abonnementen?',
-    answer:
-      `Onze IPTV Nederland-pakketten starten vanaf 35,99 ${PRICE_CURRENCY_SYMBOL} voor 3 maanden (1 scherm) tot 179,99 ${PRICE_CURRENCY_SYMBOL} voor 12 maanden op 4 schermen. Alles inclusief 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay.`,
-  },
-  {
-    question: 'Wat is het verschil tussen 1, 2, 3 en 4 schermen?',
-    answer:
-      'Het aantal schermen is het aantal apparaten dat tegelijk kan streamen. 1 scherm voor jezelf, 2 voor een stel, 3–4 voor het gezin. Elk pakket geeft dezelfde zenders en VOD.',
-  },
-  {
-    question: 'Welk pakket heeft de beste prijs-kwaliteit?',
-    answer:
-      `Het 12-maanden abonnement (1 scherm) voor 59,99 ${PRICE_CURRENCY_SYMBOL} is onze meest gekozen optie — rond 5 ${PRICE_CURRENCY_SYMBOL} per maand. Voor gezinnen is 2 schermen / 12 maanden (89,99 ${PRICE_CURRENCY_SYMBOL}) vaak de beste deal op jaarbasis.`,
-  },
-  {
-    question: 'Is er een contract of automatische verlenging?',
-    answer:
-      'Nee. Je kiest een vaste looptijd (3, 6 of 12 maanden). Geen automatische incasso: je betaalt voor de gekozen periode en geniet tot die datum van het abonnement.',
-  },
-  {
-    question: 'Hoe snel kan ik kijken na betaling?',
-    answer:
-      'Meestal binnen 2 uur na betaling. Je ontvangt je gegevens per e-mail met een korte installatiegids voor je apparaat (Smart TV, Fire Stick, MAG, telefoon, enz.).',
-  },
-];
+/** FAQ copy on /plans — prijzen uit actieve plannen zodat ze overeenkomen met de kaarten op de pagina. */
+function buildPlansPageFaqs(plans: SitePlan[], sym: string): { question: string; answer: string }[] {
+  const active = plans.filter((p) => p.is_active);
+  const pick = (devices: number, duration: number) => {
+    const m = active.filter((p) => p.devices === devices && p.duration === duration);
+    return m.find((p) => p.is_popular) ?? m[0];
+  };
+  const p12_1 = pick(1, 12);
+  const p12_2 = pick(2, 12);
+
+  let valueAnswer: string;
+  if (p12_1 && p12_2) {
+    const m1 = getMonthlyPrice(p12_1.price, p12_1.duration);
+    valueAnswer = `Het 12-maanden abonnement (1 scherm) voor ${formatPrice(p12_1.price)} ${sym} wordt veel gekozen — rond ${m1} ${sym} per maand. Voor gezinnen is 2 schermen / 12 maanden (${formatPrice(p12_2.price)} ${sym}) vaak een sterke deal op jaarbasis.`;
+  } else if (p12_1) {
+    const m1 = getMonthlyPrice(p12_1.price, p12_1.duration);
+    valueAnswer = `Het 12-maanden abonnement (1 scherm) voor ${formatPrice(p12_1.price)} ${sym} wordt veel gekozen — rond ${m1} ${sym} per maand. Bekijk hierboven alle pakketten voor meer schermen en looptijden.`;
+  } else {
+    valueAnswer =
+      'De beste keuze hangt af van hoeveel schermen je tegelijk gebruikt en hoe lang je wilt vooruitbetalen. Vergelijk de pakketten op deze pagina — “Populair” markeert wat klanten vaak kiezen.';
+  }
+
+  return [
+    {
+      question: 'Wat is het verschil tussen 1, 2, 3 en 4 schermen?',
+      answer:
+        'Het aantal schermen is het aantal apparaten dat tegelijk kan streamen. 1 scherm voor jezelf, 2 voor een stel, 3–4 voor het gezin. Elk pakket geeft dezelfde zenders en VOD.',
+    },
+    {
+      question: 'Welk pakket heeft de beste prijs-kwaliteit?',
+      answer: valueAnswer,
+    },
+    {
+      question: 'Is er een contract of automatische verlenging?',
+      answer:
+        'Nee. Je kiest een vaste looptijd (3, 6 of 12 maanden). Geen automatische incasso: je betaalt voor de gekozen periode en geniet tot die datum van het abonnement.',
+    },
+    {
+      question: 'Hoe snel kan ik kijken na betaling?',
+      answer:
+        'Meestal binnen 2 uur na betaling. Je ontvangt je gegevens per e-mail met een korte installatiegids voor je apparaat (Smart TV, Fire Stick, MAG, telefoon, enz.).',
+    },
+  ];
+}
 
 export default async function PlansHubPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const pt = await getTranslations('pricing');
   const PLANS = await getPlans();
+  const planFaqs = buildPlansPageFaqs(PLANS, PRICE_CURRENCY_SYMBOL);
 
   const deviceGroups = [1, 2, 3, 4].map((d) => ({
     devices: d,
@@ -194,7 +212,7 @@ export default async function PlansHubPage({ params }: Props) {
           { name: 'Abonnementen', url: localeUrl(locale, '/plans') },
         ]}
       />
-      <FAQSchema faqs={FAQS_NL} />
+      <FAQSchema faqs={planFaqs} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
@@ -207,34 +225,44 @@ export default async function PlansHubPage({ params }: Props) {
         />
       ))}
 
-      <section className="relative bg-white pt-32 pb-12 lg:pt-40 lg:pb-16 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-swiss-red/[0.04] rounded-full blur-[100px] pointer-events-none" />
+      <section className="relative bg-gradient-to-b from-bg/50 to-white pt-32 pb-14 lg:pt-40 lg:pb-20 overflow-hidden border-b border-border">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-swiss-red/[0.06] rounded-full blur-[100px]" />
+        </div>
 
         <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/5 border border-swiss-red/15 rounded-full mb-6">
-            <BrandMark className="w-6 h-6 shrink-0" />
-            <span className="text-xs font-semibold text-swiss-red tracking-wide uppercase">
-              {copy.badge}
-            </span>
-          </div>
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-swiss-red/20 rounded-full mb-7 shadow-sm shadow-swiss-red/5">
+              <BrandMark className="w-6 h-6 shrink-0" />
+              <span className="text-[11px] sm:text-xs font-semibold text-swiss-red tracking-wide uppercase">
+                {copy.badge}
+              </span>
+            </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold leading-[1.08] tracking-tight text-text mb-6 max-w-4xl">
-            {copy.h1Pre} <span className="text-swiss-red">{copy.h1Highlight}</span>
-          </h1>
+            <div className="pl-4 sm:pl-5 border-l-[3px] border-swiss-red/35 mb-7">
+              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold leading-[1.08] tracking-tight text-text">
+                <span className="block sm:inline">{copy.h1Pre}</span>{' '}
+                <span className="text-swiss-red">{copy.h1Highlight}</span>
+              </h1>
+            </div>
 
-          <p className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-8">
-            {copy.intro}
-          </p>
+            <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-9 max-w-2xl">
+              {copy.intro}
+            </p>
 
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-text-secondary">
-            {[copy.trustChannels, copy.trustReplay, copy.trustNoContract, copy.trustActivation].map(
-              (item) => (
-                <div key={item} className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-success shrink-0" />
-                  <span>{item}</span>
-                </div>
-              )
-            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-3">
+              {[copy.trustChannels, copy.trustReplay, copy.trustNoContract, copy.trustActivation].map(
+                (item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2.5 rounded-xl bg-white/80 border border-border/90 px-3.5 py-3 text-xs sm:text-sm text-text-secondary shadow-sm"
+                  >
+                    <Check className="w-4 h-4 text-success shrink-0" strokeWidth={2.5} />
+                    <span className="leading-snug">{item}</span>
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -430,7 +458,7 @@ export default async function PlansHubPage({ params }: Props) {
           </div>
 
           <div className="space-y-3">
-            {FAQS_NL.map((faq, i) => (
+            {planFaqs.map((faq, i) => (
               <details
                 key={i}
                 className="group bg-bg rounded-xl border border-border overflow-hidden hover:border-swiss-red/20 transition-colors"

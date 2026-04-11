@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
+import { getSiteContact } from '@/lib/get-site-contact';
 import { localeUrl } from '@/lib/utils';
 import { BreadcrumbSchema, MultiScreenSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import HomeContact from '@/components/sections/HomeContact';
 import MultiEcransClient from './MultiEcransClient';
 
 type Props = {
@@ -58,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function MultiEcransPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const plans = await getPlans();
+  const [plans, contact] = await Promise.all([getPlans(), getSiteContact()]);
 
   const multiEcransFaqs = [
     {
@@ -94,6 +96,7 @@ export default async function MultiEcransPage({ params }: Props) {
       <MultiScreenSchema locale={locale} plans={plans} />
       <FAQSchema faqs={multiEcransFaqs} />
       <MultiEcransClient plans={plans} />
+      <HomeContact contact={contact} />
     </>
   );
 }

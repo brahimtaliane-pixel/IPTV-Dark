@@ -2,17 +2,30 @@
 // IPTV Nederland - Constants & Configuration
 // ============================================================
 
-/** Single source for public URL/email so SSR and client bundles stay in sync (avoids hydration mismatches). */
+/** Production default when `NEXT_PUBLIC_SITE_URL` is not set at build time. */
 const DEFAULT_PUBLIC_ORIGIN = 'https://nederlandsiptv.com';
 
+/**
+ * Public site origin for canonical URLs, JSON-LD, metadata, emails domain.
+ * - Set `NEXT_PUBLIC_SITE_URL` in `.env.local` to match what you open in the browser
+ *   (e.g. `http://localhost:3000` or `https://nederlandsiptv.local`).
+ * - In `next dev`, if unset, defaults to `http://localhost:<PORT>` so local preview
+ *   is not stuck on the production hostname.
+ */
 function resolvePublicOrigin(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (!raw) return DEFAULT_PUBLIC_ORIGIN;
-  try {
-    return new URL(raw).origin;
-  } catch {
-    return DEFAULT_PUBLIC_ORIGIN;
+  if (raw) {
+    try {
+      return new URL(raw).origin;
+    } catch {
+      /* fall through */
+    }
   }
+  if (process.env.NODE_ENV === 'development') {
+    const port = process.env.PORT || '3000';
+    return `http://localhost:${port}`;
+  }
+  return DEFAULT_PUBLIC_ORIGIN;
 }
 
 function hostnameFromOrigin(origin: string): string {

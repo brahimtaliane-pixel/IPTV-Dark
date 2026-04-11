@@ -1,9 +1,10 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { SITE_CONFIG } from '@/lib/constants';
 import { getSiteContact } from '@/lib/get-site-contact';
 import { localeUrl } from '@/lib/utils';
 import { BreadcrumbSchema } from '@/components/seo/SchemaMarkup';
-import { Mail, Phone, MessageCircle, Clock } from 'lucide-react';
+import { Mail, Phone, MessageCircle, Clock, ArrowRight, Package } from 'lucide-react';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -114,6 +115,23 @@ export default async function ContactPage({ params }: Props) {
           </div>
         </div>
       </div>
+
+      <section className="py-14 lg:py-16 bg-bg border-t border-border" aria-labelledby="contact-plans-cta">
+        <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center">
+          <h2 id="contact-plans-cta" className="text-2xl sm:text-3xl font-extrabold text-text tracking-tight mb-3">
+            {t('plansSectionTitle')}
+          </h2>
+          <p className="text-text-secondary text-sm sm:text-base leading-relaxed mb-8">{t('plansSectionSubtitle')}</p>
+          <Link
+            href="/plans"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+          >
+            <Package className="w-4 h-4" aria-hidden />
+            {t('plansSectionCta')}
+            <ArrowRight className="w-4 h-4" aria-hidden />
+          </Link>
+        </div>
+      </section>
     </>
   );
 }

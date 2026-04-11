@@ -7,11 +7,10 @@ import { Link } from '@/i18n/navigation';
 import { PRICE_CURRENCY_SYMBOL, SITE_CONFIG, type SiteStatsSnapshot } from '@/lib/constants';
 import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getDiscount } from '@/lib/utils';
-import { NL_CITY_SLUGS_ORDERED, NL_CITY_SLUGS } from '@/lib/nl-city-slugs';
+import { NL_CITY_SLUGS_ORDERED } from '@/lib/nl-city-slugs';
 import { CITIES_DATA } from '@/lib/cities';
 
 const ISP_NL = ['KPN', 'Ziggo', 'T-Mobile', 'Odido'] as const;
-const ISP_CH = ['Swisscom', 'Sunrise', 'Salt', 'UPC'] as const;
 
 export default function CityPageClient({
   citySlug,
@@ -23,7 +22,6 @@ export default function CityPageClient({
   stats: SiteStatsSnapshot;
 }) {
   const t = useTranslations('pricing');
-  const isNlCity = NL_CITY_SLUGS.has(citySlug);
 
   const city = CITIES_DATA[citySlug];
   if (!city) {
@@ -43,7 +41,7 @@ export default function CityPageClient({
 
   const meta = city.meta_nl;
 
-  const benefitsNl = [
+  const benefits = [
     'Nederlandse, Belgische en internationale zenders — ruim 30.000 in HD/4K',
     'HD- en 4K-kwaliteit op Smart TV, telefoon, tablet en pc',
     'Replay en VOD met 170.000+ films en series',
@@ -52,25 +50,13 @@ export default function CityPageClient({
     'Compatibel met Smart TV, Android, iOS, Fire Stick, MAG en meer',
   ];
 
-  const benefitsChNl = [
-    'Zwitsers, Europees en internationaal aanbod — ruim 30.000 zenders in HD/4K',
-    'HD- en 4K-kwaliteit op Smart TV, telefoon, tablet en pc',
-    'Replay en VOD met 170.000+ films en series',
-    `Nederlandstalige support 24/7 — ook voor kijkers in ${city.name} en Zwitserland`,
-    'Activering meestal binnen 2 uur na betaling',
-    'Compatibel met Smart TV, Android, iOS, Fire Stick, MAG en meer',
-  ];
-
-  const benefits = isNlCity ? benefitsNl : benefitsChNl;
-
-  const ispList = isNlCity ? ISP_NL : ISP_CH;
-  const regionPhraseNl = isNlCity
-    ? city.name === city.canton
+  const ispList = ISP_NL;
+  const regionPhraseNl =
+    city.name === city.canton
       ? `in ${city.name} en omgeving`
-      : `in ${city.name} en de provincie ${city.canton}`
-    : `in ${city.name} en kanton ${city.canton}`;
+      : `in ${city.name} en de provincie ${city.canton}`;
 
-  const featureCardsNl = [
+  const featureCards = [
     {
       icon: Tv,
       title: '30.000+ zenders',
@@ -88,27 +74,7 @@ export default function CityPageClient({
     },
   ];
 
-  const featureCardsChNl = [
-    {
-      icon: Tv,
-      title: '30.000+ zenders',
-      desc: 'Zwitsers, Europees en internationaal in HD/4K',
-    },
-    {
-      icon: Zap,
-      title: 'Activering < 2 uur',
-      desc: 'Meestal dezelfde dag nog kijken',
-    },
-    {
-      icon: Headphones,
-      title: 'Support 24/7',
-      desc: `Hulp voor ${city.name} en Zwitserland`,
-    },
-  ];
-
-  const featureCards = isNlCity ? featureCardsNl : featureCardsChNl;
-
-  const neighborhoodLabels = isNlCity ? city.neighborhoods_fr : city.neighborhoods_de;
+  const neighborhoodLabels = city.neighborhoods_fr;
 
   return (
     <section className="pt-28 pb-20 bg-white">
@@ -275,19 +241,8 @@ export default function CityPageClient({
             Internet in {city.name} — geschikt voor IPTV
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed mb-4">
-            {isNlCity ? (
-              <>
-                {SITE_CONFIG.name} werkt met de grote providers {regionPhraseNl}. Je hebt geen speciale router of
-                instellingen nodig: een stabiele verbinding vanaf ongeveer 10 Mbps is genoeg voor HD, en ongeveer 25 Mbps
-                voor 4K.
-              </>
-            ) : (
-              <>
-                Onze stream werkt met gangbare internetverbindingen {regionPhraseNl}. Compatibel met onder andere
-                Swisscom, Sunrise, Salt en UPC. Minimaal ongeveer 10 Mbps voor HD en 25 Mbps voor 4K — geen ingewikkelde
-                configuratie nodig.
-              </>
-            )}
+            {SITE_CONFIG.name} werkt met de grote providers {regionPhraseNl}. Je hebt geen speciale router of instellingen
+            nodig: een stabiele verbinding vanaf ongeveer 10 Mbps is genoeg voor HD, en ongeveer 25 Mbps voor 4K.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {ispList.map((isp) => (
@@ -330,29 +285,16 @@ export default function CityPageClient({
               <h3 className="font-semibold text-text mb-1">Hoe werkt {SITE_CONFIG.name} in {city.name}?</h3>
               <p>
                 Je kunt overal in {city.name}
-                {isNlCity
-                  ? city.name === city.canton
-                    ? ' en omgeving'
-                    : ` en de provincie ${city.canton}`
-                  : ` en kanton ${city.canton}`}{' '}
-                kijken zolang je internet hebt (minimaal ca. 10 Mbps). Je krijgt toegang tot meer dan 30.000 zenders in HD
-                en 4K. Na betaling wordt je abonnement meestal binnen 2 uur geactiveerd.
+                {city.name === city.canton ? ' en omgeving' : ` en de provincie ${city.canton}`} kijken zolang je internet
+                hebt (minimaal ca. 10 Mbps). Je krijgt toegang tot meer dan 30.000 zenders in HD en 4K. Na betaling wordt je
+                abonnement meestal binnen 2 uur geactiveerd.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-text mb-1">Welke internetproviders werken in {city.name}?</h3>
               <p>
-                {isNlCity ? (
-                  <>
-                    Onze service werkt met vrijwel alle providers, waaronder KPN, Ziggo, T-Mobile, Odido en regionale
-                    glasvezel. Geen speciale IPTV-box van je provider nodig.
-                  </>
-                ) : (
-                  <>
-                    De stream werkt in {city.name} met onder andere Swisscom, Sunrise, Salt en UPC. Geen apart IPTV-product
-                    van je internetprovider vereist — alleen een stabiele verbinding.
-                  </>
-                )}
+                Onze service werkt met vrijwel alle providers, waaronder KPN, Ziggo, T-Mobile, Odido en regionale glasvezel.
+                Geen speciale IPTV-box van je provider nodig.
               </p>
             </div>
             <div>

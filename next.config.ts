@@ -61,6 +61,7 @@ const nextConfig: NextConfig = {
       ...legacyPlanSlugRedirects(),
       // Subscription landing URLs → pricing (branded + legacy WordPress)
       { source: '/abonnement-iptv-nederland', destination: '/#pricing', permanent: true },
+      // Legacy Swiss marketing URL → homepage pricing (keep for old backlinks)
       { source: '/abonnement-iptv-suisse', destination: '/#pricing', permanent: true },
       { source: '/iptv-plan/:slug', destination: '/plans/:slug', permanent: true },
       { source: '/guide-dinstallation-iptv', destination: '/installation', permanent: true },

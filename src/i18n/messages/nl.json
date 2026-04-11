@@ -159,7 +159,10 @@
         "question": "Is er een gratis proefperiode?",
         "answer": "Neem contact op via WhatsApp voor een eventuele proef van 24 uur, afhankelijk van beschikbaarheid."
       }
-    ]
+    ],
+    "homeSectionTitle": "Terug naar de homepage",
+    "homeSectionSubtitle": "Bekijk onze abonnementen, uitleg en alles over IPTV Nederland op één plek.",
+    "homeSectionCta": "Naar home"
   },
   "devices": {
     "title": "Werkt op al je apparaten",
@@ -231,7 +234,10 @@
   },
   "installation": {
     "title": "Installatiegids",
-    "subtitle": "Installeer streaming op al je apparaten in een paar minuten."
+    "subtitle": "Installeer streaming op al je apparaten in een paar minuten.",
+    "plansSectionTitle": "Klaar om te starten?",
+    "plansSectionSubtitle": "Kies een IPTV-abonnement dat bij je past — daarna volg je deze stappen met je persoonlijke inloggegevens.",
+    "plansSectionCta": "Bekijk abonnementen"
   },
   "about": {
     "title": "Over IPTV Nederland",
@@ -299,7 +305,25 @@
   },
   "contact": {
     "title": "Neem contact op",
-    "subtitle": "Ons team is 24/7 bereikbaar voor je vragen."
+    "subtitle": "Ons team is 24/7 bereikbaar voor je vragen.",
+    "plansSectionTitle": "Abonnement nodig?",
+    "plansSectionSubtitle": "Vergelijk onze pakketten en prijzen en kies het IPTV-abonnement dat bij je past.",
+    "plansSectionCta": "Bekijk abonnementen"
+  },
+  "homeContact": {
+    "badge": "Contact & support",
+    "title": "Nog vragen? We helpen je graag",
+    "subtitle": "Ons team staat voor je klaar — via WhatsApp, e-mail of telefoon. Liever alles op een rij? Bekijk de volledige contactpagina.",
+    "whatsapp": "WhatsApp",
+    "whatsappDesc": "Meestal reactie binnen 30 minuten",
+    "email": "E-mail",
+    "emailDesc": "Antwoord binnen 2 uur",
+    "phone": "Telefoon",
+    "phoneDesc": "24/7 bereikbaar",
+    "ctaWhatsapp": "Open WhatsApp",
+    "ctaEmail": "Mail ons",
+    "ctaPhone": "Bel ons",
+    "ctaPage": "Alle contactopties"
   },
   "notFound": {
     "title": "Pagina niet gevonden",

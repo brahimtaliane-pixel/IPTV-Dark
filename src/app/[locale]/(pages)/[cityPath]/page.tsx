@@ -6,7 +6,6 @@ import { getPlans } from '@/lib/get-plans';
 import { getSiteContact } from '@/lib/get-site-contact';
 import { localeUrl } from '@/lib/utils';
 import { CITIES_DATA, ALL_CITY_SLUGS } from '@/lib/cities';
-import { NL_CITY_SLUGS } from '@/lib/nl-city-slugs';
 import { BreadcrumbSchema, CitySchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import CityPageClient from './CityPageClient';
 
@@ -16,7 +15,7 @@ type Props = {
 
 export const dynamic = 'force-dynamic';
 
-// Parse "iptv-geneve" → "geneve"
+// Parse "iptv-amsterdam" → "amsterdam"
 function parseCitySlug(cityPath: string): string | null {
   if (cityPath.startsWith('iptv-')) {
     return cityPath.slice(5); // Remove "iptv-" prefix
@@ -89,7 +88,6 @@ export default async function CityPage({ params }: Props) {
   const cityName = city.name;
   const [plans, contact] = await Promise.all([getPlans(), getSiteContact()]);
 
-  const isNlCity = NL_CITY_SLUGS.has(citySlug);
   const cityFaqs = [
     {
       question: `Hoe werkt ${SITE_CONFIG.name} in ${cityName}?`,
@@ -97,9 +95,7 @@ export default async function CityPage({ params }: Props) {
     },
     {
       question: `Welke internetproviders werken in ${cityName}?`,
-      answer: isNlCity
-        ? `Compatibel met gangbare providers zoals KPN, Ziggo, T-Mobile en Odido — geen speciale IPTV-box van je provider nodig.`
-        : `Werkt met gangbare verbindingen; geen aparte provider-IPTV vereist. Onder andere Swisscom, Sunrise, Salt en UPC.`,
+      answer: `Compatibel met gangbare providers zoals KPN, Ziggo, T-Mobile en Odido — geen speciale IPTV-box van je provider nodig.`,
     },
     {
       question: `Zijn replay en VOD inbegrepen in ${cityName}?`,
