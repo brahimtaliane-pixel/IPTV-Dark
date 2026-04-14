@@ -15,18 +15,16 @@ const PAGE_PATH = '/iptv-dark-nederland';
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = 'IPTV Dark Nederland | Premium IPTV voor heel NL — iptvdark4k.nl';
-  const description =
-    'IPTV Dark Nederland: het officiële merk IPTV Dark voor kijkers in Nederland en België. NPO, RTL, 32.000+ zenders, VOD, replay, NL-support 24/7 op iptvdark4k.nl.';
+  const title = `IPTV Dark Nederland | Premium IPTV voor heel NL — ${SITE_CONFIG.domain}`;
+  const description = `IPTV Dark Nederland: het officiële merk ${SITE_CONFIG.name} voor kijkers in Nederland en België. NPO, RTL, 32.000+ zenders, VOD, replay, NL-support 24/7 op ${SITE_CONFIG.domain}.`;
 
   return {
     title,
     description,
     keywords: [
       'IPTV Dark Nederland',
-      'IPTV Dark',
-      'IPTV Nederland',
-      'iptvdark4k.nl',
+      SITE_CONFIG.name,
+      SITE_CONFIG.domain,
       'Nederlandse IPTV',
       'premium IPTV',
       'NPO RTL IPTV',
@@ -63,10 +61,10 @@ export default async function IptvDarkNederlandPage({ params }: Props) {
   const faqs = [
     {
       question: 'Wat is IPTV Dark Nederland?',
-      answer: `"IPTV Dark Nederland" is hoe we onze premium IPTV-service beschrijven voor kijkers in Nederland: het merk is ${SITE_CONFIG.name}, met dezelfde pakketten en support als op iptvdark4k.nl.`,
+      answer: `"IPTV Dark Nederland" is hoe we onze premium IPTV-service beschrijven voor kijkers in Nederland: het merk is ${SITE_CONFIG.name}, met dezelfde pakketten en support als op ${SITE_CONFIG.domain}.`,
     },
     {
-      question: 'Is dit dezelfde service als op iptvdark4k.nl?',
+      question: `Is dit dezelfde service als op ${SITE_CONFIG.domain}?`,
       answer: 'Ja. Je bestelt dezelfde abonnementen met dezelfde inhoud, activering en klantenservice.',
     },
     {

@@ -2,15 +2,17 @@
 // IPTV Dark - Constants & Configuration
 // ============================================================
 
-/** Production default when `NEXT_PUBLIC_SITE_URL` is not set at build time (www for canonical consistency). */
-const DEFAULT_PUBLIC_ORIGIN = 'https://www.iptvdark4k.nl';
+/** Production default when `NEXT_PUBLIC_SITE_URL` is not set at build time (apex host, no `www.`). */
+const DEFAULT_PUBLIC_ORIGIN = 'https://iptvdark4k.nl';
 
 /**
- * Public site origin for canonical URLs, JSON-LD, metadata, emails domain.
+ * Public site origin for canonical URLs, JSON-LD, metadata.
  * - Set `NEXT_PUBLIC_SITE_URL` in `.env.local` to match what you open in the browser
  *   (e.g. `http://localhost:3000` or `https://iptvdark4k.local`).
  * - In `next dev`, if unset, defaults to `http://localhost:<PORT>` so local preview
  *   is not stuck on the production hostname.
+ * - If the URL host is `www.example.com`, the origin is normalized to `https://example.com`
+ *   so `SITE_CONFIG.url` and `SITE_CONFIG.domain` stay consistent (apex for this project).
  */
 function resolvePublicOrigin(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -28,6 +30,20 @@ function resolvePublicOrigin(): string {
   return DEFAULT_PUBLIC_ORIGIN;
 }
 
+/** Use apex hostname in canonical origin (localhost / non-www unchanged). */
+function originWithoutWwwPrefix(origin: string): string {
+  try {
+    const u = new URL(origin);
+    if (/^www\./i.test(u.hostname)) {
+      u.hostname = u.hostname.slice(4);
+      return u.origin;
+    }
+  } catch {
+    /* ignore */
+  }
+  return origin;
+}
+
 function hostnameFromOrigin(origin: string): string {
   try {
     return new URL(origin).hostname;
@@ -36,7 +52,7 @@ function hostnameFromOrigin(origin: string): string {
   }
 }
 
-const _publicOrigin = resolvePublicOrigin();
+const _publicOrigin = originWithoutWwwPrefix(resolvePublicOrigin());
 const _publicHost = hostnameFromOrigin(_publicOrigin);
 /** Apex / registrable domain for `contact@` and From headers (strip `www.` when origin is www). */
 const _publicDomain = _publicHost.replace(/^www\./i, '') || _publicHost;

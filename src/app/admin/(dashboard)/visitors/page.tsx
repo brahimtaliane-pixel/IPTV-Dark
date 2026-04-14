@@ -91,134 +91,129 @@ export default function AdminVisitorsPage() {
 
   return (
     <div>
-      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Eye className="w-6 h-6 text-[#D52B1E]" />
+          <h1 className="text-2xl font-bold text-text flex items-center gap-2">
+            <Eye className="w-6 h-6 text-swiss-red" />
             Live Visitors
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-text-muted mt-1">
             Real-time visitor tracking
           </p>
         </div>
         <button
+          type="button"
           onClick={fetchVisitors}
-          className="text-gray-400 hover:text-gray-600 transition p-2"
+          className="text-text-muted hover:text-text transition p-2"
         >
           <RefreshCw className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-surface rounded-xl border border-border p-5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
-              <Circle className="w-5 h-5 fill-green-500 text-green-500" />
+            <div className="w-10 h-10 bg-green-500/15 rounded-lg flex items-center justify-center">
+              <Circle className="w-5 h-5 fill-green-400 text-green-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-gray-900">{onlineCount}</p>
-              <p className="text-xs text-gray-500">Online now</p>
+              <p className="text-2xl font-bold text-text">{onlineCount}</p>
+              <p className="text-xs text-text-muted">Online now</p>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-surface rounded-xl border border-border p-5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-              <Users className="w-5 h-5 text-blue-500" />
+            <div className="w-10 h-10 bg-blue-500/15 rounded-lg flex items-center justify-center">
+              <Users className="w-5 h-5 text-blue-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-gray-900">{todayTotal}</p>
-              <p className="text-xs text-gray-500">Visitors today</p>
+              <p className="text-2xl font-bold text-text">{todayTotal}</p>
+              <p className="text-xs text-text-muted">Visitors today</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Visitors Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-surface rounded-xl border border-border overflow-hidden">
         {loading ? (
           <div className="p-12 text-center">
-            <div className="animate-spin w-6 h-6 border-2 border-[#D52B1E] border-t-transparent rounded-full mx-auto" />
+            <div className="animate-spin w-6 h-6 border-2 border-swiss-red border-t-transparent rounded-full mx-auto" />
           </div>
         ) : visitors.length === 0 ? (
-          <div className="p-12 text-center text-gray-400">
-            <Eye className="w-10 h-10 mx-auto mb-3 opacity-30" />
+          <div className="p-12 text-center text-text-muted">
+            <Eye className="w-10 h-10 mx-auto mb-3 opacity-40" />
             <p className="text-sm">No visitors online right now</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <tr className="border-b border-border bg-bg-alt">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">
                     Visitor
                   </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">
                     Page
                   </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">
                     Location
                   </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">
                     Device
                   </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">
                     Time on site
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-border">
                 {visitors.map(v => (
-                  <tr key={v.id} className="hover:bg-gray-50/50 transition">
-                    {/* Visitor */}
+                  <tr key={v.id} className="hover:bg-bg-alt/50 transition">
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
                         <div className="relative">
-                          <div className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center">
-                            <span className="text-xs font-semibold text-gray-500">
+                          <div className="w-9 h-9 bg-bg-alt border border-border rounded-full flex items-center justify-center">
+                            <span className="text-xs font-semibold text-text-muted">
                               {(v.email || v.visitor_id).charAt(0).toUpperCase()}
                             </span>
                           </div>
-                          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
+                          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-surface" />
                         </div>
                         <div className="min-w-0">
                           {v.email ? (
                             <div className="flex items-center gap-1.5">
-                              <Mail className="w-3 h-3 text-gray-400" />
-                              <span className="text-sm font-medium text-gray-900 truncate max-w-[180px]">
+                              <Mail className="w-3 h-3 text-text-muted" />
+                              <span className="text-sm font-medium text-text truncate max-w-[180px]">
                                 {v.email}
                               </span>
                             </div>
                           ) : (
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-text-muted">
                               {v.visitor_id.slice(0, 8)}...
                             </span>
                           )}
-                          <span className="text-[11px] text-gray-400">
+                          <span className="text-[11px] text-text-muted">
                             {v.locale.toUpperCase()}
                           </span>
                         </div>
                       </div>
                     </td>
 
-                    {/* Page */}
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-1.5">
-                        <Globe className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                        <span className="text-sm text-gray-700 truncate max-w-[200px]" title={v.page_url || ''}>
+                        <Globe className="w-3.5 h-3.5 text-text-muted shrink-0" />
+                        <span className="text-sm text-text-secondary truncate max-w-[200px]" title={v.page_url || ''}>
                           {getPagePath(v.page_url)}
                         </span>
                       </div>
                       {v.referrer && (
-                        <p className="text-[11px] text-gray-400 mt-0.5 truncate max-w-[200px]">
+                        <p className="text-[11px] text-text-muted mt-0.5 truncate max-w-[200px]">
                           via {new URL(v.referrer).hostname}
                         </p>
                       )}
                     </td>
 
-                    {/* Location */}
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-1.5">
                         {v.country ? (
@@ -226,33 +221,31 @@ export default function AdminVisitorsPage() {
                             <span className="text-base leading-none">
                               {COUNTRY_FLAGS[v.country] || '🌍'}
                             </span>
-                            <span className="text-sm text-gray-700">
+                            <span className="text-sm text-text-secondary">
                               {v.city ? `${v.city}, ${v.country}` : v.country}
                             </span>
                           </>
                         ) : (
                           <>
-                            <MapPin className="w-3.5 h-3.5 text-gray-400" />
-                            <span className="text-sm text-gray-400">Unknown</span>
+                            <MapPin className="w-3.5 h-3.5 text-text-muted" />
+                            <span className="text-sm text-text-muted">Unknown</span>
                           </>
                         )}
                       </div>
                     </td>
 
-                    {/* Device */}
                     <td className="px-5 py-3.5">
-                      <div className="flex items-center gap-1.5 text-gray-600">
+                      <div className="flex items-center gap-1.5 text-text-secondary">
                         <DeviceIcon device={v.device} />
                         <span className="text-sm">{v.browser || 'Unknown'}</span>
                       </div>
-                      <p className="text-[11px] text-gray-400 mt-0.5">
+                      <p className="text-[11px] text-text-muted mt-0.5">
                         {v.device || 'Desktop'}
                       </p>
                     </td>
 
-                    {/* Time on site */}
                     <td className="px-5 py-3.5">
-                      <div className="flex items-center gap-1.5 text-gray-600">
+                      <div className="flex items-center gap-1.5 text-text-secondary">
                         <Clock className="w-3.5 h-3.5" />
                         <span className="text-sm font-medium">
                           {timeOnSite(v.first_seen_at)}

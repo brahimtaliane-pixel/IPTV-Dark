@@ -15,9 +15,8 @@ const PAGE_PATH = '/iptv-kopen';
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = 'IPTV kopen | Premium abonnement Nederland — nederlandsiptv.com';
-  const description =
-    'IPTV kopen bij IPTV Nederland: 30.000+ zenders HD/4K, 170.000+ films en series, replay, activering binnen 2 uur, Nederlandstalige support 24/7. Veilig abonnement op nederlandsiptv.com.';
+  const title = `IPTV kopen | Premium abonnement — ${SITE_CONFIG.name} | ${SITE_CONFIG.domain}`;
+  const description = `IPTV kopen bij ${SITE_CONFIG.name}: 32.000+ zenders HD/4K, 175.000+ films en series on demand, replay, activering binnen 2 uur, Nederlandstalige support 24/7. Veilig abonnement op ${SITE_CONFIG.domain}.`;
 
   return {
     title,
@@ -25,8 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: [
       'IPTV kopen',
       'IPTV abonnement kopen',
-      'IPTV Nederland',
-      'nederlandsiptv.com',
+      SITE_CONFIG.name,
+      SITE_CONFIG.domain,
       'IPTV kopen Nederland',
       'premium IPTV',
       'IPTV bestellen',
@@ -63,7 +62,7 @@ export default async function IptvKopenPage({ params }: Props) {
   const faqs = [
     {
       question: 'Waar kan ik veilig IPTV kopen?',
-      answer: `Bij een aanbieder met duidelijke website, voorwaarden en bereikbare support — zoals ${SITE_CONFIG.name} op nederlandsiptv.com.`,
+      answer: `Bij een aanbieder met duidelijke website, voorwaarden en bereikbare support — zoals ${SITE_CONFIG.name} op ${SITE_CONFIG.domain}.`,
     },
     {
       question: 'Hoe betaal ik mijn IPTV-abonnement?',
@@ -71,9 +70,9 @@ export default async function IptvKopenPage({ params }: Props) {
         'Je volgt het bestelproces op de site en ontvangt een bevestiging per e-mail. Betaalopties zie je tijdens het afrekenen.',
     },
     {
-      question: 'Wat krijg ik als ik IPTV koop bij IPTV Nederland?',
+      question: `Wat krijg ik als ik IPTV koop bij ${SITE_CONFIG.name}?`,
       answer:
-        'Toegang tot 30.000+ zenders, grote VOD-bibliotheek, replay tot 7 dagen, EPG en updates, plus Nederlandstalige support.',
+        'Toegang tot 32.000+ zenders, grote VOD-bibliotheek, replay tot 7 dagen, EPG en updates, plus Nederlandstalige support.',
     },
     {
       question: 'Hoe snel na betalen kan ik kijken?',

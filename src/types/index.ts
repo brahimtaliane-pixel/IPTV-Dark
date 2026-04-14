@@ -1,5 +1,5 @@
 // ============================================================
-// IPTV Nederland - Type Definitions
+// IPTV Dark — Type Definitions
 // ============================================================
 
 export interface Plan {

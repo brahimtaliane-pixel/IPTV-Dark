@@ -48,7 +48,7 @@ export default function WhatsAppButton({ whatsappUrl }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="bg-white rounded-xl shadow-xl border border-border p-4 max-w-[240px] relative"
+            className="bg-surface rounded-xl shadow-xl border border-border p-4 max-w-[240px] relative"
           >
             <button
               type="button"
@@ -67,7 +67,7 @@ export default function WhatsAppButton({ whatsappUrl }: Props) {
             >
               Start chat →
             </a>
-            <div className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-r border-b border-border rotate-45" />
+            <div className="absolute -bottom-2 right-6 w-4 h-4 bg-surface border-r border-b border-border rotate-45" />
           </motion.div>
         )}
       </AnimatePresence>

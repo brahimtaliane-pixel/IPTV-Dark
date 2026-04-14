@@ -59,7 +59,7 @@ export default function LeadForm({ planId, planName, isOpen, onClose }: LeadForm
             initial={{ opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            className="relative w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden"
+            className="relative w-full max-w-md bg-surface border border-border rounded-xl shadow-2xl overflow-hidden"
           >
             <button onClick={onClose} className="absolute top-3 right-3 p-1.5 text-text-muted hover:text-text rounded-md hover:bg-bg-alt">
               <X className="w-5 h-5" />

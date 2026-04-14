@@ -4,6 +4,7 @@ import {
   SCHEMA_PRICE_RANGE,
   SCHEMA_PRICE_VALID_UNTIL,
 } from '@/lib/constants';
+import { schemaKernel, schemaOrigin } from '@/lib/schema-brand';
 import { localeUrl } from '@/lib/utils';
 import type { SitePlan } from '@/lib/get-plans';
 
@@ -24,30 +25,13 @@ interface JsonLdProps {
  * Product + Offer (per active plan), Service, FAQPage — all @id-linked where useful.
  */
 export default function JsonLd({ locale, plans, phone, homeFaqs, pageTitle, pageDescription }: JsonLdProps) {
-  const base = SITE_CONFIG.url.replace(/\/$/, '');
-  const orgId = `${base}/#organization`;
-  const brandId = `${base}/#brand`;
-  const logoId = `${base}/#logo`;
+  const base = schemaOrigin();
+  const { logoId, brandId, orgId, logo, brand } = schemaKernel();
   const webSiteId = `${base}/#website`;
   const webPageId = `${base}/#homepage`;
   const serviceId = `${base}/#iptv-streaming-service`;
 
   const activePlans = plans.filter((p) => p.is_active);
-
-  const logoNode = {
-    '@type': 'ImageObject',
-    '@id': logoId,
-    url: `${base}/logo.svg`,
-    contentUrl: `${base}/logo.svg`,
-    caption: `${SITE_CONFIG.name} logo`,
-  };
-
-  const brandNode = {
-    '@type': 'Brand',
-    '@id': brandId,
-    name: SITE_CONFIG.name,
-    logo: { '@id': logoId },
-  };
 
   const organizationNode = {
     '@type': 'Organization',
@@ -57,7 +41,7 @@ export default function JsonLd({ locale, plans, phone, homeFaqs, pageTitle, page
     legalName: SITE_CONFIG.name,
     url: base,
     logo: { '@id': logoId },
-    image: `${base}/logo.svg`,
+    image: [`${base}/logo.svg`, `${base}/favicon.svg`],
     brand: { '@id': brandId },
     description: pageDescription,
     email: SITE_CONFIG.email,
@@ -112,6 +96,7 @@ export default function JsonLd({ locale, plans, phone, homeFaqs, pageTitle, page
     description: plan.description_nl,
     image: `${base}${plan.image}`,
     sku: plan.slug,
+    category: 'IPTV-abonnement',
     brand: { '@id': brandId },
     offers: {
       '@type': 'Offer',
@@ -166,8 +151,8 @@ export default function JsonLd({ locale, plans, phone, homeFaqs, pageTitle, page
   };
 
   const graph = [
-    logoNode,
-    brandNode,
+    logo,
+    brand,
     organizationNode,
     webSiteNode,
     webPageNode,

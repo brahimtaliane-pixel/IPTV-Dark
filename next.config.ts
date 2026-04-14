@@ -50,7 +50,7 @@ const nextConfig: NextConfig = {
   },
 
   // ─── Rewrites ────────────────────────────────────────────
-  /** Many clients still request `/favicon.ico` first; serve the same NL mark as `public/favicon.svg`. */
+  /** Many clients still request `/favicon.ico` first; serve the same mark as `public/favicon.svg`. */
   async rewrites() {
     return [{ source: '/favicon.ico', destination: '/favicon.svg' }];
   },

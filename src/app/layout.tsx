@@ -2,9 +2,9 @@ import '@/app/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-const favicon = '/favicon.svg?v=tv3';
+const favicon = '/favicon.svg?v=tv4';
 
-/** Brand mark (red tile + play) — same asset as `app/icon.svg` / `public/favicon.svg`. */
+/** Lime TV brand mark — same artwork as `BrandMark` / `app/icon.svg` / `public/favicon.svg`. */
 export const metadata: Metadata = {
   icons: {
     icon: [{ url: favicon, type: 'image/svg+xml' }],

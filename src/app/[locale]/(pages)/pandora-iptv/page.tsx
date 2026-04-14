@@ -15,18 +15,17 @@ const PAGE_PATH = '/pandora-iptv';
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = 'Pandora IPTV alternatief | Premium IPTV Nederland — 30.000+ zenders HD/4K';
-  const description =
-    'Zoek je Pandora IPTV of vergelijkbare apps? Ontdek IPTV Nederland: 30.000+ zenders, 170.000+ films en series, replay, Nederlandstalige support 24/7 en activering binnen 2 uur.';
+  const title = `Pandora IPTV alternatief | ${SITE_CONFIG.name} — 32.000+ zenders HD/4K`;
+  const description = `Zoek je Pandora IPTV of vergelijkbare apps? Ontdek ${SITE_CONFIG.name}: 32.000+ zenders, 175.000+ films en series on demand, replay, Nederlandstalige support 24/7 en activering binnen 2 uur.`;
 
   return {
     title,
     description,
     keywords: [
       'Pandora IPTV',
-      'Pandora IPTV Nederland',
+      `Pandora IPTV ${SITE_CONFIG.name}`,
       'IPTV alternatief',
-      'IPTV Nederland',
+      SITE_CONFIG.name,
       'premium IPTV',
       'IPTV HD 4K',
     ],

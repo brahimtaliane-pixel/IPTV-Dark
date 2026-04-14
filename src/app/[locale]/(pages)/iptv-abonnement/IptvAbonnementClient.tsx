@@ -83,7 +83,7 @@ const TOPIC_TAGS = [
   'goedkoop IPTV abonnement',
   'HD 4K abonnement',
   'Replay VOD',
-  'iptvdark4k.nl',
+  SITE_CONFIG.domain,
   'EPG',
   'verlengen IPTV',
 ];
@@ -190,7 +190,7 @@ export default function IptvAbonnementClient({
               <BrandMark className="w-10 h-10 sm:w-11 shrink-0" />
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-swiss-red">{SITE_CONFIG.name}</p>
-                <p className="text-xs text-text-muted">iptvdark4k.nl · Thema</p>
+                <p className="text-xs text-text-muted">{SITE_CONFIG.domain} · Thema</p>
               </div>
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-swiss-red/25 shadow-sm shadow-black/25">
@@ -219,7 +219,7 @@ export default function IptvAbonnementClient({
             Zoek je een betrouwbaar <strong className="text-text font-semibold">IPTV-abonnement</strong> in Nederland? Bij{' '}
             {SITE_CONFIG.name} kies je <strong className="text-text font-semibold">3, 6 of 12 maanden</strong> met vaste
             prijzen, 32.000+ zenders, meer dan 175.000 films en meer dan 175.000 series on demand, replay tot 7 dagen en support 24/7 — op{' '}
-            <strong className="text-text font-semibold">iptvdark4k.nl</strong>.
+            <strong className="text-text font-semibold">{SITE_CONFIG.domain}</strong>.
           </motion.p>
 
           <p className="text-sm text-text-muted max-w-3xl mb-8 border-l-2 border-swiss-red/25 pl-4">

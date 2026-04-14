@@ -42,10 +42,10 @@ export default function HeroDesktopImage({
         />
         <div className="relative bg-transparent">
           <Image
-            src="/images/hero-devices.png"
+            src="/images/hero-iptv-dark-devices.png"
             alt={alt}
-            width={612}
-            height={408}
+            width={1024}
+            height={682}
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="relative w-full h-auto object-contain bg-transparent transition-transform duration-500 group-hover:scale-[1.01]"
             priority

@@ -101,9 +101,15 @@
     "guarantee": "Niet tevreden? Geld terug binnen 24 uur"
   },
   "testimonials": {
+    "badge": "Reviews & vertrouwen",
     "title": "Wat onze",
     "titleHighlight": "klanten zeggen",
-    "subtitle": "Duizenden tevreden klanten — van Amsterdam tot Groningen — die elke dag buffer-vrij streamen."
+    "subtitle": "Echte feedback van streamers in heel Nederland — stabiele beelden, snelle support en een bibliotheek die blijft groeien.",
+    "ratingLabel": "Gemiddelde score",
+    "ratingValue": "4,9/5",
+    "statCustomers": "Actieve klanten",
+    "statSupport": "Support",
+    "verified": "Geverifieerde klant"
   },
   "faq": {
     "title": "Veelgestelde",

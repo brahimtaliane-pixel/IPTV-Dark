@@ -18,17 +18,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
   const multiUrl = `${SITE_CONFIG.url}/multi-scherm`;
-  const title =
-    'IPTV multi-scherm — 2, 3 of 4 schermen tegelijk | IPTV Nederland';
-  const description =
-    'IPTV Nederland multi-scherm pakketten: kijk op 2, 3 of 4 apparaten tegelijk. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, 7 dagen replay. Vanaf 53,99 €.';
+  const title = `IPTV multi-scherm — 2, 3 of 4 schermen tegelijk | ${SITE_CONFIG.name}`;
+  const description = `${SITE_CONFIG.name} multi-scherm pakketten: kijk op 2, 3 of 4 apparaten tegelijk. Meer dan 32.000 zenders HD/4K, 175.000+ films en series on demand, 7 dagen replay. Vanaf 53,99 €.`;
 
   return {
     title,
     description,
     keywords: [
       'iptv multi scherm',
-      'IPTV Nederland multi scherm',
+      `${SITE_CONFIG.name} multi scherm`,
       'iptv gezin',
       'iptv 2 schermen',
       'iptv 4 schermen',

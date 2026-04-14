@@ -1,4 +1,5 @@
 import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
+import { schemaKernel } from '@/lib/schema-brand';
 import type { SitePlan } from '@/lib/get-plans';
 import { CITIES_DATA } from '@/lib/cities';
 import { localeUrl } from '@/lib/utils';
@@ -37,32 +38,30 @@ export function PlanProductSchema({
   locale: string;
   plan: SitePlan;
 }) {
-  const name = plan.name_nl;
-  const description = plan.description_nl;
-  const slug = plan.slug;
+  const { logo, brand, organizationCompact, orgId, brandId } = schemaKernel();
 
-  const schema = {
-    '@context': 'https://schema.org',
+  const product = {
     '@type': 'Product',
-    name,
-    description,
+    name: plan.name_nl,
+    description: plan.description_nl,
     image: `${SITE_CONFIG.url}${plan.image}`,
-    brand: {
-      '@type': 'Brand',
-      name: SITE_CONFIG.name,
-    },
+    sku: plan.slug,
+    category: 'IPTV-abonnement',
+    brand: { '@id': brandId },
     offers: {
       '@type': 'Offer',
       price: plan.price,
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
       priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
-      seller: {
-        '@type': 'Organization',
-        name: SITE_CONFIG.name,
-      },
-      url: localeUrl(locale, `/abonnementen/${slug}`),
+      seller: { '@id': orgId },
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
     },
+  };
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [logo, brand, organizationCompact, product],
   };
 
   return (
@@ -128,38 +127,51 @@ export function CitySchema({
 }) {
   const city = CITIES_DATA[citySlug];
   const geo = CITY_GEO[citySlug];
+  const { orgId, brandId, logo, brand, organizationCompact } = schemaKernel();
+  const base = organizationCompact.url as string;
+
   if (!city || !geo) return null;
 
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: `${SITE_CONFIG.name} ${city.name}`,
-    url: localeUrl(locale, `/iptv-${citySlug}`),
-    telephone,
-    email: SITE_CONFIG.email,
-    description: city.meta_nl.description,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: city.name,
-      addressRegion: city.canton,
-      addressCountry: 'NL',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: geo.lat,
-      longitude: geo.lng,
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      opens: '00:00',
-      closes: '23:59',
-    },
-    priceRange: SCHEMA_PRICE_RANGE,
-    areaServed: {
-      '@type': 'City',
-      name: city.name,
-    },
+    '@graph': [
+      logo,
+      brand,
+      organizationCompact,
+      {
+        '@type': 'LocalBusiness',
+        name: `${SITE_CONFIG.name} ${city.name}`,
+        url: localeUrl(locale, `/iptv-${citySlug}`),
+        telephone,
+        email: SITE_CONFIG.email,
+        image: [`${base}/logo.svg`, `${base}/favicon.svg`],
+        description: city.meta_nl.description,
+        parentOrganization: { '@id': orgId },
+        brand: { '@id': brandId },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: city.name,
+          addressRegion: city.canton,
+          addressCountry: 'NL',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: geo.lat,
+          longitude: geo.lng,
+        },
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          opens: '00:00',
+          closes: '23:59',
+        },
+        priceRange: SCHEMA_PRICE_RANGE,
+        areaServed: {
+          '@type': 'City',
+          name: city.name,
+        },
+      },
+    ],
   };
 
   return (
@@ -170,7 +182,7 @@ export function CitySchema({
   );
 }
 
-// ─── Multi-Ecrans Product Schema ───────────────────────────
+// ─── Multi-Ecrans Product Schema (single @graph) ───────────
 export function MultiScreenSchema({
   locale,
   plans,
@@ -179,17 +191,18 @@ export function MultiScreenSchema({
   plans: SitePlan[];
 }) {
   const multiPlans = plans.filter((p) => p.devices > 1);
+  if (multiPlans.length === 0) return null;
 
-  const schemas = multiPlans.map((plan) => ({
-    '@context': 'https://schema.org',
+  const { logo, brand, organizationCompact, orgId, brandId } = schemaKernel();
+
+  const products = multiPlans.map((plan) => ({
     '@type': 'Product',
     name: plan.name_nl,
     description: plan.description_nl,
     image: `${SITE_CONFIG.url}${plan.image}`,
-    brand: {
-      '@type': 'Brand',
-      name: SITE_CONFIG.name,
-    },
+    sku: plan.slug,
+    category: 'IPTV-abonnement',
+    brand: { '@id': brandId },
     offers: {
       '@type': 'Offer',
       price: plan.price,
@@ -197,22 +210,75 @@ export function MultiScreenSchema({
       availability: 'https://schema.org/InStock',
       priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
       url: localeUrl(locale, `/abonnementen/${plan.slug}`),
-      seller: {
-        '@type': 'Organization',
-        name: SITE_CONFIG.name,
-      },
+      seller: { '@id': orgId },
     },
   }));
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [logo, brand, organizationCompact, ...products],
+  };
+
   return (
-    <>
-      {schemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+// ─── Plans hub: ItemList + Product offers (single @graph) ─
+export function PlansHubSchema({
+  locale,
+  plans,
+}: {
+  locale: string;
+  plans: SitePlan[];
+}) {
+  const { logo, brand, organizationCompact, orgId, brandId } = schemaKernel();
+  const base = organizationCompact.url as string;
+
+  const itemList = {
+    '@type': 'ItemList',
+    name: `${SITE_CONFIG.name} — abonnementen`,
+    description: 'IPTV-abonnementen met 1–4 gelijktijdige schermen en looptijden van 3, 6 of 12 maanden.',
+    numberOfItems: plans.length,
+    itemListElement: plans.map((plan, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
+      name: plan.name_nl,
+    })),
+  };
+
+  const products = plans.map((plan) => ({
+    '@type': 'Product',
+    name: plan.name_nl,
+    description: plan.description_nl,
+    image: `${base}${plan.image}`,
+    sku: plan.slug,
+    category: 'IPTV-abonnement',
+    brand: { '@id': brandId },
+    offers: {
+      '@type': 'Offer',
+      price: plan.price,
+      priceCurrency: PRICE_CURRENCY,
+      availability: 'https://schema.org/InStock',
+      priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
+      seller: { '@id': orgId },
+    },
+  }));
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [logo, brand, organizationCompact, itemList, ...products],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
   );
 }

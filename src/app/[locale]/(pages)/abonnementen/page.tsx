@@ -21,14 +21,12 @@ import {
 } from 'lucide-react';
 import {
   SITE_CONFIG,
-  PRICE_CURRENCY,
   PRICE_CURRENCY_SYMBOL,
-  SCHEMA_PRICE_VALID_UNTIL,
   STATS,
 } from '@/lib/constants';
 import { getPlans, type SitePlan } from '@/lib/get-plans';
 import { localeUrl, formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, FAQSchema, PlansHubSchema } from '@/components/seo/SchemaMarkup';
 import BrandMark from '@/components/ui/BrandMark';
 
 type Props = {
@@ -218,40 +216,6 @@ export default async function PlansHubPage({ params }: Props) {
       .sort((a, b) => a.duration - b.duration),
   }));
 
-  const itemListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'IPTV Dark abonnementen',
-    numberOfItems: PLANS.length,
-    itemListElement: PLANS.map((plan, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
-      name: plan.name_nl,
-    })),
-  };
-
-  const productSchemas = PLANS.map((plan) => ({
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: plan.name_nl,
-    description: plan.description_nl,
-    image: `${SITE_CONFIG.url}${plan.image}`,
-    brand: { '@type': 'Brand', name: SITE_CONFIG.name },
-    offers: {
-      '@type': 'Offer',
-      price: plan.price,
-      priceCurrency: PRICE_CURRENCY,
-      availability: 'https://schema.org/InStock',
-      priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
-      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
-      seller: {
-        '@type': 'Organization',
-        name: SITE_CONFIG.name,
-      },
-    },
-  }));
-
   const copy = PAGE_COPY;
 
   return (
@@ -263,17 +227,7 @@ export default async function PlansHubPage({ params }: Props) {
         ]}
       />
       <FAQSchema faqs={planFaqs} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
-      />
-      {productSchemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
+      <PlansHubSchema locale={locale} plans={PLANS} />
 
       <section className="relative bg-bg pt-28 pb-16 lg:pt-36 lg:pb-20 overflow-hidden border-b border-border">
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>

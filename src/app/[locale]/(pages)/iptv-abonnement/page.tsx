@@ -15,9 +15,8 @@ const PAGE_PATH = '/iptv-abonnement';
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = 'IPTV abonnement | 3, 6 of 12 maanden — IPTV Nederland | nederlandsiptv.com';
-  const description =
-    'IPTV abonnement bij IPTV Nederland: kies 3, 6 of 12 maanden, 30.000+ zenders, 170.000+ films en series, replay, Nederlandstalige support 24/7. Transparante prijzen op nederlandsiptv.com.';
+  const title = `IPTV abonnement | 3, 6 of 12 maanden — ${SITE_CONFIG.name} | ${SITE_CONFIG.domain}`;
+  const description = `IPTV abonnement bij ${SITE_CONFIG.name}: kies 3, 6 of 12 maanden, 32.000+ zenders, 175.000+ films en series on demand, replay, Nederlandstalige support 24/7. Transparante prijzen op ${SITE_CONFIG.domain}.`;
 
   return {
     title,
@@ -27,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'IPTV abonnement Nederland',
       'maandabonnement IPTV',
       'IPTV 12 maanden',
-      'IPTV Nederland',
-      'nederlandsiptv.com',
+      SITE_CONFIG.name,
+      SITE_CONFIG.domain,
       'premium IPTV',
     ],
     openGraph: {
@@ -62,8 +61,8 @@ export default async function IptvAbonnementPage({ params }: Props) {
 
   const faqs = [
     {
-      question: 'Wat is een IPTV-abonnement bij IPTV Nederland?',
-      answer: `Een abonnement met vaste looptijd (3, 6 of 12 maanden) inclusief toegang tot 30.000+ zenders, grote VOD-bibliotheek, replay en Nederlandstalige support — zoals beschreven op ${SITE_CONFIG.url}.`,
+      question: `Wat is een IPTV-abonnement bij ${SITE_CONFIG.name}?`,
+      answer: `Een abonnement met vaste looptijd (3, 6 of 12 maanden) inclusief toegang tot 32.000+ zenders, grote VOD-bibliotheek, replay en Nederlandstalige support — zoals beschreven op ${SITE_CONFIG.url}.`,
     },
     {
       question: 'Verschillen de looptijden qua zenders?',

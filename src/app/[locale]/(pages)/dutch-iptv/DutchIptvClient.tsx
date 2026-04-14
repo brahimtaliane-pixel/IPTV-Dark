@@ -83,7 +83,7 @@ const TOPIC_TAGS = [
   'Replay 7 dagen',
   'Nederlandstalige support',
   'Smart TV Nederland',
-  'iptvdark4k.nl',
+  SITE_CONFIG.domain,
   'EPG Nederland',
   'buffer-vrij',
 ];
@@ -190,7 +190,7 @@ export default function DutchIptvClient({
               <BrandMark className="w-10 h-10 sm:w-11 shrink-0" />
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-swiss-red">{SITE_CONFIG.name}</p>
-                <p className="text-xs text-text-muted">iptvdark4k.nl · Thema</p>
+                <p className="text-xs text-text-muted">{SITE_CONFIG.domain} · Thema</p>
               </div>
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-swiss-red/25 shadow-sm shadow-black/25">
@@ -220,7 +220,7 @@ export default function DutchIptvClient({
             <strong className="text-text font-semibold">Nederlandse IPTV</strong>? {SITE_CONFIG.name} levert een premium
             service met NPO, RTL en regionale zenders, Vlaams aanbod, sport, nieuws en 32.000+ internationale zenders —
             met Nederlandstalige support en snelle activering op{' '}
-            <strong className="text-text font-semibold">iptvdark4k.nl</strong>.
+            <strong className="text-text font-semibold">{SITE_CONFIG.domain}</strong>.
           </motion.p>
 
           <p className="text-sm text-text-muted max-w-3xl mb-8 border-l-2 border-swiss-red/25 pl-4">
@@ -647,7 +647,8 @@ export default function DutchIptvClient({
             <div>
               <h3 className="font-semibold text-text mb-1">Is dit dezelfde Dutch IPTV als overal online genoemd?</h3>
               <p>
-                “Dutch IPTV” is een algemene zoekterm. {SITE_CONFIG.name} is onze eigen premium service op iptvdark4k.nl
+                “Dutch IPTV” is een algemene zoekterm. {SITE_CONFIG.name} is onze eigen premium service op{' '}
+                {SITE_CONFIG.domain}
                 — met focus op Nederlandse/Belgische zenders, Nederlandstalige support en stabiele streams.
               </p>
             </div>

@@ -15,9 +15,8 @@ const PAGE_PATH = '/dutch-iptv';
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = 'Dutch IPTV | Nederlandse IPTV HD/4K — nederlandsiptv.com';
-  const description =
-    'Dutch IPTV & Nederlandse IPTV bij IPTV Nederland: NPO, RTL, Vlaams aanbod, 30.000+ zenders, replay, VOD, Nederlandstalige support 24/7. Premium streaming voor NL & BE op nederlandsiptv.com.';
+  const title = `Dutch IPTV | Nederlandse IPTV HD/4K — ${SITE_CONFIG.domain}`;
+  const description = `Dutch IPTV & Nederlandse IPTV bij ${SITE_CONFIG.name}: NPO, RTL, Vlaams aanbod, 32.000+ zenders, replay, VOD, Nederlandstalige support 24/7. Premium streaming voor NL & BE op ${SITE_CONFIG.domain}.`;
 
   return {
     title,
@@ -25,10 +24,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: [
       'Dutch IPTV',
       'Nederlandse IPTV',
-      'IPTV Nederland',
+      SITE_CONFIG.name,
       'IPTV België',
       'NPO RTL IPTV',
-      'nederlandsiptv.com',
+      SITE_CONFIG.domain,
       'IPTV HD 4K',
     ],
     openGraph: {
@@ -62,8 +61,8 @@ export default async function DutchIptvPage({ params }: Props) {
 
   const faqs = [
     {
-      question: 'Wat is Dutch IPTV bij IPTV Nederland?',
-      answer: `"Dutch IPTV" is een veelgezochte term. ${SITE_CONFIG.name} biedt een premium IPTV-service met Nederlandse en Belgische zenders, internationaal aanbod en Nederlandstalige support op nederlandsiptv.com.`,
+      question: `Wat is Dutch IPTV bij ${SITE_CONFIG.name}?`,
+      answer: `"Dutch IPTV" is een veelgezochte term. ${SITE_CONFIG.name} biedt een premium IPTV-service met Nederlandse en Belgische zenders, internationaal aanbod en Nederlandstalige support op ${SITE_CONFIG.domain}.`,
     },
     {
       question: 'Zijn Nederlandse zenders zoals NPO en RTL inbegrepen?',

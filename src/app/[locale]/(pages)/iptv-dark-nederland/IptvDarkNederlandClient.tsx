@@ -40,7 +40,7 @@ const COMPARISON_ROWS: { label: string; generic: string; us: string }[] = [
   {
     label: 'Merk & duidelijkheid',
     generic: 'Anonieme resellers, wisselende namen — onduidelijk wie je betaalt',
-    us: 'IPTV Dark: één merk, duidelijke site (iptvdark4k.nl) en bevestiging per e-mail',
+    us: `IPTV Dark: één merk, duidelijke site (${SITE_CONFIG.domain}) en bevestiging per e-mail`,
   },
   {
     label: 'Service in Nederland',
@@ -74,10 +74,10 @@ const STEPS = [
 const TOPIC_TAGS = [
   'IPTV Dark Nederland',
   'IPTV Dark',
-  'IPTV Nederland',
+  'IPTV premium Nederland',
   'premium IPTV NL',
   'NPO RTL IPTV',
-  'iptvdark4k.nl',
+  SITE_CONFIG.domain,
   'Nederlandse IPTV',
   'HD 4K streaming',
   'glasvezel IPTV',
@@ -115,7 +115,7 @@ export default function IptvDarkNederlandClient({
   const t = useTranslations('pricing');
 
   const benefits = [
-    `${SITE_CONFIG.name} is dé premium IPTV-service voor kijkers in Nederland: één merk, duidelijke pakketten op iptvdark4k.nl`,
+    `${SITE_CONFIG.name} is dé premium IPTV-service voor kijkers in Nederland: één merk, duidelijke pakketten op ${SITE_CONFIG.domain}`,
     'NPO, RTL, regionaal en Vlaams — naast 32.000+ internationale zenders, sport en nieuws',
     'Meer dan 175.000 films en series on demand, replay tot 7 dagen en overzichtelijke EPG',
     'Nederlandstalige support 24/7: hulp bij Smart TV, Fire Stick, M3U, MAG en meer',
@@ -191,7 +191,7 @@ export default function IptvDarkNederlandClient({
               <BrandMark className="w-10 h-10 sm:w-11 shrink-0" />
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-swiss-red">{SITE_CONFIG.name}</p>
-                <p className="text-xs text-text-muted">iptvdark4k.nl · Thema</p>
+                <p className="text-xs text-text-muted">{SITE_CONFIG.domain} · Thema</p>
               </div>
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-swiss-red/25 shadow-sm shadow-black/25">
@@ -220,7 +220,7 @@ export default function IptvDarkNederlandClient({
             <strong className="text-text font-semibold">IPTV Dark Nederland</strong> staat voor dezelfde premium IPTV
             die je kent van {SITE_CONFIG.name}: NPO, RTL en regionaal, Vlaams en internationaal aanbod, 32.000+ zenders,
             enorme VOD en Nederlandstalige support — rechtstreeks via{' '}
-            <strong className="text-text font-semibold">iptvdark4k.nl</strong>.
+            <strong className="text-text font-semibold">{SITE_CONFIG.domain}</strong>.
           </motion.p>
 
           <p className="text-sm text-text-muted max-w-3xl mb-8 border-l-2 border-swiss-red/25 pl-4">
@@ -645,10 +645,12 @@ export default function IptvDarkNederlandClient({
           <h2 className="text-xl font-bold text-text mb-6">Veelgestelde vragen — IPTV Dark Nederland</h2>
           <div className="space-y-5 text-sm text-text-secondary leading-relaxed">
             <div>
-              <h3 className="font-semibold text-text mb-1">Is IPTV Dark Nederland hetzelfde als IPTV Dark op iptvdark4k.nl?</h3>
+              <h3 className="font-semibold text-text mb-1">
+                Is IPTV Dark Nederland hetzelfde als IPTV Dark op {SITE_CONFIG.domain}?
+              </h3>
               <p>
                 Ja. “IPTV Dark Nederland” beschrijft gewoon onze premium service voor kijkers in Nederland — het merk is{' '}
-                {SITE_CONFIG.name}, met dezelfde pakketten en support als op iptvdark4k.nl.
+                {SITE_CONFIG.name}, met dezelfde pakketten en support als op {SITE_CONFIG.domain}.
               </p>
             </div>
             <div>

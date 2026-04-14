@@ -84,7 +84,7 @@ const TOPIC_TAGS = [
   'Replay & VOD',
   'Multi-scherm kopen',
   'veilig IPTV bestellen',
-  'iptvdark4k.nl',
+  SITE_CONFIG.domain,
   'EPG',
   'Xtream Codes',
 ];
@@ -191,7 +191,7 @@ export default function IptvKopenClient({
               <BrandMark className="w-10 h-10 sm:w-11 shrink-0" />
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-swiss-red">{SITE_CONFIG.name}</p>
-                <p className="text-xs text-text-muted">iptvdark4k.nl · Thema</p>
+                <p className="text-xs text-text-muted">{SITE_CONFIG.domain} · Thema</p>
               </div>
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-swiss-red/25 shadow-sm shadow-black/25">
@@ -218,7 +218,7 @@ export default function IptvKopenClient({
             className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-6"
           >
             Wil je <strong className="text-text font-semibold">IPTV kopen</strong> zonder gedoe? Op{' '}
-            <strong className="text-text font-semibold">iptvdark4k.nl</strong> bestel je een officieel abonnement met
+            <strong className="text-text font-semibold">{SITE_CONFIG.domain}</strong> bestel je een officieel abonnement met
             32.000+ zenders, meer dan 175.000 films en meer dan 175.000 series on demand, replay en Nederlandstalige support — activering meestal
             binnen 2 uur, op al je apparaten.
           </motion.p>
@@ -646,7 +646,7 @@ export default function IptvKopenClient({
               <h3 className="font-semibold text-text mb-1">Waar kan ik veilig IPTV kopen?</h3>
               <p>
                 Bij een aanbieder met duidelijke website, voorwaarden en bereikbare support — zoals {SITE_CONFIG.name} op{' '}
-                iptvdark4k.nl. Vermijd anonieme verkopers zonder herkenbaar bedrijf achter de aanbieding.
+                {SITE_CONFIG.domain}. Vermijd anonieme verkopers zonder herkenbaar bedrijf achter de aanbieding.
               </p>
             </div>
             <div>
