@@ -1,5 +1,5 @@
 import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_RANGE, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
-import { schemaKernel } from '@/lib/schema-brand';
+import { schemaKernel, schemaOrigin } from '@/lib/schema-brand';
 import type { SitePlan } from '@/lib/get-plans';
 import { CITIES_DATA } from '@/lib/cities';
 import { localeUrl } from '@/lib/utils';
@@ -20,6 +20,61 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
       name: item.name,
       item: item.url,
     })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+/**
+ * Branded WebSite + WebPage JSON-LD — same `#website` / organization `@id`s as home `JsonLd`
+ * so crawlers can merge the graph across pages.
+ */
+export function BrandedWebPageSchema({
+  locale,
+  path,
+  title,
+  description,
+}: {
+  locale: string;
+  path: string;
+  title: string;
+  description: string;
+}) {
+  const base = schemaOrigin();
+  const { logo, brand, organizationCompact, orgId } = schemaKernel();
+  const webSiteId = `${base}/#website`;
+  const pageUrl = localeUrl(locale, path);
+  const webPageId = `${pageUrl}#webpage`;
+
+  const webSiteNode = {
+    '@type': 'WebSite',
+    '@id': webSiteId,
+    name: SITE_CONFIG.name,
+    url: base,
+    publisher: { '@id': orgId },
+    inLanguage: 'nl-NL',
+  };
+
+  const webPageNode = {
+    '@type': 'WebPage',
+    '@id': webPageId,
+    name: title,
+    description,
+    url: pageUrl,
+    isPartOf: { '@id': webSiteId },
+    about: { '@id': orgId },
+    publisher: { '@id': orgId },
+    inLanguage: 'nl-NL',
+  };
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [logo, brand, organizationCompact, webSiteNode, webPageNode],
   };
 
   return (

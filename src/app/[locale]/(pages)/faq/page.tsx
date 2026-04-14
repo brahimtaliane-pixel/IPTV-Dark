@@ -4,20 +4,23 @@ import { ArrowRight, Home } from 'lucide-react';
 import FAQ from '@/components/sections/FAQ';
 import { SITE_CONFIG } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import type { Metadata } from 'next';
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
+const FAQ_PAGE_TITLE = 'Veelgestelde vragen — IPTV Dark';
+const FAQ_PAGE_DESCRIPTION =
+  'Antwoorden op veelgestelde vragen over IPTV Dark: apparaten, activering binnen 2 uur, replay, VOD met meer dan 175.000 films en meer dan 175.000 series, support 24/7 en meer.';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
   const faqUrl = `${SITE_CONFIG.url}/faq`;
-  const title = 'Veelgestelde vragen — IPTV Dark';
-  const description =
-    'Antwoorden op veelgestelde vragen over IPTV Dark: apparaten, activering binnen 2 uur, replay, VOD met meer dan 175.000 films en meer dan 175.000 series, support 24/7 en meer.';
+  const title = FAQ_PAGE_TITLE;
+  const description = FAQ_PAGE_DESCRIPTION;
 
   return {
     title,
@@ -86,6 +89,12 @@ export default async function FAQPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'FAQ', url: localeUrl(locale, '/faq') },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path="/faq"
+        title={FAQ_PAGE_TITLE}
+        description={FAQ_PAGE_DESCRIPTION}
       />
       <FAQSchema faqs={allFaqs} />
       <div className="pt-20">

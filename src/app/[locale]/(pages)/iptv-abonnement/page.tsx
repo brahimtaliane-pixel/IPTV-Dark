@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG, STATS } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import IptvAbonnementClient from './IptvAbonnementClient';
 
 type Props = {
@@ -12,11 +12,14 @@ type Props = {
 
 const PAGE_PATH = '/iptv-abonnement';
 
+const IPTV_ABO_PAGE_TITLE = `IPTV abonnement | 3, 6 of 12 maanden — ${SITE_CONFIG.name} | ${SITE_CONFIG.domain}`;
+const IPTV_ABO_PAGE_DESCRIPTION = `IPTV abonnement bij ${SITE_CONFIG.name}: kies 3, 6 of 12 maanden, 32.000+ zenders, 175.000+ films en series on demand, replay, Nederlandstalige support 24/7. Transparante prijzen op ${SITE_CONFIG.domain}.`;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = `IPTV abonnement | 3, 6 of 12 maanden — ${SITE_CONFIG.name} | ${SITE_CONFIG.domain}`;
-  const description = `IPTV abonnement bij ${SITE_CONFIG.name}: kies 3, 6 of 12 maanden, 32.000+ zenders, 175.000+ films en series on demand, replay, Nederlandstalige support 24/7. Transparante prijzen op ${SITE_CONFIG.domain}.`;
+  const title = IPTV_ABO_PAGE_TITLE;
+  const description = IPTV_ABO_PAGE_DESCRIPTION;
 
   return {
     title,
@@ -95,6 +98,12 @@ export default async function IptvAbonnementPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'IPTV abonnement', url: localeUrl(locale, PAGE_PATH) },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path={PAGE_PATH}
+        title={IPTV_ABO_PAGE_TITLE}
+        description={IPTV_ABO_PAGE_DESCRIPTION}
       />
       <FAQSchema faqs={faqs} />
       <IptvAbonnementClient

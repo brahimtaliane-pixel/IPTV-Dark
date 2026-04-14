@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG, STATS } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import IptvKopenClient from './IptvKopenClient';
 
 type Props = {
@@ -12,11 +12,14 @@ type Props = {
 
 const PAGE_PATH = '/iptv-kopen';
 
+const IPTV_KOPEN_PAGE_TITLE = `IPTV kopen | Premium abonnement — ${SITE_CONFIG.name} | ${SITE_CONFIG.domain}`;
+const IPTV_KOPEN_PAGE_DESCRIPTION = `IPTV kopen bij ${SITE_CONFIG.name}: 32.000+ zenders HD/4K, 175.000+ films en series on demand, replay, activering binnen 2 uur, Nederlandstalige support 24/7. Veilig abonnement op ${SITE_CONFIG.domain}.`;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = `IPTV kopen | Premium abonnement — ${SITE_CONFIG.name} | ${SITE_CONFIG.domain}`;
-  const description = `IPTV kopen bij ${SITE_CONFIG.name}: 32.000+ zenders HD/4K, 175.000+ films en series on demand, replay, activering binnen 2 uur, Nederlandstalige support 24/7. Veilig abonnement op ${SITE_CONFIG.domain}.`;
+  const title = IPTV_KOPEN_PAGE_TITLE;
+  const description = IPTV_KOPEN_PAGE_DESCRIPTION;
 
   return {
     title,
@@ -95,6 +98,12 @@ export default async function IptvKopenPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'IPTV kopen', url: localeUrl(locale, PAGE_PATH) },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path={PAGE_PATH}
+        title={IPTV_KOPEN_PAGE_TITLE}
+        description={IPTV_KOPEN_PAGE_DESCRIPTION}
       />
       <FAQSchema faqs={faqs} />
       <IptvKopenClient

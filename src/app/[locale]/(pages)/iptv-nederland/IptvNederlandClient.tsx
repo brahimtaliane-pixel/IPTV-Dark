@@ -9,9 +9,11 @@ import {
   Tv,
   Headphones,
   Wifi,
-  CreditCard,
-  ShoppingCart,
+  Languages,
+  Cast,
   Sparkles,
+  ShoppingCart,
+  CreditCard,
   ShieldCheck,
   Scale,
   BookOpen,
@@ -23,7 +25,6 @@ import {
   ChevronRight,
   Laptop,
   Lightbulb,
-  Languages,
   Flag,
 } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
@@ -38,54 +39,55 @@ const ISP_NL = ['KPN', 'Ziggo', 'T-Mobile', 'Odido'] as const;
 
 const COMPARISON_ROWS: { label: string; generic: string; us: string }[] = [
   {
-    label: 'Looptijd abonnement',
-    generic: 'Onduidelijk of “lifetime” zonder kleine lettertjes',
-    us: '3, 6 of 12 maanden — je ziet vooraf de totaalprijs',
+    label: 'Wat “IPTV Nederland” online vaak betekent',
+    generic: 'Wisselende resellers, vage namen en onduidelijk wie je betaalt',
+    us: `${SITE_CONFIG.name}: één merk, duidelijke site (${SITE_CONFIG.domain}) en bevestiging per e-mail`,
   },
   {
-    label: 'Wat is inbegrepen',
-    generic: 'Vaak beperkte zenders of extra betalen voor VOD',
-    us: 'Volledig pakket: 32.000+ zenders + 175.000+ films en 175.000+ series + replay',
+    label: 'Nederlandse zenders & Vlaams',
+    generic: 'Soms alleen buitenlands of een karig NL-pakket',
+    us: 'NPO, RTL, regionaal en Vlaams — naast 32.000+ zenders wereldwijd',
   },
   {
-    label: 'Verlengen & support',
-    generic: 'Account verdwijnt of geen reactie bij vragen',
-    us: 'Doorlopende service + NL-support 24/7 tijdens je abonnement',
+    label: 'Taal & support',
+    generic: 'Alleen Engels of forums zonder echte helpdesk',
+    us: 'Nederlandstalige helpdesk 24/7 — ook voor installatie en apparaten',
   },
   {
-    label: 'Meerdere gebruikers',
-    generic: 'Eén stream of onduidelijke regels voor gezin',
-    us: 'Optioneel multi-scherm: 2, 3 of 4 gelijktijdige streams',
+    label: 'EPG, replay & VOD',
+    generic: 'Lege gids of geen nette replay',
+    us: 'Overzichtelijke EPG + replay tot 7 dagen + enorme VOD-bibliotheek',
   },
   {
-    label: 'Kwaliteit',
-    generic: 'Wisselende bitrate; geen garantie op HD/4K',
-    us: 'Premium infrastructuur — HD & 4K waar beschikbaar',
+    label: 'Kwaliteit op NL-internet',
+    generic: 'Buffering tijdens piekuren op KPN, Ziggo of glasvezel',
+    us: 'Premium infrastructuur — stabiel HD & 4K waar je verbinding het toelaat',
   },
 ];
 
 const STEPS = [
-  { n: '1', title: 'Kies je looptijd', desc: '3, 6 of 12 maanden — vergelijk de prijs per maand.' },
-  { n: '2', title: 'Rond je abonnement af', desc: 'Veilig betalen; bevestiging per e-mail.' },
-  { n: '3', title: 'Activeer je lijn', desc: 'Toegangsgegevens meestal binnen 2 uur.' },
-  { n: '4', title: 'Kijk de looptijd uit', desc: 'Zelfde account op al je schermen; optioneel verlengen.' },
+  { n: '1', title: 'Kies je pakket', desc: 'Geschikt voor Nederland & België — 3, 6 of 12 maanden.' },
+  { n: '2', title: 'Activeer snel', desc: 'Meestal binnen 2 uur: Nederlandse uitleg per e-mail.' },
+  { n: '3', title: 'Zet je apps klaar', desc: 'Smart TV, Fire Stick, telefoon — volg onze NL-gids.' },
+  { n: '4', title: 'Geniet lokaal + wereldwijd', desc: 'NPO tot internationaal sport — op al je schermen.' },
 ];
 
 const TOPIC_TAGS = [
-  'IPTV abonnement',
-  'IPTV abonnement Nederland',
-  'maandabonnement IPTV',
-  '3 maanden IPTV',
-  '12 maanden IPTV',
-  'IPTV Dark',
-  'premium IPTV abonnement',
-  'multi-scherm abonnement',
-  'goedkoop IPTV abonnement',
-  'HD 4K abonnement',
-  'Replay VOD',
+  'IPTV Nederland',
+  'Nederlandse IPTV',
+  SITE_CONFIG.name,
+  'premium IPTV Nederland',
+  'NPO & RTL',
+  'Eredivisie',
+  'IPTV België',
+  'HD & 4K',
+  'Replay 7 dagen',
+  'Nederlandstalige support',
+  'Smart TV Nederland',
   SITE_CONFIG.domain,
-  'EPG',
-  'verlengen IPTV',
+  'EPG Nederland',
+  'KPN Ziggo IPTV',
+  'glasvezel streaming',
 ];
 
 const PAGE_NAV = [
@@ -98,13 +100,13 @@ const PAGE_NAV = [
 ] as const;
 
 const HERO_HIGHLIGHTS = [
-  'Flexibele looptijden',
-  'Eén duidelijke prijs',
+  'NL & BE zenders',
+  'Nederlandstalige support',
   '32.000+ zenders',
-  'Support tijdens looptijd',
+  'Replay & VOD',
 ];
 
-export default function IptvAbonnementClient({
+export default function IptvNederlandClient({
   plans,
   stats,
 }: {
@@ -114,38 +116,38 @@ export default function IptvAbonnementClient({
   const t = useTranslations('pricing');
 
   const benefits = [
-    'Eén IPTV-abonnement met vaste looptijd — geen verborgen verlengingen of “lifetime”-misleiding',
-    'Kies 3, 6 of 12 maanden en zie direct je maandprijs en totaal (in euro’s, duidelijk)',
-    'Zelfde inhoud in elk abonnement: 32.000+ zenders, 175.000+ films en 175.000+ series, replay, EPG',
-    'Tijdens de looptijd: updates, Nederlandstalige support 24/7 en hulp bij apparaten',
-    'Optioneel multi-scherm-abonnement voor gezinnen (2–4 streams)',
-    'Werkt op gangbare internet in NL — KPN, Ziggo, T-Mobile, Odido, glasvezel',
+    'Zoek je “IPTV Nederland”? Je krijgt het officiële merk IPTV Dark — geen anonieme tussenpersonen',
+    'NPO, RTL, regionaal en Vlaams — naast 32.000+ internationale zenders, sport en nieuws',
+    'Meer dan 175.000 films en series on demand, replay tot 7 dagen en overzichtelijke EPG',
+    'Nederlandstalige support 24/7: hulp bij Smart TV, Fire Stick, M3U, MAG en meer',
+    'Geschikt voor typisch Nederlands internet: glasvezel, kabel en DSL (o.a. KPN, Ziggo, T-Mobile, Odido)',
+    'Multi-scherm voor gezinnen — meerdere streams tegelijk op eigen apparaten',
   ];
 
   const featureCards = [
     {
       icon: Tv,
-      title: 'Alles in je abonnement',
-      desc: 'Live TV, VOD en replay — geen aparte “addons” nodig voor de basis.',
+      title: 'Nederland centraal',
+      desc: 'NPO, RTL en regionaal naast internationaal — precies wat veel zoekers met “IPTV Nederland” bedoelen.',
     },
     {
       icon: ShieldCheck,
-      title: 'Heldere voorwaarden',
-      desc: 'Je weet hoe lang je abonnement loopt en wat je krijgt.',
+      title: 'Eén merk, duidelijke afspraken',
+      desc: 'Geen wisselende reseller-namen: je weet bij wie je koopt en hoe support werkt.',
     },
     {
       icon: Headphones,
-      title: 'Service tijdens looptijd',
-      desc: 'Vragen over verlenging of installatie? We blijven bereikbaar.',
+      title: 'Support in het Nederlands',
+      desc: 'Hulp bij apps, M3U of MAG — uitleg in begrijpelijke taal, 24/7 bereikbaar.',
     },
   ];
 
   const quickLinks = [
-    { href: '/abonnementen' as const, label: 'Prijzen bekijken', icon: BookOpen },
+    { href: '/abonnementen' as const, label: 'Alle abonnementen', icon: BookOpen },
+    { href: '/iptv-abonnement' as const, label: 'IPTV abonnement', icon: CreditCard },
     { href: '/iptv-kopen' as const, label: 'IPTV kopen', icon: ShoppingCart },
-    { href: '/dutch-iptv' as const, label: 'Dutch IPTV', icon: Languages },
     { href: '/iptv-dark-nederland' as const, label: 'IPTV Dark Nederland', icon: Flag },
-    { href: '/iptv-nederland' as const, label: 'IPTV Nederland', icon: MapPin },
+    { href: '/dutch-iptv' as const, label: 'Dutch IPTV', icon: Languages },
     { href: '/multi-scherm' as const, label: 'Multi-scherm', icon: Tv },
     { href: '/faq' as const, label: 'FAQ', icon: HelpCircle },
     { href: '/installation' as const, label: 'Installatie', icon: Wrench },
@@ -175,7 +177,7 @@ export default function IptvAbonnementClient({
               Home
             </Link>
             <ChevronRight className="w-3.5 h-3.5 opacity-50 shrink-0" aria-hidden />
-            <span className="text-text font-medium">IPTV abonnement</span>
+            <span className="text-text font-medium">IPTV Nederland</span>
             <span className="hidden sm:inline text-border">·</span>
             <time dateTime="2026-04-12" className="hidden sm:inline text-text-muted/80">
               Bijgewerkt april 2026
@@ -195,9 +197,9 @@ export default function IptvAbonnementClient({
               </div>
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-swiss-red/25 shadow-sm shadow-black/25">
-              <CreditCard className="w-3.5 h-3.5 text-swiss-red shrink-0" />
+              <Cast className="w-3.5 h-3.5 text-swiss-red shrink-0" />
               <span className="text-[11px] font-semibold text-swiss-red uppercase tracking-wide">
-                IPTV abonnement · NL
+                IPTV Nederland · premium streaming
               </span>
             </div>
           </motion.div>
@@ -208,7 +210,7 @@ export default function IptvAbonnementClient({
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-text leading-tight tracking-tight mb-5"
           >
-            IPTV abonnement — flexibel en transparant bij {SITE_CONFIG.name}
+            IPTV Nederland — premium TV-streaming voor heel Nederland
           </motion.h1>
 
           <motion.p
@@ -217,15 +219,15 @@ export default function IptvAbonnementClient({
             transition={{ delay: 0.2 }}
             className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-6"
           >
-            Zoek je een betrouwbaar <strong className="text-text font-semibold">IPTV-abonnement</strong> in Nederland? Bij{' '}
-            {SITE_CONFIG.name} kies je <strong className="text-text font-semibold">3, 6 of 12 maanden</strong> met vaste
-            prijzen, 32.000+ zenders, meer dan 175.000 films en meer dan 175.000 series on demand, replay tot 7 dagen en support 24/7 — op{' '}
-            <strong className="text-text font-semibold">{SITE_CONFIG.domain}</strong>.
+            <strong className="text-text font-semibold">IPTV Nederland</strong> is een veelgebruikte zoekterm — vaak
+            bedoelen mensen gewoon betrouwbare internet-TV met Nederlandse zenders. {SITE_CONFIG.name} is precies dat:
+            NPO, RTL en regionaal, Vlaams en internationaal, 32.000+ zenders, enorme VOD en Nederlandstalige support —
+            rechtstreeks via <strong className="text-text font-semibold">{SITE_CONFIG.domain}</strong>.
           </motion.p>
 
           <p className="text-sm text-text-muted max-w-3xl mb-8 border-l-2 border-swiss-red/25 pl-4">
-            Geen onduidelijke “lifetime”-verhalen: een gewoon abonnement met begin en einde, duidelijke voorwaarden en dezelfde
-            premiumkwaliteit voor iedere looptijd.
+            Of je nu in Amsterdam, Rotterdam of het Groningse platteland kijkt: stabiele streams op glasvezel, kabel of
+            DSL — zonder aparte provider-TV-pakketten te stapelen.
           </p>
 
           <motion.div
@@ -238,7 +240,7 @@ export default function IptvAbonnementClient({
               href="/abonnementen"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
             >
-              Abonnementen vergelijken
+              Bekijk IPTV Nederland-pakketten
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
@@ -268,25 +270,25 @@ export default function IptvAbonnementClient({
               <Lightbulb className="w-4 h-4 text-swiss-red" aria-hidden />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-text">Goed IPTV-abonnement kiezen — 3 vragen</h2>
-              <p className="text-xs text-text-muted mt-1">Waar let je op vóór je een looptijd kiest?</p>
+              <h2 className="text-sm font-bold text-text">Waarom IPTV Nederland bij {SITE_CONFIG.name}?</h2>
+              <p className="text-xs text-text-muted mt-1">Drie redenen waarom kijkers in Nederland (en België) voor ons kiezen.</p>
             </div>
           </div>
           <ul className="space-y-2 text-sm text-text-secondary">
             <li className="flex gap-2">
               <span className="font-bold text-swiss-red shrink-0">1.</span>
-              Klopt de <strong className="text-text font-semibold">prijs per maand</strong> met wat er in het pakket zit
-              (zenders, VOD, replay)?
+              <strong className="text-text font-semibold">Lokale zenders</strong> naast internationaal: nieuws, sport en
+              entertainment zoals je gewend bent.
             </li>
             <li className="flex gap-2">
               <span className="font-bold text-swiss-red shrink-0">2.</span>
-              Is <strong className="text-text font-semibold">support bereikbaar tijdens je hele abonnement</strong>, niet
-              alleen bij de eerste betaling?
+              <strong className="text-text font-semibold">Hulp in het Nederlands</strong> — geen gedoe met alleen-Engelse
+              forums of anonieme verkopers.
             </li>
             <li className="flex gap-2">
               <span className="font-bold text-swiss-red shrink-0">3.</span>
-              Kun je later <strong className="text-text font-semibold">verlengen of upgraden</strong> (bijv. multi-scherm)
-              zonder opnieuw van nul te beginnen?
+              <strong className="text-text font-semibold">Stabiele streams</strong> voor HD/4K op typische NL-glasvezel- en
+              kabelverbindingen.
             </li>
           </ul>
         </div>
@@ -363,8 +365,8 @@ export default function IptvAbonnementClient({
               <Scale className="w-5 h-5 text-swiss-red" />
             </div>
             <div>
-              <h2 className="text-xl font-extrabold text-text">IPTV-abonnement: willekeur vs. {SITE_CONFIG.name}</h2>
-              <p className="text-sm text-text-muted">Waarom een duidelijk abonnement de moeite waard is</p>
+              <h2 className="text-xl font-extrabold text-text">IPTV Nederland vergeleken: generiek vs. {SITE_CONFIG.name}</h2>
+              <p className="text-sm text-text-muted">Merk, zenders, support en stabiliteit — op een rij</p>
             </div>
           </div>
           <div className="lg:hidden p-4 sm:p-5 space-y-3 bg-bg/40 border-b border-border">
@@ -373,7 +375,7 @@ export default function IptvAbonnementClient({
                 <div className="text-xs font-bold text-swiss-red uppercase tracking-wide mb-2">{row.label}</div>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <div className="text-[10px] font-semibold text-text-muted uppercase mb-0.5">Twijfelachtige aanbiedingen</div>
+                    <div className="text-[10px] font-semibold text-text-muted uppercase mb-0.5">Generieke aanbieders</div>
                     <p className="text-text-secondary">{row.generic}</p>
                   </div>
                   <div>
@@ -392,7 +394,7 @@ export default function IptvAbonnementClient({
               <thead>
                 <tr className="border-b border-border bg-bg/80">
                   <th className="text-left py-3 px-4 sm:px-6 font-semibold text-text">Criterium</th>
-                  <th className="text-left py-3 px-4 sm:px-6 font-medium text-text-muted">Veel twijfelachtige aanbiedingen</th>
+                  <th className="text-left py-3 px-4 sm:px-6 font-medium text-text-muted">Veel generieke IPTV-aanbieders</th>
                   <th className="text-left py-3 px-4 sm:px-6 font-semibold text-swiss-red">{SITE_CONFIG.name}</th>
                 </tr>
               </thead>
@@ -454,11 +456,11 @@ export default function IptvAbonnementClient({
             </div>
             <blockquote className="flex-1">
               <p className="text-text text-sm sm:text-base leading-relaxed font-medium">
-                We namen een jaar-abonnement omdat de maandprijs het beste uitkwam. Alles staat duidelijk op de site en bij
-                vragen over verlengen krijg ik gewoon antwoord via WhatsApp.
+                We zochten IPTV Nederland met stabiele NPO en sport. Met IPTV Dark werkt alles soepel op onze Samsung-TV
+                en telefoon — support antwoordt snel in het Nederlands.
               </p>
               <footer className="mt-3 text-xs text-text-muted">
-                — Laura M., <span className="text-text-secondary">Eindhoven</span> · tevreden klant
+                — Thomas B., <span className="text-text-secondary">Utrecht</span> · tevreden klant
               </footer>
             </blockquote>
           </div>
@@ -466,9 +468,9 @@ export default function IptvAbonnementClient({
 
         {/* Enhancement: steps */}
         <div id="starten" className="mb-16 scroll-mt-28">
-          <h2 className="text-2xl font-extrabold text-text mb-2 text-center">Je IPTV-abonnement in 4 stappen</h2>
+          <h2 className="text-2xl font-extrabold text-text mb-2 text-center">Zo start je met IPTV Nederland bij ons</h2>
           <p className="text-text-secondary text-center mb-10 max-w-xl mx-auto text-sm">
-            Van kiezen tot kijken — zonder verrassingen achteraf.
+            Van bestelling tot je eerste zender op het scherm — in een paar duidelijke stappen.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {STEPS.map((step, i) => (
@@ -491,10 +493,10 @@ export default function IptvAbonnementClient({
         </div>
 
         <div id="pakketten" className="mb-16 scroll-mt-28">
-          <h2 className="text-2xl font-extrabold text-text mb-2">IPTV-abonnementen — kies je looptijd</h2>
+          <h2 className="text-2xl font-extrabold text-text mb-2">Abonnementen — IPTV Nederland op jouw manier</h2>
           <p className="text-text-secondary mb-8">
-            Alle opties bevatten hetzelfde premium aanbod; het verschil zit in de looptijd en de prijs per maand. Langere
-            abonnementen zijn vaak voordeliger per maand.
+            Kies 3, 6 of 12 maanden. Alle pakketten geven hetzelfde rijke aanbod: Nederlandse en Belgische zenders, VOD,
+            replay en updates.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -630,7 +632,7 @@ export default function IptvAbonnementClient({
             Onderwerpen & zoektermen
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed mb-4">
-            Handige labels die passen bij wat bezoekers zoeken rond IPTV en streaming in Nederland:
+            Zoektermen rond IPTV Nederland, Nederlandse zenders en streaming:
           </p>
           <div className="flex flex-wrap gap-2">
             {TOPIC_TAGS.map((n) => (
@@ -642,59 +644,59 @@ export default function IptvAbonnementClient({
         </div>
 
         <div id="faq" className="bg-bg rounded-xl border border-border p-6 sm:p-8 mb-16 scroll-mt-28">
-          <h2 className="text-xl font-bold text-text mb-6">Veelgestelde vragen — IPTV abonnement</h2>
+          <h2 className="text-xl font-bold text-text mb-6">Veelgestelde vragen — IPTV Nederland</h2>
           <div className="space-y-5 text-sm text-text-secondary leading-relaxed">
             <div>
-              <h3 className="font-semibold text-text mb-1">Wat houdt een IPTV-abonnement bij jullie in?</h3>
+              <h3 className="font-semibold text-text mb-1">Is “IPTV Nederland” hetzelfde als jullie merk?</h3>
               <p>
-                Een vaste looptijd (3, 6 of 12 maanden) met toegang tot 32.000+ zenders, grote VOD-bibliotheek, replay tot 7
-                dagen, EPG en updates — plus Nederlandstalige support zolang je abonnement loopt.
+                “IPTV Nederland” beschrijft wat veel mensen zoeken: internet-TV met Nederlandse zenders. Het merk achter
+                deze service is {SITE_CONFIG.name} — met dezelfde pakketten en support op {SITE_CONFIG.domain}.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">Verschillen de pakketten qua zenders?</h3>
+              <h3 className="font-semibold text-text mb-1">Zijn NPO en RTL inbegrepen?</h3>
               <p>
-                Nee: de inhoud is gelijk. Je kiest alleen hoe lang je wilt intekenen; langere abonnementen zijn meestal
-                voordeliger per maand.
+                Ons aanbod is gericht op volledige entertainment: Nederlandse en Vlaamse zenders, sport, nieuws en daarnaast
+                internationaal — inclusief grote VOD-bibliotheek en replay.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">Kan ik verlengen als mijn abonnement afloopt?</h3>
+              <h3 className="font-semibold text-text mb-1">Kan ik vanuit België kijken?</h3>
               <p>
-                Ja — je kunt opnieuw een looptijd kiezen. Neem gerust contact op als je wilt verlengen of overstappen naar
-                multi-scherm.
+                Ja, veel klanten kijken vanuit België en Nederland. Je hebt een stabiele internetverbinding nodig; onze
+                service is daarop geoptimaliseerd.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">Is er een multi-scherm-abonnement?</h3>
+              <h3 className="font-semibold text-text mb-1">In welke taal is de support?</h3>
               <p>
-                Voor meerdere gelijktijdige streams hebben we aparte pakketten. Zie{' '}
+                Onze helpdesk ondersteunt primair in het Nederlands; voor internationale klanten is er ook Engels mogelijk
+                waar nodig.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-text mb-1">Hoe snel kan ik kijken na bestellen?</h3>
+              <p>
+                Meestal binnen circa 2 uur na betalingsbevestiging. Je ontvangt je inloggegevens per e-mail met instructies.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-text mb-1">Multi-scherm voor het gezin?</h3>
+              <p>
+                Ja — bekijk{' '}
                 <Link href="/multi-scherm" className="text-swiss-red font-medium hover:underline">
-                  Multi-scherm
+                  multi-scherm pakketten
                 </Link>{' '}
-                voor details.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text mb-1">Hoe snel is mijn abonnement actief?</h3>
-              <p>
-                Meestal binnen circa 2 uur na betalingsbevestiging. Je ontvangt je inloggegevens per e-mail.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text mb-1">Wat als ik niet tevreden ben?</h3>
-              <p>
-                Niet tevreden — geld terug binnen 24 uur (zie onze algemene voorwaarden op de site).
+                voor 2, 3 of 4 gelijktijdige streams.
               </p>
             </div>
           </div>
         </div>
 
         <div className="mb-14 rounded-2xl bg-gradient-to-br from-swiss-red to-swiss-red-dark p-8 sm:p-10 text-center text-black shadow-lg shadow-swiss-red/20">
-          <h2 className="text-xl sm:text-2xl font-extrabold mb-2">Kies je IPTV-abonnement</h2>
+          <h2 className="text-xl sm:text-2xl font-extrabold mb-2">Start vandaag met IPTV Nederland</h2>
           <p className="text-black/80 text-sm sm:text-base max-w-lg mx-auto mb-6">
-            Vergelijk 3, 6 en 12 maanden, kies wat bij je past en start binnen enkele uren — premium TV zonder kleine
-            lettertjes.
+            Premium streaming met Nederlandse zenders — kies je pakket en kijk binnen enkele uren naar je favoriete kanalen.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link

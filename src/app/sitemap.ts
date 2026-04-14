@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/pandora-iptv', priority: 0.85, changeFrequency: 'monthly' as const },
     { path: '/iptv-kopen', priority: 0.88, changeFrequency: 'weekly' as const },
     { path: '/dutch-iptv', priority: 0.87, changeFrequency: 'weekly' as const },
+    { path: '/iptv-nederland', priority: 0.88, changeFrequency: 'weekly' as const },
     { path: '/iptv-abonnement', priority: 0.88, changeFrequency: 'weekly' as const },
     { path: '/iptv-dark-nederland', priority: 0.87, changeFrequency: 'weekly' as const },
     { path: '/faq', priority: 0.8, changeFrequency: 'monthly' as const },

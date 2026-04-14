@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG, STATS } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import PandoraIptvClient from './PandoraIptvClient';
 
 type Props = {
@@ -12,11 +12,14 @@ type Props = {
 
 const PAGE_PATH = '/pandora-iptv';
 
+const PANDORA_PAGE_TITLE = `Pandora IPTV alternatief | ${SITE_CONFIG.name} — 32.000+ zenders HD/4K`;
+const PANDORA_PAGE_DESCRIPTION = `Zoek je Pandora IPTV of vergelijkbare apps? Ontdek ${SITE_CONFIG.name}: 32.000+ zenders, 175.000+ films en series on demand, replay, Nederlandstalige support 24/7 en activering binnen 2 uur.`;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = `Pandora IPTV alternatief | ${SITE_CONFIG.name} — 32.000+ zenders HD/4K`;
-  const description = `Zoek je Pandora IPTV of vergelijkbare apps? Ontdek ${SITE_CONFIG.name}: 32.000+ zenders, 175.000+ films en series on demand, replay, Nederlandstalige support 24/7 en activering binnen 2 uur.`;
+  const title = PANDORA_PAGE_TITLE;
+  const description = PANDORA_PAGE_DESCRIPTION;
 
   return {
     title,
@@ -102,6 +105,12 @@ export default async function PandoraIptvPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'Pandora IPTV', url: localeUrl(locale, PAGE_PATH) },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path={PAGE_PATH}
+        title={PANDORA_PAGE_TITLE}
+        description={PANDORA_PAGE_DESCRIPTION}
       />
       <FAQSchema faqs={faqs} />
       <PandoraIptvClient

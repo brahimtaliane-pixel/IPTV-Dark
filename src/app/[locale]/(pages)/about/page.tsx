@@ -1,7 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { SITE_CONFIG } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema } from '@/components/seo/SchemaMarkup';
 import { Shield, Headphones, Award, MapPin } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -62,6 +62,12 @@ export default async function AboutPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: t('breadcrumb'), url: localeUrl(locale, '/about') },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path="/about"
+        title={t('title')}
+        description={t('subtitle')}
       />
       <div className="pt-28 pb-20 bg-bg">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">

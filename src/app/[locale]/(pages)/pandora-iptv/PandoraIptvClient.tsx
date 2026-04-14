@@ -146,6 +146,7 @@ export default function PandoraIptvClient({
     { href: '/iptv-kopen' as const, label: 'IPTV kopen', icon: ShoppingCart },
     { href: '/dutch-iptv' as const, label: 'Dutch IPTV', icon: Languages },
     { href: '/iptv-dark-nederland' as const, label: 'IPTV Dark Nederland', icon: Flag },
+    { href: '/iptv-nederland' as const, label: 'IPTV Nederland', icon: MapPin },
     { href: '/multi-scherm' as const, label: 'Multi-scherm', icon: Tv },
     { href: '/faq' as const, label: 'FAQ', icon: HelpCircle },
     { href: '/installation' as const, label: 'Installatie', icon: Wrench },

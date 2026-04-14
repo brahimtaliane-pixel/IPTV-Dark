@@ -46,6 +46,7 @@ export default function Footer() {
               <li><Link href="/pandora-iptv" className="text-sm text-white/60 hover:text-white transition-colors">{t('pandoraIptvPage')}</Link></li>
               <li><Link href="/iptv-kopen" className="text-sm text-white/60 hover:text-white transition-colors">{t('iptvKopenPage')}</Link></li>
               <li><Link href="/dutch-iptv" className="text-sm text-white/60 hover:text-white transition-colors">{t('dutchIptvPage')}</Link></li>
+              <li><Link href="/iptv-nederland" className="text-sm text-white/60 hover:text-white transition-colors">{t('iptvNederlandPage')}</Link></li>
               <li><Link href="/iptv-abonnement" className="text-sm text-white/60 hover:text-white transition-colors">{t('iptvAbonnementPage')}</Link></li>
               <li><Link href="/iptv-dark-nederland" className="text-sm text-white/60 hover:text-white transition-colors">{t('iptvDarkNederlandPage')}</Link></li>
             </ul>

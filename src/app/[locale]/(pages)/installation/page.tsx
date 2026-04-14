@@ -1,7 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { SITE_CONFIG } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import InstallationClient from './InstallationClient';
 import type { Metadata } from 'next';
 
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'IPTV Smart TV',
       'IPTV Fire Stick',
       'M3U playlist',
-      'iptvdark4k.nl',
+      SITE_CONFIG.domain,
     ],
     openGraph: {
       title,
@@ -63,6 +63,12 @@ export default async function InstallationPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: t('breadcrumbLabel'), url: localeUrl(locale, PAGE_PATH) },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path={PAGE_PATH}
+        title={t('metaTitle')}
+        description={t('metaDescription')}
       />
       <FAQSchema faqs={faqs} />
       <InstallationClient />

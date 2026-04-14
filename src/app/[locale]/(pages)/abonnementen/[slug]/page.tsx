@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG, PRICE_CURRENCY_SYMBOL } from '@/lib/constants';
 import { getPlans, getPlanBySlug, getPlanCheckoutSnapshot } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, PlanProductSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema, PlanProductSchema } from '@/components/seo/SchemaMarkup';
 import PlanPageClient from './PlanPageClient';
 
 type Props = {
@@ -87,6 +87,14 @@ export default async function PlanPage({ params }: Props) {
   const planName = plan ? plan.name_nl : slug;
   const checkout = plan ? getPlanCheckoutSnapshot(plan) : { showDirect: false, directHref: '' };
 
+  let webPageTitle = `Pakket | ${SITE_CONFIG.name}`;
+  let webPageDescription = `IPTV Dark abonnementspakket — bekijk alle pakketten op ${SITE_CONFIG.domain}.`;
+  if (plan) {
+    const deviceText = plan.devices > 1 ? ` — ${plan.devices} gelijktijdige schermen` : '';
+    webPageTitle = `${plan.name_nl} — IPTV Dark | ${plan.price} ${PRICE_CURRENCY_SYMBOL}`;
+    webPageDescription = `${plan.name_nl}${deviceText}. ${plan.description_nl}. Meer dan 32.000 zenders HD/4K, meer dan 175.000 films en meer dan 175.000 series on demand, replay inbegrepen. Activering binnen 2 uur, support 24/7. ${plan.price} ${PRICE_CURRENCY_SYMBOL} voor ${plan.duration} maanden.`;
+  }
+
   return (
     <>
       <BreadcrumbSchema
@@ -95,6 +103,12 @@ export default async function PlanPage({ params }: Props) {
           { name: 'Abonnementen', url: localeUrl(locale, '/abonnementen') },
           { name: planName, url: localeUrl(locale, `/abonnementen/${slug}`) },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path={`/abonnementen/${slug}`}
+        title={webPageTitle}
+        description={webPageDescription}
       />
       {plan && <PlanProductSchema locale={locale} plan={plan} />}
       <PlanPageClient plans={plans} checkout={checkout} />

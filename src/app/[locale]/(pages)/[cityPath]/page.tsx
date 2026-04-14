@@ -7,7 +7,12 @@ import { getSiteContact } from '@/lib/get-site-contact';
 import { localeUrl } from '@/lib/utils';
 import { CITIES_DATA, ALL_CITY_SLUGS } from '@/lib/cities';
 import { CITY_PAGE_SECTIONS_NL } from '@/lib/city-page-content-nl';
-import { BreadcrumbSchema, CitySchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import {
+  BreadcrumbSchema,
+  BrandedWebPageSchema,
+  CitySchema,
+  FAQSchema,
+} from '@/components/seo/SchemaMarkup';
 import CityPageClient from './CityPageClient';
 
 type Props = {
@@ -101,6 +106,12 @@ export default async function CityPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: `IPTV Dark ${cityName}`, url: localeUrl(locale, `/iptv-${citySlug}`) },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path={`/iptv-${citySlug}`}
+        title={city.meta_nl.title}
+        description={city.meta_nl.description}
       />
       <CitySchema locale={locale} citySlug={citySlug} telephone={contact.phone} />
       <FAQSchema faqs={cityFaqs} />

@@ -1,7 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { SITE_CONFIG } from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema } from '@/components/seo/SchemaMarkup';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -65,6 +65,12 @@ export default async function PrivacyPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: t('breadcrumb'), url: localeUrl(locale, '/privacy') },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path="/privacy"
+        title={t('title')}
+        description={t('metaDescription')}
       />
       <div className="pt-28 pb-20 bg-bg">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">

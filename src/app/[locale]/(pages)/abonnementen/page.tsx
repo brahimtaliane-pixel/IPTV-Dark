@@ -26,7 +26,12 @@ import {
 } from '@/lib/constants';
 import { getPlans, type SitePlan } from '@/lib/get-plans';
 import { localeUrl, formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema, PlansHubSchema } from '@/components/seo/SchemaMarkup';
+import {
+  BreadcrumbSchema,
+  BrandedWebPageSchema,
+  FAQSchema,
+  PlansHubSchema,
+} from '@/components/seo/SchemaMarkup';
 import BrandMark from '@/components/ui/BrandMark';
 
 type Props = {
@@ -35,12 +40,15 @@ type Props = {
 
 export const dynamic = 'force-dynamic';
 
+const PLANS_HUB_PAGE_TITLE = `IPTV Dark abonnementen — alle HD/4K-pakketten vanaf 35,99 ${PRICE_CURRENCY_SYMBOL}`;
+const PLANS_HUB_PAGE_DESCRIPTION =
+  'Alle IPTV Dark-pakketten op een rij: 1, 2, 3 of 4 schermen, looptijd 3, 6 of 12 maanden. 32.000+ zenders HD/4K, meer dan 175.000 films en meer dan 175.000 series on demand, 7 dagen replay. Activering binnen 2 uur.';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
-  const title = `IPTV Dark abonnementen — alle HD/4K-pakketten vanaf 35,99 ${PRICE_CURRENCY_SYMBOL}`;
-  const description =
-    'Alle IPTV Dark-pakketten op een rij: 1, 2, 3 of 4 schermen, looptijd 3, 6 of 12 maanden. 32.000+ zenders HD/4K, meer dan 175.000 films en meer dan 175.000 series on demand, 7 dagen replay. Activering binnen 2 uur.';
+  const title = PLANS_HUB_PAGE_TITLE;
+  const description = PLANS_HUB_PAGE_DESCRIPTION;
 
   const plansUrl = `${SITE_CONFIG.url}/abonnementen`;
 
@@ -225,6 +233,12 @@ export default async function PlansHubPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'Abonnementen', url: localeUrl(locale, '/abonnementen') },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path="/abonnementen"
+        title={PLANS_HUB_PAGE_TITLE}
+        description={PLANS_HUB_PAGE_DESCRIPTION}
       />
       <FAQSchema faqs={planFaqs} />
       <PlansHubSchema locale={locale} plans={PLANS} />

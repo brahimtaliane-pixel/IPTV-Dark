@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { SITE_CONFIG, STATS } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
 import IptvDarkNederlandClient from './IptvDarkNederlandClient';
 
 type Props = {
@@ -12,11 +12,14 @@ type Props = {
 
 const PAGE_PATH = '/iptv-dark-nederland';
 
+const IPTV_DARK_NL_PAGE_TITLE = `IPTV Dark Nederland | Premium IPTV voor heel NL — ${SITE_CONFIG.domain}`;
+const IPTV_DARK_NL_PAGE_DESCRIPTION = `IPTV Dark Nederland: het officiële merk ${SITE_CONFIG.name} voor kijkers in Nederland en België. NPO, RTL, 32.000+ zenders, VOD, replay, NL-support 24/7 op ${SITE_CONFIG.domain}.`;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
   const pageUrl = `${SITE_CONFIG.url}${PAGE_PATH}`;
-  const title = `IPTV Dark Nederland | Premium IPTV voor heel NL — ${SITE_CONFIG.domain}`;
-  const description = `IPTV Dark Nederland: het officiële merk ${SITE_CONFIG.name} voor kijkers in Nederland en België. NPO, RTL, 32.000+ zenders, VOD, replay, NL-support 24/7 op ${SITE_CONFIG.domain}.`;
+  const title = IPTV_DARK_NL_PAGE_TITLE;
+  const description = IPTV_DARK_NL_PAGE_DESCRIPTION;
 
   return {
     title,
@@ -94,6 +97,12 @@ export default async function IptvDarkNederlandPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'IPTV Dark Nederland', url: localeUrl(locale, PAGE_PATH) },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path={PAGE_PATH}
+        title={IPTV_DARK_NL_PAGE_TITLE}
+        description={IPTV_DARK_NL_PAGE_DESCRIPTION}
       />
       <FAQSchema faqs={faqs} />
       <IptvDarkNederlandClient

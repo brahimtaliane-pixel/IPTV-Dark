@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation';
 import { SITE_CONFIG } from '@/lib/constants';
 import { getSiteContact } from '@/lib/get-site-contact';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema } from '@/components/seo/SchemaMarkup';
+import { BreadcrumbSchema, BrandedWebPageSchema } from '@/components/seo/SchemaMarkup';
 import { Mail, Phone, MessageCircle, Clock, ArrowRight, Package } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -78,6 +78,12 @@ export default async function ContactPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'Contact', url: localeUrl(locale, '/contact') },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path="/contact"
+        title={t('title')}
+        description={t('subtitle')}
       />
       <div className="pt-28 pb-20 bg-bg">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">

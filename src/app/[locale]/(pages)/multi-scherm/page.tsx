@@ -4,7 +4,12 @@ import { SITE_CONFIG } from '@/lib/constants';
 import { getPlans } from '@/lib/get-plans';
 import { getSiteContact } from '@/lib/get-site-contact';
 import { localeUrl } from '@/lib/utils';
-import { BreadcrumbSchema, MultiScreenSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
+import {
+  BreadcrumbSchema,
+  BrandedWebPageSchema,
+  MultiScreenSchema,
+  FAQSchema,
+} from '@/components/seo/SchemaMarkup';
 import HomeContact from '@/components/sections/HomeContact';
 import MultiEcransClient from './MultiEcransClient';
 
@@ -14,12 +19,15 @@ type Props = {
 
 export const dynamic = 'force-dynamic';
 
+const MULTI_SCREEN_PAGE_TITLE = `IPTV multi-scherm — 2, 3 of 4 schermen tegelijk | ${SITE_CONFIG.name}`;
+const MULTI_SCREEN_PAGE_DESCRIPTION = `${SITE_CONFIG.name} multi-scherm pakketten: kijk op 2, 3 of 4 apparaten tegelijk. Meer dan 32.000 zenders HD/4K, 175.000+ films en series on demand, 7 dagen replay. Vanaf 53,99 €.`;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
   const multiUrl = `${SITE_CONFIG.url}/multi-scherm`;
-  const title = `IPTV multi-scherm — 2, 3 of 4 schermen tegelijk | ${SITE_CONFIG.name}`;
-  const description = `${SITE_CONFIG.name} multi-scherm pakketten: kijk op 2, 3 of 4 apparaten tegelijk. Meer dan 32.000 zenders HD/4K, 175.000+ films en series on demand, 7 dagen replay. Vanaf 53,99 €.`;
+  const title = MULTI_SCREEN_PAGE_TITLE;
+  const description = MULTI_SCREEN_PAGE_DESCRIPTION;
 
   return {
     title,
@@ -90,6 +98,12 @@ export default async function MultiEcransPage({ params }: Props) {
           { name: 'Home', url: localeUrl(locale) },
           { name: 'Multi-scherm', url: localeUrl(locale, '/multi-scherm') },
         ]}
+      />
+      <BrandedWebPageSchema
+        locale={locale}
+        path="/multi-scherm"
+        title={MULTI_SCREEN_PAGE_TITLE}
+        description={MULTI_SCREEN_PAGE_DESCRIPTION}
       />
       <MultiScreenSchema locale={locale} plans={plans} />
       <FAQSchema faqs={multiEcransFaqs} />
