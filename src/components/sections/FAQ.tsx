@@ -47,7 +47,7 @@ export default function FAQ({ showAll = false }: FAQProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.04 }}
-                className="bg-white rounded-lg border border-border overflow-hidden"
+                className="bg-surface rounded-lg border border-border overflow-hidden"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}

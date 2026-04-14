@@ -14,7 +14,7 @@ export default function WhyUs() {
   const t = useTranslations('whyUs');
 
   return (
-    <section className="py-14 lg:py-20 bg-white">
+    <section className="py-14 lg:py-20 bg-surface">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

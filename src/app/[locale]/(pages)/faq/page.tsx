@@ -15,9 +15,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
   const faqUrl = `${SITE_CONFIG.url}/faq`;
-  const title = 'Veelgestelde vragen — IPTV Nederland';
+  const title = 'Veelgestelde vragen — IPTV Dark';
   const description =
-    'Antwoorden op veelgestelde vragen over IPTV Nederland: apparaten, activering binnen 2 uur, replay, VOD met 170.000+ films en series, support 24/7 en meer.';
+    'Antwoorden op veelgestelde vragen over IPTV Dark: apparaten, activering binnen 2 uur, replay, VOD met meer dan 175.000 films en meer dan 175.000 series, support 24/7 en meer.';
 
   return {
     title,
@@ -48,9 +48,9 @@ export default async function FAQPage({ params }: Props) {
 
   const allFaqs = [
     {
-      question: 'Wat is IPTV Nederland?',
+      question: 'Wat is IPTV Dark?',
       answer:
-        'IPTV Nederland is een internettelevisiedienst met meer dan 30.000 live TV-zenders en 170.000+ films en series on demand in HD en 4K. Geoptimaliseerd voor kijkers in Nederland.',
+        'IPTV Dark is een internettelevisiedienst met meer dan 32.000 live TV-zenders en meer dan 175.000 films en meer dan 175.000 series on demand in HD en 4K. Geoptimaliseerd voor kijkers in Nederland.',
     },
     {
       question: 'Welke apparaten worden ondersteund?',
@@ -100,7 +100,7 @@ export default async function FAQPage({ params }: Props) {
           <p className="text-text-secondary text-sm sm:text-base leading-relaxed mb-8">{t('homeSectionSubtitle')}</p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
           >
             <Home className="w-4 h-4" aria-hidden />
             {t('homeSectionCta')}

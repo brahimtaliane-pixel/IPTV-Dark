@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     keywords: [
-      'IPTV Nederland',
+      'IPTV Dark',
       'over iptv nederland',
       'iptv provider nederland',
       'iptv streaming nederland',
@@ -63,7 +63,7 @@ export default async function AboutPage({ params }: Props) {
           { name: t('breadcrumb'), url: localeUrl(locale, '/about') },
         ]}
       />
-      <div className="pt-28 pb-20 bg-white">
+      <div className="pt-28 pb-20 bg-bg">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/8 rounded-full border border-swiss-red/15 mb-5">

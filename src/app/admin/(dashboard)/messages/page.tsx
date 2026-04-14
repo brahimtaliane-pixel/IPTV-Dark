@@ -131,7 +131,7 @@ export default function MessagesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin w-8 h-8 border-3 border-[#D52B1E] border-t-transparent rounded-full" />
+        <div className="animate-spin w-8 h-8 border-3 border-swiss-red border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -139,30 +139,28 @@ export default function MessagesPage() {
   return (
     <div className="h-[calc(100vh-130px)] flex flex-col">
       <div className="mb-4">
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-text flex items-center gap-2">
           Messages
           {totalUnread > 0 && (
-            <span className="bg-[#D52B1E] text-white text-xs font-bold px-2 py-0.5 rounded-full">
+            <span className="bg-swiss-red text-text-on-red text-xs font-bold px-2 py-0.5 rounded-full">
               {totalUnread}
             </span>
           )}
         </h1>
-        <p className="text-sm text-gray-500 mt-1">Customer email conversations</p>
+        <p className="text-sm text-text-muted mt-1">Customer email conversations</p>
       </div>
 
-      <div className="flex-1 flex bg-white rounded-xl border border-gray-200 overflow-hidden min-h-0">
-        {/* Conversation List */}
-        <div className={`w-full md:w-96 border-r border-gray-200 flex flex-col ${selectedConvo ? 'hidden md:flex' : 'flex'}`}>
-          {/* Search + Filters */}
-          <div className="p-3 border-b border-gray-100 space-y-2">
+      <div className="flex-1 flex bg-surface rounded-xl border border-border overflow-hidden min-h-0">
+        <div className={`w-full md:w-96 border-r border-border flex flex-col ${selectedConvo ? 'hidden md:flex' : 'flex'}`}>
+          <div className="p-3 border-b border-border space-y-2">
             <div className="relative">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
               <input
                 type="text"
                 placeholder="Search conversations..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#D52B1E]/20 focus:border-[#D52B1E]"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-border rounded-lg bg-bg-alt text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-swiss-red/20 focus:border-swiss-red"
               />
             </div>
             <div className="flex gap-1">
@@ -173,11 +171,12 @@ export default function MessagesPage() {
               ].map(tab => (
                 <button
                   key={tab.value}
+                  type="button"
                   onClick={() => setFilter(tab.value)}
                   className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded-md text-xs font-medium transition ${
                     filter === tab.value
-                      ? 'bg-[#D52B1E] text-white'
-                      : 'text-gray-500 hover:bg-gray-50'
+                      ? 'bg-swiss-red text-text-on-red'
+                      : 'text-text-muted hover:bg-bg-alt'
                   }`}
                 >
                   <tab.icon size={12} />
@@ -187,11 +186,10 @@ export default function MessagesPage() {
             </div>
           </div>
 
-          {/* Conversation Items */}
           <div className="flex-1 overflow-y-auto">
             {filteredConvos.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-gray-400">
-                <MailOpen size={32} className="mb-2" />
+              <div className="flex flex-col items-center justify-center h-full text-text-muted">
+                <MailOpen size={32} className="mb-2 opacity-60" />
                 <p className="text-sm">No conversations yet</p>
                 <p className="text-xs mt-1">Incoming emails will appear here</p>
               </div>
@@ -199,33 +197,34 @@ export default function MessagesPage() {
               filteredConvos.map(convo => (
                 <button
                   key={convo.id}
+                  type="button"
                   onClick={() => openConversation(convo)}
-                  className={`w-full text-left px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition ${
-                    selectedConvo?.id === convo.id ? 'bg-red-50' : ''
+                  className={`w-full text-left px-4 py-3 border-b border-border hover:bg-bg-alt transition ${
+                    selectedConvo?.id === convo.id ? 'bg-swiss-red/10' : ''
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
-                      convo.unread_count > 0 ? 'bg-[#D52B1E] text-white' : 'bg-gray-100 text-gray-500'
+                      convo.unread_count > 0 ? 'bg-swiss-red text-text-on-red' : 'bg-bg-alt text-text-muted border border-border'
                     }`}>
                       {convo.customer_name[0]?.toUpperCase() || '?'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <span className={`text-sm truncate ${convo.unread_count > 0 ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}>
+                        <span className={`text-sm truncate ${convo.unread_count > 0 ? 'font-bold text-text' : 'font-medium text-text-secondary'}`}>
                           {convo.customer_name}
                         </span>
-                        <span className="text-[10px] text-gray-400 shrink-0 ml-2">
+                        <span className="text-[10px] text-text-muted shrink-0 ml-2">
                           {formatTime(convo.last_message_at)}
                         </span>
                       </div>
-                      <p className={`text-xs truncate mt-0.5 ${convo.unread_count > 0 ? 'font-semibold text-gray-700' : 'text-gray-500'}`}>
+                      <p className={`text-xs truncate mt-0.5 ${convo.unread_count > 0 ? 'font-semibold text-text-secondary' : 'text-text-muted'}`}>
                         {convo.subject}
                       </p>
-                      <p className="text-[11px] text-gray-400 truncate">{convo.customer_email}</p>
+                      <p className="text-[11px] text-text-muted truncate">{convo.customer_email}</p>
                     </div>
                     {convo.unread_count > 0 && (
-                      <span className="bg-[#D52B1E] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0">
+                      <span className="bg-swiss-red text-text-on-red text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0">
                         {convo.unread_count}
                       </span>
                     )}
@@ -236,41 +235,43 @@ export default function MessagesPage() {
           </div>
         </div>
 
-        {/* Message Thread */}
         <div className={`flex-1 flex flex-col ${selectedConvo ? 'flex' : 'hidden md:flex'}`}>
           {selectedConvo ? (
             <>
-              {/* Thread Header */}
-              <div className="px-4 py-3 border-b border-gray-200 flex items-center gap-3">
+              <div className="px-4 py-3 border-b border-border flex items-center gap-3">
                 <button
+                  type="button"
                   onClick={() => { setSelectedConvo(null); setMessages([]); }}
-                  className="md:hidden p-1 text-gray-400 hover:text-gray-600"
+                  className="md:hidden p-1 text-text-muted hover:text-text"
                 >
                   <ArrowLeft size={20} />
                 </button>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 text-sm truncate">{selectedConvo.subject}</h3>
-                  <p className="text-xs text-gray-500">{selectedConvo.customer_name} &lt;{selectedConvo.customer_email}&gt;</p>
+                  <h3 className="font-semibold text-text text-sm truncate">{selectedConvo.subject}</h3>
+                  <p className="text-xs text-text-muted">{selectedConvo.customer_name} &lt;{selectedConvo.customer_email}&gt;</p>
                 </div>
                 <div className="flex gap-1">
                   {selectedConvo.status === 'open' ? (
                     <button
+                      type="button"
                       onClick={() => updateStatus(selectedConvo.id, 'closed')}
-                      className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 transition"
+                      className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-green-400 bg-green-500/15 border border-green-500/25 rounded-lg hover:bg-green-500/20 transition"
                     >
                       <CheckCircle size={12} /> Close
                     </button>
                   ) : (
                     <button
+                      type="button"
                       onClick={() => updateStatus(selectedConvo.id, 'open')}
-                      className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-[#D52B1E] bg-red-50 rounded-lg hover:bg-red-100 transition"
+                      className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-swiss-red bg-swiss-red/10 border border-swiss-red/25 rounded-lg hover:bg-swiss-red/15 transition"
                     >
                       <Circle size={12} /> Reopen
                     </button>
                   )}
                   <button
+                    type="button"
                     onClick={() => updateStatus(selectedConvo.id, 'archived')}
-                    className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition"
+                    className="p-1.5 text-text-muted hover:text-text hover:bg-bg-alt rounded-lg transition"
                     title="Archive"
                   >
                     <Archive size={14} />
@@ -278,8 +279,7 @@ export default function MessagesPage() {
                 </div>
               </div>
 
-              {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-bg">
                 {messages.map(msg => (
                   <div
                     key={msg.id}
@@ -287,18 +287,18 @@ export default function MessagesPage() {
                   >
                     <div className={`max-w-[80%] rounded-xl px-4 py-3 ${
                       msg.direction === 'outbound'
-                        ? 'bg-[#D52B1E] text-white'
-                        : 'bg-gray-100 text-gray-900'
+                        ? 'bg-swiss-red text-text-on-red'
+                        : 'bg-bg-alt border border-border text-text'
                     }`}>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-[10px] font-medium ${msg.direction === 'outbound' ? 'text-red-200' : 'text-gray-500'}`}>
+                        <span className={`text-[10px] font-medium ${msg.direction === 'outbound' ? 'text-text-on-red/80' : 'text-text-muted'}`}>
                           {msg.direction === 'outbound' ? 'You' : msg.from_email}
                         </span>
-                        <span className={`text-[10px] ${msg.direction === 'outbound' ? 'text-red-300' : 'text-gray-400'}`}>
+                        <span className={`text-[10px] ${msg.direction === 'outbound' ? 'text-text-on-red/60' : 'text-text-muted'}`}>
                           {formatTime(msg.created_at)}
                         </span>
                       </div>
-                      <div className={`text-sm leading-relaxed ${msg.direction === 'outbound' ? 'text-white/90' : 'text-gray-700'}`}>
+                      <div className={`text-sm leading-relaxed ${msg.direction === 'outbound' ? 'text-text-on-red/95' : 'text-text-secondary'}`}>
                         {msg.body_text || stripHtml(msg.body_html || '')}
                       </div>
                     </div>
@@ -307,8 +307,7 @@ export default function MessagesPage() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Reply Input */}
-              <div className="p-3 border-t border-gray-200">
+              <div className="p-3 border-t border-border bg-surface">
                 <div className="flex gap-2">
                   <textarea
                     value={replyText}
@@ -321,15 +320,16 @@ export default function MessagesPage() {
                     }}
                     placeholder="Type your reply... (Enter to send, Shift+Enter for new line)"
                     rows={2}
-                    className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#D52B1E]/20 focus:border-[#D52B1E]"
+                    className="flex-1 px-3 py-2 border border-border rounded-lg text-sm text-text bg-bg-alt resize-none placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-swiss-red/20 focus:border-swiss-red"
                   />
                   <button
+                    type="button"
                     onClick={sendReply}
                     disabled={!replyText.trim() || sending}
-                    className="px-4 bg-[#D52B1E] text-white rounded-lg hover:bg-[#b52318] transition disabled:opacity-40 flex items-center gap-1.5 text-sm font-medium"
+                    className="px-4 bg-swiss-red text-text-on-red rounded-lg hover:bg-swiss-red-dark transition disabled:opacity-40 flex items-center gap-1.5 text-sm font-medium self-end"
                   >
                     {sending ? (
-                      <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                      <div className="animate-spin w-4 h-4 border-2 border-text-on-red border-t-transparent rounded-full" />
                     ) : (
                       <Send size={14} />
                     )}
@@ -339,9 +339,9 @@ export default function MessagesPage() {
               </div>
             </>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-gray-400">
-              <Mail size={40} className="mb-3" />
-              <p className="font-medium text-gray-500">Select a conversation</p>
+            <div className="flex-1 flex flex-col items-center justify-center text-text-muted bg-bg">
+              <Mail size={40} className="mb-3 opacity-40" />
+              <p className="font-medium text-text-secondary">Select a conversation</p>
               <p className="text-xs mt-1">Choose from the left panel to view messages</p>
             </div>
           )}

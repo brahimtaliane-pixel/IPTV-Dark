@@ -1,0 +1,2 @@
+-- Optional post-migration seed. Core data comes from migrations.
+-- Add dev-only INSERTs here if needed.

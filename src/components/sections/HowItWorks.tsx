@@ -24,7 +24,7 @@ export default function HowItWorks() {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <span className="inline-block px-3 py-1 bg-swiss-red text-white text-xs font-semibold rounded mb-4">
+          <span className="inline-block px-3 py-1 bg-swiss-red text-black text-xs font-semibold rounded mb-4">
             {t('badge')}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-3">
@@ -42,9 +42,9 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="relative bg-white rounded-xl border border-border p-6 hover:border-swiss-red/20 hover:shadow-sm transition-all group flex flex-col items-center text-center"
+              className="relative bg-surface rounded-xl border border-border p-6 hover:border-swiss-red/20 hover:shadow-sm transition-all group flex flex-col items-center text-center"
             >
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-swiss-red flex items-center justify-center text-white text-xs font-bold shadow-sm">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-swiss-red flex items-center justify-center text-black text-xs font-bold shadow-sm">
                 {i + 1}
               </div>
 
@@ -66,8 +66,8 @@ export default function HowItWorks() {
           className="text-center mt-12"
         >
           <Link
-            href="/plans"
-            className="inline-flex items-center px-6 py-3 bg-swiss-red hover:bg-swiss-red/90 text-white font-semibold rounded-lg transition-colors shadow-sm"
+            href="/abonnementen"
+            className="inline-flex items-center px-6 py-3 bg-swiss-red hover:bg-swiss-red/90 text-black font-semibold rounded-lg transition-colors shadow-sm"
           >
             {t('cta')}
             <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

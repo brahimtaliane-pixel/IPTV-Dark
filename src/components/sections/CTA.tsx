@@ -11,8 +11,8 @@ export default function CTA() {
   return (
     <section className="py-14 lg:py-20 bg-swiss-red relative overflow-hidden">
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.04]" style={{
-        backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+      <div className="absolute inset-0 opacity-[0.06]" style={{
+        backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
         backgroundSize: '24px 24px',
       }} />
 
@@ -22,22 +22,22 @@ export default function CTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-black tracking-tight mb-4">
             {t('title')}
           </h2>
-          <p className="text-lg text-white/80 max-w-xl mx-auto mb-8">
+          <p className="text-lg text-black/75 max-w-xl mx-auto mb-8">
             {t('subtitle')}
           </p>
 
           <Link
             href="/#pricing"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-swiss-red font-bold rounded-lg hover:bg-white/90 transition-colors text-sm"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-black text-swiss-red font-bold rounded-lg hover:bg-black/90 transition-colors text-sm"
           >
             {t('button')}
             <ArrowRight className="w-4 h-4" />
           </Link>
 
-          <p className="text-sm text-white/50 mt-5">{t('guarantee')}</p>
+          <p className="text-sm text-black/50 mt-5">{t('guarantee')}</p>
         </motion.div>
       </div>
     </section>

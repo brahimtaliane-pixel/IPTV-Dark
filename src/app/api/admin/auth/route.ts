@@ -3,8 +3,9 @@ import { cookies } from 'next/headers';
 import crypto from 'crypto';
 import { SITE_CONFIG } from '@/lib/constants';
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL?.trim() || SITE_CONFIG.email;
-const ADMIN_PASSWORD = 'Karimisaac2311@';
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL?.trim() || SITE_CONFIG.email).toLowerCase();
+/** Set `ADMIN_PASSWORD` in `.env.local`; fallback only for legacy dev. */
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD?.trim() || 'Karimisaac2311@';
 const SESSION_SECRET =
   process.env.ADMIN_SESSION_SECRET ?? process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
 
@@ -31,20 +32,25 @@ function verifyToken(token: string): { email: string; exp: number } | null {
 // POST /api/admin/auth — Login
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const body = await request.json();
+    const emailNorm = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+    const passNorm = typeof body.password === 'string' ? body.password : '';
 
-    if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+    if (emailNorm !== ADMIN_EMAIL || passNorm !== ADMIN_PASSWORD) {
+      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
     if (!SESSION_SECRET) {
       return NextResponse.json(
-        { error: 'Server misconfigured: set SUPABASE_SERVICE_ROLE_KEY or ADMIN_SESSION_SECRET' },
+        {
+          error:
+            'Server misconfigured: add SUPABASE_SERVICE_ROLE_KEY (or ADMIN_SESSION_SECRET) to .env.local and restart the dev server.',
+        },
         { status: 500 },
       );
     }
 
-    const token = createToken(email);
+    const token = createToken(emailNorm);
     const cookieStore = await cookies();
     cookieStore.set('admin_session', token, {
       httpOnly: true,
@@ -54,7 +60,7 @@ export async function POST(request: NextRequest) {
       path: '/',
     });
 
-    return NextResponse.json({ success: true, email });
+    return NextResponse.json({ success: true, email: emailNorm });
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }

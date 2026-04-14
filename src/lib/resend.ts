@@ -45,9 +45,9 @@ export async function sendPaymentLinkEmail(data: LeadEmailData) {
 </head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;">
   <div style="max-width:600px;margin:0 auto;padding:20px;">
-    <div style="background:#D52B1E;padding:28px 32px;border-radius:12px 12px 0 0;text-align:center;">
-      <h1 style="margin:0;color:#fff;font-size:24px;font-weight:800;letter-spacing:0.5px;">
-        IPTV<span style="font-weight:400;"> NEDERLAND</span>
+    <div style="background:#c6ff3f;padding:28px 32px;border-radius:12px 12px 0 0;text-align:center;">
+      <h1 style="margin:0;color:#0a0a0a;font-size:24px;font-weight:800;letter-spacing:0.5px;">
+        IPTV<span style="font-weight:400;"> DARK</span>
       </h1>
     </div>
     
@@ -67,13 +67,13 @@ export async function sendPaymentLinkEmail(data: LeadEmailData) {
         <div style="font-size:14px;color:#666;">
           Looptijd: ${data.planDuration} maanden
         </div>
-        <div style="font-size:28px;font-weight:800;color:#D52B1E;margin:12px 0 0;">
+        <div style="font-size:28px;font-weight:800;color:#1a1a1a;margin:12px 0 0;">
           ${data.planPrice} ${PRICE_CURRENCY_SYMBOL}
         </div>
       </div>
       
       <div style="text-align:center;margin:0 0 24px;">
-        <a href="${paymentUrl}" style="display:inline-block;background:#D52B1E;color:#fff;text-decoration:none;padding:14px 40px;border-radius:8px;font-size:16px;font-weight:700;letter-spacing:0.5px;">
+        <a href="${paymentUrl}" style="display:inline-block;background:#0a0a0a;color:#c6ff3f;text-decoration:none;padding:14px 40px;border-radius:8px;font-size:16px;font-weight:700;letter-spacing:0.5px;">
           NAAR BETALING
         </a>
       </div>
@@ -89,9 +89,9 @@ export async function sendPaymentLinkEmail(data: LeadEmailData) {
           Hulp nodig? Neem contact op
         </p>
         <p style="margin:0;">
-          <a href="mailto:${SITE_CONFIG.email}" style="color:#D52B1E;text-decoration:none;font-size:13px;">${SITE_CONFIG.email}</a>
+          <a href="mailto:${SITE_CONFIG.email}" style="color:#5a6e18;text-decoration:none;font-size:13px;">${SITE_CONFIG.email}</a>
           <span style="color:#ccc;margin:0 8px;">|</span>
-          <a href="${contact.whatsappUrl}" style="color:#D52B1E;text-decoration:none;font-size:13px;">WhatsApp</a>
+          <a href="${contact.whatsappUrl}" style="color:#5a6e18;text-decoration:none;font-size:13px;">WhatsApp</a>
         </p>
       </div>
     </div>
@@ -124,13 +124,13 @@ export async function sendAdminNotification(data: LeadEmailData) {
 <html>
 <body style="margin:0;padding:20px;font-family:monospace;background:#f5f5f5;">
   <div style="max-width:500px;margin:0 auto;background:#fff;border:1px solid #ddd;border-radius:8px;padding:24px;">
-    <h2 style="margin:0 0 16px;color:#D52B1E;">🔔 Nieuwe lead</h2>
+    <h2 style="margin:0 0 16px;color:#5a6e18;">🔔 Nieuwe lead</h2>
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <tr><td style="padding:6px 0;color:#999;">Naam</td><td style="padding:6px 0;font-weight:700;">${data.customerName}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">E-mail</td><td style="padding:6px 0;">${data.email}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Telefoon</td><td style="padding:6px 0;">${data.phone}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Pakket</td><td style="padding:6px 0;font-weight:700;">${data.planName}</td></tr>
-      <tr><td style="padding:6px 0;color:#999;">Prijs</td><td style="padding:6px 0;color:#D52B1E;font-weight:700;">${data.planPrice} ${PRICE_CURRENCY_SYMBOL}</td></tr>
+      <tr><td style="padding:6px 0;color:#999;">Prijs</td><td style="padding:6px 0;color:#5a6e18;font-weight:700;">${data.planPrice} ${PRICE_CURRENCY_SYMBOL}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Taal</td><td style="padding:6px 0;">${data.locale.toUpperCase()}</td></tr>
       <tr><td style="padding:6px 0;color:#999;">Datum</td><td style="padding:6px 0;">${new Date().toLocaleString('nl-NL')}</td></tr>
     </table>
@@ -140,7 +140,7 @@ export async function sendAdminNotification(data: LeadEmailData) {
 
   try {
     await getResend().emails.send({
-      from: `IPTV Nederland Leads <contact@${SITE_CONFIG.domain}>`,
+      from: `IPTV Dark Leads <contact@${SITE_CONFIG.domain}>`,
       to: SITE_CONFIG.email,
       subject: `🔔 Nieuwe lead: ${data.customerName} – ${data.planName}`,
       html,

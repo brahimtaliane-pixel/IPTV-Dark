@@ -23,7 +23,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-4">
               <BrandMark className="w-7 h-7 shrink-0" />
               <span className="text-lg font-extrabold tracking-tight">
-                IPTV<span className="text-swiss-red">NEDERLAND</span>
+                IPTV<span className="text-swiss-red">DARK</span>
               </span>
             </Link>
             <p className="text-sm text-white/50 leading-relaxed">
@@ -36,7 +36,7 @@ export default function Footer() {
             <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-4">{t('links')}</h3>
             <ul className="space-y-2.5">
               <li><Link href="/" className="text-sm text-white/60 hover:text-white transition-colors">{nav('home')}</Link></li>
-              <li><Link href="/plans" className="text-sm text-white/60 hover:text-white transition-colors">{nav('plans')}</Link></li>
+              <li><Link href="/abonnementen" className="text-sm text-white/60 hover:text-white transition-colors">{nav('plans')}</Link></li>
               <li><Link href="/multi-scherm" className="text-sm text-white/60 hover:text-white transition-colors">{nav('multiScreen')}</Link></li>
               <li><Link href="/faq" className="text-sm text-white/60 hover:text-white transition-colors">{nav('faq')}</Link></li>
               <li><Link href="/installation" className="text-sm text-white/60 hover:text-white transition-colors">{nav('installation')}</Link></li>
@@ -47,6 +47,7 @@ export default function Footer() {
               <li><Link href="/iptv-kopen" className="text-sm text-white/60 hover:text-white transition-colors">{t('iptvKopenPage')}</Link></li>
               <li><Link href="/dutch-iptv" className="text-sm text-white/60 hover:text-white transition-colors">{t('dutchIptvPage')}</Link></li>
               <li><Link href="/iptv-abonnement" className="text-sm text-white/60 hover:text-white transition-colors">{t('iptvAbonnementPage')}</Link></li>
+              <li><Link href="/iptv-dark-nederland" className="text-sm text-white/60 hover:text-white transition-colors">{t('iptvDarkNederlandPage')}</Link></li>
             </ul>
           </div>
 

@@ -59,13 +59,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...legacyPlanSlugRedirects(),
+      // English /plans → Dutch URL (bookmarks & external links)
+      { source: '/plans', destination: '/abonnementen', permanent: true },
+      { source: '/plans/:slug', destination: '/abonnementen/:slug', permanent: true },
       // Subscription landing URLs → pricing (branded + legacy WordPress)
       { source: '/abonnement-iptv-nederland', destination: '/#pricing', permanent: true },
       // Legacy Swiss marketing URL → homepage pricing (keep for old backlinks)
       { source: '/abonnement-iptv-suisse', destination: '/#pricing', permanent: true },
       // Old French slug → Dutch URL (bookmarks & external links)
       { source: '/multi-ecrans', destination: '/multi-scherm', permanent: true },
-      { source: '/iptv-plan/:slug', destination: '/plans/:slug', permanent: true },
+      { source: '/iptv-plan/:slug', destination: '/abonnementen/:slug', permanent: true },
       { source: '/guide-dinstallation-iptv', destination: '/installation', permanent: true },
       { source: '/a-propos', destination: '/about', permanent: true },
       { source: '/politique-de-confidentialite', destination: '/privacy', permanent: true },

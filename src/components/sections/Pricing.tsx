@@ -30,23 +30,23 @@ export default async function Pricing({ plans }: { plans: SitePlan[] }) {
                 className={cn(
                   'relative rounded-xl p-6 flex flex-col motion-safe:transition-transform motion-safe:duration-300',
                   plan.is_popular
-                    ? 'bg-swiss-red text-white ring-2 ring-swiss-red shadow-lg shadow-swiss-red/15 md:scale-[1.04]'
-                    : 'bg-white border border-border hover:-translate-y-0.5 hover:border-swiss-red/20'
+                    ? 'bg-swiss-red text-black ring-2 ring-swiss-red shadow-lg shadow-swiss-red/25 md:scale-[1.04]'
+                    : 'bg-surface border border-border hover:-translate-y-0.5 hover:border-swiss-red/20'
                 )}
               >
                 {plan.is_popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="px-3 py-1 bg-white text-swiss-red text-[11px] font-bold rounded-full uppercase tracking-wide shadow-sm">
+                    <span className="px-3 py-1 bg-black text-swiss-red text-[11px] font-bold rounded-full uppercase tracking-wide shadow-sm">
                       {t('popular')}
                     </span>
                   </div>
                 )}
 
                 <div className="mb-5">
-                  <h3 className={cn('text-base font-bold mb-0.5', plan.is_popular ? 'text-white' : 'text-text')}>
+                  <h3 className={cn('text-base font-bold mb-0.5', plan.is_popular ? 'text-black' : 'text-text')}>
                     {name}
                   </h3>
-                  <p className={cn('text-xs', plan.is_popular ? 'text-white/70' : 'text-text-muted')}>
+                  <p className={cn('text-xs', plan.is_popular ? 'text-black/70' : 'text-text-muted')}>
                     {t('duration', { count: plan.duration })}
                   </p>
                 </div>
@@ -54,21 +54,21 @@ export default async function Pricing({ plans }: { plans: SitePlan[] }) {
                 <div className="mb-5">
                   {plan.original_price != null && plan.original_price > 0 && (
                     <div className="mb-0.5">
-                      <span className={cn('text-sm line-through', plan.is_popular ? 'text-white/50' : 'text-text-muted')}>
+                      <span className={cn('text-sm line-through', plan.is_popular ? 'text-black/45' : 'text-text-muted')}>
                         {formatPrice(plan.original_price)} {PRICE_CURRENCY_SYMBOL}
                       </span>
                     </div>
                   )}
                   <div className="flex items-baseline gap-1.5">
-                    <span className={cn('text-4xl font-extrabold', plan.is_popular ? 'text-white' : 'text-text')}>
+                    <span className={cn('text-4xl font-extrabold', plan.is_popular ? 'text-black' : 'text-text')}>
                       {formatPrice(plan.price)}
                     </span>
-                    <span className={cn('text-sm font-medium', plan.is_popular ? 'text-white/70' : 'text-text-muted')}>
+                    <span className={cn('text-sm font-medium', plan.is_popular ? 'text-black/70' : 'text-text-muted')}>
                       {PRICE_CURRENCY_SYMBOL}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className={cn('text-xs', plan.is_popular ? 'text-white/60' : 'text-text-muted')}>
+                    <span className={cn('text-xs', plan.is_popular ? 'text-black/60' : 'text-text-muted')}>
                       {getMonthlyPrice(plan.price, plan.duration)} {PRICE_CURRENCY_SYMBOL}
                       {t('perMonth')}
                     </span>
@@ -76,7 +76,7 @@ export default async function Pricing({ plans }: { plans: SitePlan[] }) {
                       <span
                         className={cn(
                           'text-[10px] font-bold px-1.5 py-0.5 rounded',
-                          plan.is_popular ? 'bg-white/20 text-white' : 'bg-success/10 text-success'
+                          plan.is_popular ? 'bg-black/10 text-black' : 'bg-success/10 text-success'
                         )}
                       >
                         -{discount}%
@@ -88,8 +88,8 @@ export default async function Pricing({ plans }: { plans: SitePlan[] }) {
                 <ul className="space-y-2.5 mb-6 flex-grow">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5">
-                      <Check className={cn('w-4 h-4 mt-0.5 shrink-0', plan.is_popular ? 'text-white/80' : 'text-swiss-red')} />
-                      <span className={cn('text-sm', plan.is_popular ? 'text-white/90' : 'text-text-secondary')}>
+                      <Check className={cn('w-4 h-4 mt-0.5 shrink-0', plan.is_popular ? 'text-black/75' : 'text-swiss-red')} />
+                      <span className={cn('text-sm', plan.is_popular ? 'text-black/90' : 'text-text-secondary')}>
                         {t(`features.${f}`)}
                       </span>
                     </li>
@@ -97,12 +97,12 @@ export default async function Pricing({ plans }: { plans: SitePlan[] }) {
                 </ul>
 
                 <Link
-                  href={`/plans/${plan.slug}`}
+                  href={`/abonnementen/${plan.slug}`}
                   className={cn(
                     'block text-center py-3 rounded-lg font-semibold text-sm transition-colors',
                     plan.is_popular
-                      ? 'bg-white text-swiss-red hover:bg-white/90'
-                      : 'bg-swiss-red text-white hover:bg-swiss-red-dark'
+                      ? 'bg-black text-swiss-red hover:bg-black/90'
+                      : 'bg-swiss-red text-black hover:bg-swiss-red-dark'
                   )}
                 >
                   {t('cta')}

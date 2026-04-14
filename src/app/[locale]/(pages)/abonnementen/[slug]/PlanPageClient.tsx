@@ -23,10 +23,11 @@ import {
   Star,
   MessageCircle,
 } from 'lucide-react';
-import { PRICE_CURRENCY_SYMBOL } from '@/lib/constants';
+import { PRICE_CURRENCY_SYMBOL, SITE_CONFIG, STATS } from '@/lib/constants';
 import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
+import BrandMark from '@/components/ui/BrandMark';
 import LeadForm from '@/components/ui/LeadForm';
 
 // ─── Sticky CTA Bar ─────────────────────────────────────────
@@ -70,7 +71,7 @@ function StickyCTA({
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-border z-50 shadow-lg"
+          className="fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-md border-t border-border z-50 shadow-lg"
         >
           <div className="max-w-6xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -84,7 +85,7 @@ function StickyCTA({
               {isDirectCheckout ? (
                 <a
                   href={directHref}
-                  className="px-6 py-2.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+                  className="px-6 py-2.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
                 >
                   {t('subscribeNow')}
                 </a>
@@ -92,7 +93,7 @@ function StickyCTA({
                 <button
                   type="button"
                   onClick={onOpenForm}
-                  className="px-6 py-2.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+                  className="px-6 py-2.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
                 >
                   {t('subscribeNow')}
                 </button>
@@ -118,7 +119,7 @@ function FAQItem({
   onClick: () => void;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-border overflow-hidden transition-all duration-300 hover:border-swiss-red/20">
+    <div className="bg-surface rounded-xl border border-border overflow-hidden transition-all duration-300 hover:border-swiss-red/20">
       <button
         onClick={onClick}
         className="w-full text-left p-5 font-medium flex justify-between items-center group"
@@ -167,11 +168,15 @@ export default function PlanPageClient({
   const plan = plans.find((p) => p.slug === slug);
   if (!plan) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-text mb-4">Plan not found</h1>
-          <Link href="/" className="text-swiss-red hover:underline">
-            ← Back
+      <div className="min-h-screen flex items-center justify-center bg-bg px-5">
+        <div className="text-center max-w-md">
+          <BrandMark className="w-12 h-12 mx-auto mb-4" />
+          <p className="text-xs font-semibold uppercase tracking-wider text-swiss-red mb-2">{SITE_CONFIG.name}</p>
+          <h1 className="text-2xl font-bold text-text mb-3">Pakket niet gevonden</h1>
+          <p className="text-text-secondary text-sm mb-6">Dit abonnement bestaat niet (meer) of de link is onjuist.</p>
+          <Link href="/abonnementen" className="inline-flex items-center gap-2 text-swiss-red font-semibold hover:underline">
+            <ArrowLeft className="w-4 h-4" />
+            Terug naar alle abonnementen
           </Link>
         </div>
       </div>
@@ -241,7 +246,7 @@ export default function PlanPageClient({
       {/* ═══════════════════════════════════════════════════════
           1. PREMIUM HERO SECTION
       ═══════════════════════════════════════════════════════ */}
-      <section className="pt-28 pb-16 bg-white relative overflow-hidden">
+      <section className="pt-28 pb-16 bg-bg relative overflow-hidden">
         {/* Subtle background accents */}
         <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-swiss-red/[0.03] rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-swiss-red/[0.03] rounded-full blur-[100px] pointer-events-none" />
@@ -249,7 +254,7 @@ export default function PlanPageClient({
         <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
           {/* Back link */}
           <Link
-            href="/#pricing"
+            href="/abonnementen"
             className="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-swiss-red transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -260,30 +265,39 @@ export default function PlanPageClient({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-bg rounded-2xl border border-border overflow-hidden"
+            className="bg-surface rounded-2xl border border-border overflow-hidden shadow-xl shadow-black/30"
           >
             <div className="p-6 sm:p-8 lg:p-12">
-              {/* Badges */}
+              {/* Brand + Badges */}
               <motion.div
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.15 }}
-                className="flex flex-wrap items-center gap-2 mb-6"
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/8 rounded-full border border-swiss-red/15">
-                  <div className="w-2 h-2 rounded-full bg-swiss-red animate-pulse" />
-                  <span className="text-xs font-semibold text-swiss-red uppercase tracking-wide">
-                    {t('premiumPlan')}
-                  </span>
+                <div className="flex items-center gap-3">
+                  <BrandMark className="w-10 h-10 sm:w-12 sm:h-12 shrink-0" />
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-swiss-red">{SITE_CONFIG.name}</p>
+                    <p className="text-xs text-text-muted">{t('planHeroDomain')}</p>
+                  </div>
                 </div>
-                {plan.devices > 1 && (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 rounded-full border border-blue-200">
-                    <Monitor className="w-3.5 h-3.5 text-blue-600" />
-                    <span className="text-xs font-semibold text-blue-700">
-                      {plan.devices} schermen tegelijk
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-bg rounded-full border border-swiss-red/25">
+                    <div className="w-2 h-2 rounded-full bg-swiss-red animate-pulse" />
+                    <span className="text-[11px] font-semibold text-swiss-red uppercase tracking-wide">
+                      {t('premiumPlan')}
                     </span>
                   </div>
-                )}
+                  {plan.devices > 1 && (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-bg rounded-full border border-swiss-red/20">
+                      <Monitor className="w-3.5 h-3.5 text-swiss-red" />
+                      <span className="text-[11px] font-semibold text-swiss-red">
+                        {plan.devices} schermen tegelijk
+                      </span>
+                    </div>
+                  )}
+                </div>
               </motion.div>
 
               {/* Title + Price row */}
@@ -298,6 +312,9 @@ export default function PlanPageClient({
                     {name}
                   </h1>
                   <p className="text-base sm:text-lg text-text-secondary max-w-xl">{description}</p>
+                  <p className="text-sm text-text-muted mt-4 max-w-xl border-l-2 border-swiss-red/35 pl-4">
+                    {t('planHeroBrandLine')}
+                  </p>
                 </motion.div>
 
                 {/* Price Card */}
@@ -306,7 +323,7 @@ export default function PlanPageClient({
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
-                  className="bg-white p-5 sm:p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow flex flex-col items-center sm:items-start min-w-[260px]"
+                  className="bg-surface p-5 sm:p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow flex flex-col items-center sm:items-start min-w-[260px]"
                 >
                   <div className="text-xs text-text-muted font-medium tracking-wide mb-1">{t('totalPrice')}</div>
 
@@ -342,7 +359,7 @@ export default function PlanPageClient({
                     {showDirect ? (
                       <a
                         href={directHref}
-                        className="block w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide text-center"
+                        className="block w-full py-3 bg-swiss-red text-black font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide text-center"
                       >
                         {t('subscribeNow')}
                       </a>
@@ -350,7 +367,7 @@ export default function PlanPageClient({
                       <button
                         type="button"
                         onClick={() => setIsLeadFormOpen(true)}
-                        className="w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
+                        className="w-full py-3 bg-swiss-red text-black font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
                       >
                         {t('subscribeNow')}
                       </button>
@@ -382,6 +399,26 @@ export default function PlanPageClient({
                   </div>
                 ))}
               </motion.div>
+
+              {/* Catalog stats — same numbers as landelijke site */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden border border-border mt-8"
+              >
+                {[
+                  { value: STATS.channels, label: t('statChannels') },
+                  { value: STATS.movies, label: t('statVod') },
+                  { value: STATS.uptime, label: t('statUptime') },
+                  { value: STATS.supportHours, label: t('statSupport') },
+                ].map((row) => (
+                  <div key={row.label} className="bg-bg px-4 py-4 text-center">
+                    <div className="text-lg sm:text-xl font-extrabold text-swiss-red tabular-nums">{row.value}</div>
+                    <div className="text-[10px] text-text-muted mt-0.5 uppercase tracking-wider font-medium">{row.label}</div>
+                  </div>
+                ))}
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -390,7 +427,7 @@ export default function PlanPageClient({
       {/* ═══════════════════════════════════════════════════════
           2. MAIN CONTENT GRID
       ═══════════════════════════════════════════════════════ */}
-      <section className="pb-16 bg-white">
+      <section className="pb-16 bg-bg">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left column (2/3) */}
@@ -429,7 +466,7 @@ export default function PlanPageClient({
                   {keyFeatures.map((feat) => (
                     <div
                       key={feat.label}
-                      className="flex items-start gap-3 p-4 bg-white rounded-lg border border-border hover:border-swiss-red/20 transition-all group"
+                      className="flex items-start gap-3 p-4 bg-surface rounded-lg border border-border hover:border-swiss-red/20 transition-all group"
                     >
                       <div className="w-10 h-10 rounded-full bg-swiss-red/8 flex items-center justify-center shrink-0 group-hover:bg-swiss-red/12 transition-colors">
                         <feat.icon className="w-5 h-5 text-swiss-red" />
@@ -453,7 +490,7 @@ export default function PlanPageClient({
                 className="bg-bg rounded-xl border border-border overflow-hidden lg:sticky lg:top-24"
               >
                 {/* Sidebar header */}
-                <div className="p-5 bg-white border-b border-border">
+                <div className="p-5 bg-surface border-b border-border">
                   <h2 className="text-lg font-bold text-text">{t('planDetails')}</h2>
                   <p className="text-xs text-text-muted mt-0.5">{t('allFeaturesIncluded')}</p>
                 </div>
@@ -462,7 +499,7 @@ export default function PlanPageClient({
                 <div className="p-5">
                   <ul className="space-y-2.5 mb-6">
                     {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-white transition-colors group">
+                      <li key={f} className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-bg-alt transition-colors group">
                         <div className="w-5 h-5 rounded-full bg-swiss-red/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-swiss-red/15 transition-colors">
                           <Check className="w-3 h-3 text-swiss-red" />
                         </div>
@@ -474,7 +511,7 @@ export default function PlanPageClient({
                   </ul>
 
                   {/* Additional info */}
-                  <div className="bg-white p-4 rounded-lg border border-border">
+                  <div className="bg-surface p-4 rounded-lg border border-border">
                     <h3 className="text-sm font-bold text-text mb-3">{t('additionalInfo')}</h3>
                     <ul className="space-y-2.5">
                       {[
@@ -500,7 +537,7 @@ export default function PlanPageClient({
                     {showDirect ? (
                       <a
                         href={directHref}
-                        className="block w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide text-center"
+                        className="block w-full py-3 bg-swiss-red text-black font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide text-center"
                       >
                         {t('subscribeNow')}
                       </a>
@@ -508,7 +545,7 @@ export default function PlanPageClient({
                       <button
                         type="button"
                         onClick={() => setIsLeadFormOpen(true)}
-                        className="w-full py-3 bg-swiss-red text-white font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
+                        className="w-full py-3 bg-swiss-red text-black font-bold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors tracking-wide"
                       >
                         {t('subscribeNow')}
                       </button>
@@ -527,9 +564,10 @@ export default function PlanPageClient({
       <section className="py-16 bg-bg">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           {/* Section heading */}
-          <div className="text-center mb-10">
-            <div className="inline-block px-3 py-1 bg-swiss-red text-white text-xs font-semibold rounded-full mb-3 uppercase tracking-wide">
-              Trustpilot
+            <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface border border-swiss-red/25 text-swiss-red text-xs font-semibold rounded-full mb-3 uppercase tracking-wide">
+              <BrandMark className="w-4 h-4" />
+              {t('reviewsBadge')}
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-text mb-2">
               {t('reviewsTitle')} <span className="text-swiss-red">{t('reviewsTitleHighlight')}</span>
@@ -542,7 +580,7 @@ export default function PlanPageClient({
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-xl border border-border p-6 sm:p-8 max-w-5xl mx-auto mb-10"
+            className="bg-surface rounded-xl border border-border p-6 sm:p-8 max-w-5xl mx-auto mb-10"
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               {/* Overall rating */}
@@ -585,10 +623,9 @@ export default function PlanPageClient({
                 </div>
               </div>
 
-              {/* Trustpilot */}
               <div className="flex flex-col items-center md:items-end">
                 <div className="text-xs text-text-muted mb-2">{t('verifiedBy')}</div>
-                <div className="bg-[#00b67a] text-white px-4 py-2 rounded-md font-bold flex items-center text-sm">
+                <div className="bg-[#00b67a] text-white px-4 py-2 rounded-md font-bold flex items-center text-sm shadow-lg shadow-black/20">
                   <Star className="w-4 h-4 mr-1.5 fill-current" />
                   Trustpilot
                 </div>
@@ -605,7 +642,7 @@ export default function PlanPageClient({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-xl border border-border p-5 hover:border-swiss-red/20 hover:-translate-y-1 transition-all duration-300"
+                className="bg-surface rounded-xl border border-border p-5 hover:border-swiss-red/20 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="flex items-center mb-3">
                   <div className="flex text-swiss-red">
@@ -633,7 +670,9 @@ export default function PlanPageClient({
           {/* Trustpilot link */}
           <div className="text-center mt-8">
             <a
-              href="#"
+              href="https://www.trustpilot.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-text-muted hover:text-swiss-red transition-colors text-sm"
             >
               {t('seeAllReviews')}
@@ -646,7 +685,7 @@ export default function PlanPageClient({
       {/* ═══════════════════════════════════════════════════════
           4. OTHER PLANS
       ═══════════════════════════════════════════════════════ */}
-      <section id="other-plans" className="py-16 bg-white">
+      <section id="other-plans" className="py-16 bg-bg">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           <h2 className="text-2xl font-extrabold text-text mb-8">{t('otherPlans')}</h2>
 
@@ -668,7 +707,7 @@ export default function PlanPageClient({
                   <div className="flex items-center gap-2 mb-3">
                     <h3 className="text-lg font-bold text-text">{otherName}</h3>
                     {p.devices > 1 && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 rounded text-[10px] font-semibold text-blue-700 border border-blue-200">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-bg rounded text-[10px] font-semibold text-swiss-red border border-swiss-red/25">
                         <Monitor className="w-3 h-3" />
                         {p.devices}
                       </span>
@@ -695,8 +734,8 @@ export default function PlanPageClient({
                     )}
                   </div>
                   <Link
-                    href={`/plans/${p.slug}`}
-                    className="inline-flex items-center gap-2 px-5 py-2 bg-swiss-red text-white font-semibold rounded-lg text-sm hover:bg-swiss-red-dark transition-colors"
+                    href={`/abonnementen/${p.slug}`}
+                    className="inline-flex items-center gap-2 px-5 py-2 bg-swiss-red text-black font-semibold rounded-lg text-sm hover:bg-swiss-red-dark transition-colors"
                   >
                     {t('viewDetails')}
                     <ArrowRight className="w-4 h-4" />
@@ -718,7 +757,7 @@ export default function PlanPageClient({
         <div className="max-w-5xl mx-auto px-5 sm:px-8 relative z-10">
           {/* Section heading */}
           <div className="text-center mb-12">
-            <div className="inline-block px-3 py-1 bg-swiss-red text-white text-xs font-semibold rounded-full mb-3 uppercase tracking-wide">
+            <div className="inline-block px-3 py-1 bg-swiss-red text-black text-xs font-semibold rounded-full mb-3 uppercase tracking-wide">
               {t('simpleAndFast')}
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-text mb-2">{t('howItWorks')}</h2>
@@ -739,9 +778,9 @@ export default function PlanPageClient({
                 transition={{ delay: i * 0.1 }}
                 className="relative group"
               >
-                <div className="bg-white rounded-xl p-5 border border-border hover:border-swiss-red/20 transition-all duration-300 h-full flex flex-col items-center text-center group-hover:-translate-y-1">
+                <div className="bg-surface rounded-xl p-5 border border-border hover:border-swiss-red/20 transition-all duration-300 h-full flex flex-col items-center text-center group-hover:-translate-y-1">
                   {/* Step number */}
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-swiss-red flex items-center justify-center text-white font-bold text-xs shadow-sm z-10">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-swiss-red flex items-center justify-center text-black font-bold text-xs shadow-sm z-10">
                     {i + 1}
                   </div>
 
@@ -764,13 +803,13 @@ export default function PlanPageClient({
       {/* ═══════════════════════════════════════════════════════
           6. PRODUCT FAQ
       ═══════════════════════════════════════════════════════ */}
-      <section className="py-16 bg-white relative overflow-hidden">
+      <section className="py-16 bg-bg relative overflow-hidden">
         <div className="absolute -bottom-24 left-1/4 w-48 h-48 bg-swiss-red/[0.04] rounded-full blur-[80px] pointer-events-none" />
 
         <div className="max-w-3xl mx-auto px-5 sm:px-8 relative z-10">
           {/* Section heading */}
           <div className="text-center mb-10">
-            <div className="inline-block px-3 py-1 bg-swiss-red text-white text-xs font-semibold rounded-full mb-3 uppercase tracking-wide">
+            <div className="inline-block px-3 py-1 bg-swiss-red text-black text-xs font-semibold rounded-full mb-3 uppercase tracking-wide">
               {t('frequentQuestions')}
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-text mb-2">

@@ -15,7 +15,7 @@ export default async function MerciPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'merci' });
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-5 bg-white">
+    <div className="min-h-screen flex items-center justify-center px-5 bg-bg">
       <div className="max-w-sm w-full text-center">
         <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-5">
           <CheckCircle className="w-8 h-8 text-success" />

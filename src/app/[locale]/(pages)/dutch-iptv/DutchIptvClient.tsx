@@ -24,8 +24,10 @@ import {
   ChevronRight,
   Laptop,
   Lightbulb,
+  Flag,
 } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
+import BrandMark from '@/components/ui/BrandMark';
 import { PRICE_CURRENCY_SYMBOL, SITE_CONFIG, STATS, type SiteStatsSnapshot } from '@/lib/constants';
 import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getDiscount } from '@/lib/utils';
@@ -53,7 +55,7 @@ const COMPARISON_ROWS: { label: string; generic: string; us: string }[] = [
   {
     label: 'Kwaliteit HD / 4K',
     generic: 'Wisselende bitrate en buffering tijdens piekuren',
-    us: 'Premium infrastructuur — 99,9% beschikbaarheid, HD & 4K',
+    us: 'Premium infrastructuur — 99,8% beschikbaarheid, HD & 4K',
   },
   {
     label: 'Dekking in NL',
@@ -72,7 +74,7 @@ const STEPS = [
 const TOPIC_TAGS = [
   'Dutch IPTV',
   'Nederlandse IPTV',
-  'IPTV Nederland',
+  'IPTV Dark',
   'NPO & RTL',
   'Eredivisie',
   'Vlaamse zenders',
@@ -81,7 +83,7 @@ const TOPIC_TAGS = [
   'Replay 7 dagen',
   'Nederlandstalige support',
   'Smart TV Nederland',
-  'nederlandsiptv.com',
+  'iptvdark4k.nl',
   'EPG Nederland',
   'buffer-vrij',
 ];
@@ -98,7 +100,7 @@ const PAGE_NAV = [
 const HERO_HIGHLIGHTS = [
   'NL & BE zenders',
   'Nederlandstalige support',
-  '30.000+ zenders',
+  '32.000+ zenders',
   'Replay & VOD',
 ];
 
@@ -113,8 +115,8 @@ export default function DutchIptvClient({
 
   const benefits = [
     'Volledig pakket voor wie Nederlandse en Belgische TV wil, mét internationaal aanbod erbij',
-    'NPO, RTL, regionale omroepen, sport en nieuws — naast 30.000+ zenders wereldwijd',
-    '170.000+ films en series on demand + replay tot 7 dagen met overzichtelijke EPG',
+    'NPO, RTL, regionale omroepen, sport en nieuws — naast 32.000+ zenders wereldwijd',
+    'meer dan 175.000 films en meer dan 175.000 series on demand + replay tot 7 dagen met overzichtelijke EPG',
     'Nederlandstalige support 24/7 — geen taalbarrière bij vragen of installatie',
     'Ideaal op glasvezel, kabel of DSL bij KPN, Ziggo, T-Mobile, Odido en meer',
     'Multi-scherm opties voor gezinnen die tegelijk op meerdere tv’s kijken',
@@ -139,9 +141,10 @@ export default function DutchIptvClient({
   ];
 
   const quickLinks = [
-    { href: '/plans' as const, label: 'Alle abonnementen', icon: BookOpen },
+    { href: '/abonnementen' as const, label: 'Alle abonnementen', icon: BookOpen },
     { href: '/iptv-abonnement' as const, label: 'IPTV abonnement', icon: CreditCard },
     { href: '/iptv-kopen' as const, label: 'IPTV kopen', icon: ShoppingCart },
+    { href: '/iptv-dark-nederland' as const, label: 'IPTV Dark Nederland', icon: Flag },
     { href: '/multi-scherm' as const, label: 'Multi-scherm', icon: Tv },
     { href: '/faq' as const, label: 'FAQ', icon: HelpCircle },
     { href: '/installation' as const, label: 'Installatie', icon: Wrench },
@@ -155,9 +158,13 @@ export default function DutchIptvClient({
   ];
 
   return (
-    <section className="relative pt-28 pb-20 bg-white overflow-hidden">
+    <section className="relative pt-28 pb-20 bg-bg overflow-hidden">
       <div
         className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[min(100vw,900px)] h-64 bg-gradient-to-b from-swiss-red/[0.07] to-transparent blur-3xl rounded-full"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -bottom-32 left-0 w-[min(420px,85vw)] h-[420px] bg-swiss-red/[0.04] rounded-full blur-[100px]"
         aria-hidden
       />
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative">
@@ -177,12 +184,21 @@ export default function DutchIptvClient({
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/8 rounded-full border border-swiss-red/15 mb-5"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
           >
-            <Languages className="w-3.5 h-3.5 text-swiss-red" />
-            <span className="text-xs font-semibold text-swiss-red uppercase tracking-wide">
-              {SITE_CONFIG.name} · Dutch IPTV · Nederlandse TV
-            </span>
+            <div className="flex items-center gap-3">
+              <BrandMark className="w-10 h-10 sm:w-11 shrink-0" />
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-swiss-red">{SITE_CONFIG.name}</p>
+                <p className="text-xs text-text-muted">iptvdark4k.nl · Thema</p>
+              </div>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-swiss-red/25 shadow-sm shadow-black/25">
+              <Languages className="w-3.5 h-3.5 text-swiss-red shrink-0" />
+              <span className="text-[11px] font-semibold text-swiss-red uppercase tracking-wide">
+                Dutch IPTV · Nederlandse TV
+              </span>
+            </div>
           </motion.div>
 
           <motion.h1
@@ -202,9 +218,9 @@ export default function DutchIptvClient({
           >
             Op zoek naar betrouwbare <strong className="text-text font-semibold">Dutch IPTV</strong> of{' '}
             <strong className="text-text font-semibold">Nederlandse IPTV</strong>? {SITE_CONFIG.name} levert een premium
-            service met NPO, RTL en regionale zenders, Vlaams aanbod, sport, nieuws en 30.000+ internationale zenders —
+            service met NPO, RTL en regionale zenders, Vlaams aanbod, sport, nieuws en 32.000+ internationale zenders —
             met Nederlandstalige support en snelle activering op{' '}
-            <strong className="text-text font-semibold">nederlandsiptv.com</strong>.
+            <strong className="text-text font-semibold">iptvdark4k.nl</strong>.
           </motion.p>
 
           <p className="text-sm text-text-muted max-w-3xl mb-8 border-l-2 border-swiss-red/25 pl-4">
@@ -219,8 +235,8 @@ export default function DutchIptvClient({
             className="flex flex-wrap gap-3"
           >
             <Link
-              href="/#pricing"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+              href="/abonnementen"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
             >
               Bekijk Nederlandse IPTV-pakketten
               <ArrowRight className="w-4 h-4" />
@@ -282,7 +298,7 @@ export default function DutchIptvClient({
               <a
                 key={id}
                 href={id}
-                className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium border border-border bg-white text-text-secondary hover:border-swiss-red/35 hover:text-swiss-red transition-colors scroll-mt-28"
+                className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium border border-border bg-surface text-text-secondary hover:border-swiss-red/35 hover:text-swiss-red transition-colors scroll-mt-28"
               >
                 {label}
               </a>
@@ -297,7 +313,7 @@ export default function DutchIptvClient({
             { value: stats.uptime, label: 'Beschikbaarheid' },
             { value: stats.supportHours, label: 'Support' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white px-6 py-5 text-center">
+            <div key={stat.label} className="bg-surface px-6 py-5 text-center">
               <div className="text-2xl sm:text-3xl font-extrabold text-swiss-red">{stat.value}</div>
               <div className="text-xs text-text-muted mt-1 uppercase tracking-wider font-medium">{stat.label}</div>
             </div>
@@ -312,7 +328,7 @@ export default function DutchIptvClient({
             <Link
               key={href}
               href={href}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-border bg-bg/80 text-sm font-medium text-text-secondary hover:border-swiss-red/30 hover:text-swiss-red hover:bg-white transition-all"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-border bg-bg/80 text-sm font-medium text-text-secondary hover:border-swiss-red/30 hover:text-swiss-red hover:bg-surface transition-all"
             >
               <Icon className="w-3.5 h-3.5 text-swiss-red shrink-0" aria-hidden />
               {label}
@@ -324,7 +340,7 @@ export default function DutchIptvClient({
           {trustItems.map(({ icon: Icon, label, sub }) => (
             <div
               key={label}
-              className="flex items-center gap-4 rounded-xl border border-border bg-gradient-to-br from-bg to-white px-5 py-4 shadow-sm"
+              className="flex items-center gap-4 rounded-xl border border-border bg-gradient-to-br from-bg to-surface px-5 py-4 shadow-sm shadow-black/20"
             >
               <div className="w-11 h-11 rounded-full bg-swiss-red/10 flex items-center justify-center shrink-0">
                 <Icon className="w-5 h-5 text-swiss-red" aria-hidden />
@@ -340,9 +356,9 @@ export default function DutchIptvClient({
         {/* Enhancement: comparison */}
         <div
           id="vergelijk"
-          className="mb-16 rounded-2xl border border-border bg-gradient-to-b from-bg to-white overflow-hidden shadow-sm scroll-mt-28"
+          className="mb-16 rounded-2xl border border-border bg-gradient-to-b from-bg to-surface overflow-hidden shadow-lg shadow-black/25 scroll-mt-28"
         >
-          <div className="px-6 py-5 sm:px-8 border-b border-border bg-white/80 backdrop-blur-sm flex flex-wrap items-center gap-3">
+          <div className="px-6 py-5 sm:px-8 border-b border-border bg-surface/80 backdrop-blur-sm flex flex-wrap items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-swiss-red/10 flex items-center justify-center">
               <Scale className="w-5 h-5 text-swiss-red" />
             </div>
@@ -353,7 +369,7 @@ export default function DutchIptvClient({
           </div>
           <div className="lg:hidden p-4 sm:p-5 space-y-3 bg-bg/40 border-b border-border">
             {COMPARISON_ROWS.map((row) => (
-              <div key={row.label} className="rounded-xl border border-border bg-white p-4 shadow-sm">
+              <div key={row.label} className="rounded-xl border border-border bg-surface p-4 shadow-sm">
                 <div className="text-xs font-bold text-swiss-red uppercase tracking-wide mb-2">{row.label}</div>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -431,7 +447,7 @@ export default function DutchIptvClient({
           </div>
         </div>
 
-        <div className="mb-16 rounded-2xl border border-border bg-white p-6 sm:p-8 shadow-sm">
+        <div className="mb-16 rounded-2xl border border-border bg-surface p-6 sm:p-8 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
             <div className="w-12 h-12 rounded-full bg-swiss-red/10 flex items-center justify-center text-swiss-red font-extrabold text-lg shrink-0">
               “
@@ -464,7 +480,7 @@ export default function DutchIptvClient({
                 transition={{ delay: i * 0.05 }}
                 className="relative rounded-xl border border-border bg-bg p-5 pt-8"
               >
-                <div className="absolute -top-3 left-5 w-9 h-9 rounded-full bg-swiss-red text-white text-sm font-extrabold flex items-center justify-center shadow-md">
+                <div className="absolute -top-3 left-5 w-9 h-9 rounded-full bg-swiss-red text-black text-sm font-extrabold flex items-center justify-center shadow-md">
                   {step.n}
                 </div>
                 <h3 className="text-sm font-bold text-text mb-1">{step.title}</h3>
@@ -490,12 +506,12 @@ export default function DutchIptvClient({
                   key={plan.id}
                   className={`rounded-xl border p-6 transition-all ${
                     plan.is_popular
-                      ? 'bg-swiss-red border-swiss-red text-white relative'
-                      : 'bg-white border-border hover:border-swiss-red/20'
+                      ? 'bg-swiss-red border-swiss-red text-black relative'
+                      : 'bg-surface border-border hover:border-swiss-red/20'
                   }`}
                 >
                   {plan.is_popular && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-swiss-red text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-black text-swiss-red text-xs font-bold px-3 py-1 rounded-full shadow-sm">
                       {t('popular')}
                     </span>
                   )}
@@ -505,7 +521,7 @@ export default function DutchIptvClient({
                     <span className="text-sm opacity-80">{PRICE_CURRENCY_SYMBOL}</span>
                     {discount > 0 && (
                       <span
-                        className={`text-xs font-bold px-1.5 py-0.5 rounded ml-1 ${plan.is_popular ? 'bg-white/20' : 'bg-success text-white'}`}
+                        className={`text-xs font-bold px-1.5 py-0.5 rounded ml-1 ${plan.is_popular ? 'bg-black/25' : 'bg-success text-white'}`}
                       >
                         -{discount}%
                       </span>
@@ -517,11 +533,11 @@ export default function DutchIptvClient({
                     </div>
                   )}
                   <Link
-                    href={`/plans/${plan.slug}`}
+                    href={`/abonnementen/${plan.slug}`}
                     className={`block text-center py-2.5 rounded-lg font-semibold text-sm transition-colors ${
                       plan.is_popular
-                        ? 'bg-white text-swiss-red hover:bg-white/90'
-                        : 'bg-swiss-red text-white hover:bg-swiss-red-dark'
+                        ? 'bg-black text-swiss-red hover:bg-black/90'
+                        : 'bg-swiss-red text-black hover:bg-swiss-red-dark'
                     }`}
                   >
                     {t('cta')}
@@ -532,7 +548,7 @@ export default function DutchIptvClient({
           </div>
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4">
             <Link
-              href="/plans"
+              href="/abonnementen"
               className="inline-flex items-center gap-2 text-sm font-semibold text-swiss-red hover:underline"
             >
               Alle pakketten vergelijken
@@ -574,7 +590,7 @@ export default function DutchIptvClient({
             </div>
             <div className="lg:w-56 flex flex-wrap gap-2 justify-start lg:justify-end">
               {['Smart TV', 'Fire TV', 'Android', 'iOS', 'Windows'].map((chip) => (
-                <span key={chip} className="px-3 py-1.5 rounded-lg bg-white border border-border text-xs font-medium text-text-secondary">
+                <span key={chip} className="px-3 py-1.5 rounded-lg bg-surface border border-border text-xs font-medium text-text-secondary">
                   {chip}
                 </span>
               ))}
@@ -595,7 +611,7 @@ export default function DutchIptvClient({
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {ISP_NL.map((isp) => (
-              <div key={isp} className="bg-white rounded-lg border border-border p-3 text-center">
+              <div key={isp} className="bg-surface rounded-lg border border-border p-3 text-center">
                 <div className="text-sm font-semibold text-text">{isp}</div>
                 <div className="text-xs text-success mt-0.5 flex items-center justify-center gap-1">
                   <Check className="w-3 h-3" />
@@ -618,7 +634,7 @@ export default function DutchIptvClient({
           </p>
           <div className="flex flex-wrap gap-2">
             {TOPIC_TAGS.map((n) => (
-              <span key={n} className="px-3 py-1.5 bg-white border border-border rounded-full text-sm text-text-secondary">
+              <span key={n} className="px-3 py-1.5 bg-surface border border-border rounded-full text-sm text-text-secondary">
                 {n}
               </span>
             ))}
@@ -631,7 +647,7 @@ export default function DutchIptvClient({
             <div>
               <h3 className="font-semibold text-text mb-1">Is dit dezelfde Dutch IPTV als overal online genoemd?</h3>
               <p>
-                “Dutch IPTV” is een algemene zoekterm. {SITE_CONFIG.name} is onze eigen premium service op nederlandsiptv.com
+                “Dutch IPTV” is een algemene zoekterm. {SITE_CONFIG.name} is onze eigen premium service op iptvdark4k.nl
                 — met focus op Nederlandse/Belgische zenders, Nederlandstalige support en stabiele streams.
               </p>
             </div>
@@ -675,22 +691,22 @@ export default function DutchIptvClient({
           </div>
         </div>
 
-        <div className="mb-14 rounded-2xl bg-gradient-to-br from-swiss-red to-swiss-red-dark p-8 sm:p-10 text-center text-white shadow-lg shadow-swiss-red/20">
+        <div className="mb-14 rounded-2xl bg-gradient-to-br from-swiss-red to-swiss-red-dark p-8 sm:p-10 text-center text-black shadow-lg shadow-swiss-red/20">
           <h2 className="text-xl sm:text-2xl font-extrabold mb-2">Start met Dutch IPTV vandaag</h2>
-          <p className="text-white/90 text-sm sm:text-base max-w-lg mx-auto mb-6">
+          <p className="text-black/80 text-sm sm:text-base max-w-lg mx-auto mb-6">
             Nederlandse IPTV met premium kwaliteit — kies je pakket en kijk binnen enkele uren naar je favoriete zenders.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/#pricing"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-swiss-red font-bold rounded-lg text-sm hover:bg-white/95 transition-colors"
+              href="/abonnementen"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-black text-swiss-red font-bold rounded-lg text-sm hover:bg-black/90 transition-colors"
             >
               Bekijk pakketten
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border-2 border-white/40 text-white font-semibold rounded-lg text-sm hover:bg-white/10 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border-2 border-black/25 text-black font-semibold rounded-lg text-sm hover:bg-black/10 transition-colors"
             >
               Contact opnemen
             </Link>

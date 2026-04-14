@@ -10,7 +10,7 @@ export default async function Hero({ statValues }: { statValues: SiteStatsSnapsh
   const stats = await getTranslations('stats');
 
   return (
-    <section className="relative bg-white pt-32 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
+    <section className="relative bg-bg pt-32 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
         <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-swiss-red/[0.04] rounded-full blur-[100px]" />
       </div>
@@ -32,7 +32,7 @@ export default async function Hero({ statValues }: { statValues: SiteStatsSnapsh
             <div className="flex flex-wrap gap-3 mb-8">
               <Link
                 href="/#pricing"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
               >
                 {t('ctaPrimary')}
                 <ArrowRight className="w-4 h-4" />
@@ -64,7 +64,7 @@ export default async function Hero({ statValues }: { statValues: SiteStatsSnapsh
             { value: statValues.uptime, label: stats('uptime') },
             { value: statValues.supportHours, label: stats('support') },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white px-6 py-5 text-center">
+            <div key={stat.label} className="bg-surface px-6 py-5 text-center">
               <div className="text-2xl sm:text-3xl font-extrabold text-swiss-red">{stat.value}</div>
               <div className="text-xs text-text-muted mt-1 uppercase tracking-wider font-medium">{stat.label}</div>
             </div>

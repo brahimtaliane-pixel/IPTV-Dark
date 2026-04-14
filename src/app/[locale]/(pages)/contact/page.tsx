@@ -79,7 +79,7 @@ export default async function ContactPage({ params }: Props) {
           { name: 'Contact', url: localeUrl(locale, '/contact') },
         ]}
       />
-      <div className="pt-28 pb-20 bg-white">
+      <div className="pt-28 pb-20 bg-bg">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
             <p className="text-xs font-semibold uppercase tracking-wider text-swiss-red mb-2">{SITE_CONFIG.name}</p>
@@ -123,8 +123,8 @@ export default async function ContactPage({ params }: Props) {
           </h2>
           <p className="text-text-secondary text-sm sm:text-base leading-relaxed mb-8">{t('plansSectionSubtitle')}</p>
           <Link
-            href="/plans"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+            href="/abonnementen"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
           >
             <Package className="w-4 h-4" aria-hidden />
             {t('plansSectionCta')}

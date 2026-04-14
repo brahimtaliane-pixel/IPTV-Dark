@@ -16,12 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPages = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
-    { path: '/plans', priority: 0.95, changeFrequency: 'weekly' as const },
+    { path: '/abonnementen', priority: 0.95, changeFrequency: 'weekly' as const },
     { path: '/multi-scherm', priority: 0.9, changeFrequency: 'weekly' as const },
     { path: '/pandora-iptv', priority: 0.85, changeFrequency: 'monthly' as const },
     { path: '/iptv-kopen', priority: 0.88, changeFrequency: 'weekly' as const },
     { path: '/dutch-iptv', priority: 0.87, changeFrequency: 'weekly' as const },
     { path: '/iptv-abonnement', priority: 0.88, changeFrequency: 'weekly' as const },
+    { path: '/iptv-dark-nederland', priority: 0.87, changeFrequency: 'weekly' as const },
     { path: '/faq', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/installation', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/about', priority: 0.6, changeFrequency: 'monthly' as const },
@@ -50,14 +51,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const plan of plans) {
     entries.push({
-      url: pageUrl(`/plans/${plan.slug}`),
+      url: pageUrl(`/abonnementen/${plan.slug}`),
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.9,
       alternates: {
         languages: {
-          'nl-NL': `${baseUrl}/plans/${plan.slug}`,
-          'x-default': `${baseUrl}/plans/${plan.slug}`,
+          'nl-NL': `${baseUrl}/abonnementen/${plan.slug}`,
+          'x-default': `${baseUrl}/abonnementen/${plan.slug}`,
         },
       },
     });

@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import { SITE_CONFIG, PRICE_CURRENCY_SYMBOL } from '@/lib/constants';
 
 export const runtime = 'edge';
-export const alt = 'IPTV Nederland — zenders HD/4K, VOD en replay';
+export const alt = 'IPTV Dark — zenders HD/4K, VOD en replay';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -11,7 +11,7 @@ export default async function OGImage() {
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #1a0000 0%, #3d0000 50%, #1a0000 100%)',
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #0a0a0a 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -29,7 +29,7 @@ export default async function OGImage() {
             left: 0,
             right: 0,
             height: 6,
-            background: '#E31937',
+            background: '#c6ff3f',
           }}
         />
 
@@ -38,7 +38,7 @@ export default async function OGImage() {
             style={{
               width: 64,
               height: 64,
-              background: '#E31937',
+              background: '#c6ff3f',
               borderRadius: 14,
               display: 'flex',
               alignItems: 'center',
@@ -47,7 +47,7 @@ export default async function OGImage() {
           >
             <div
               style={{
-                color: 'white',
+                color: '#0a0a0a',
                 fontSize: 36,
                 fontWeight: 900,
               }}
@@ -57,7 +57,7 @@ export default async function OGImage() {
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
             <span style={{ fontSize: 56, fontWeight: 900, color: '#ffffff' }}>IPTV</span>
-            <span style={{ fontSize: 56, fontWeight: 900, color: '#E31937' }}>NEDERLAND</span>
+            <span style={{ fontSize: 56, fontWeight: 900, color: '#c6ff3f' }}>DARK</span>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export default async function OGImage() {
             marginBottom: 36,
           }}
         >
-          30.000+ zenders HD/4K • 170.000+ films en series • Replay & VOD • Support 24/7
+          32.000+ zenders HD/4K • 175.000+ films • 175.000+ series • Replay & VOD • Support 24/7
         </div>
 
         <div
@@ -90,8 +90,8 @@ export default async function OGImage() {
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            background: '#E31937',
-            color: 'white',
+            background: '#c6ff3f',
+            color: '#0a0a0a',
             padding: '14px 40px',
             borderRadius: 14,
             fontSize: 24,

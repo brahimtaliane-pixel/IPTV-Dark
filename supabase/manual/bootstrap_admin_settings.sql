@@ -26,10 +26,10 @@ CREATE POLICY "Public read contact keys on admin_settings"
 
 -- 4) Default rows (change phone/WhatsApp in Admin → Settings later)
 INSERT INTO admin_settings (key, value) VALUES
-  ('admin_email', 'contact@nederlandsiptv.com'),
-  ('notification_email', 'contact@nederlandsiptv.com'),
-  ('resend_from_name', 'IPTV Nederland'),
-  ('resend_from_domain', 'nederlandsiptv.com'),
+  ('admin_email', 'contact@iptvdark4k.nl'),
+  ('notification_email', 'contact@iptvdark4k.nl'),
+  ('resend_from_name', 'IPTV Dark'),
+  ('resend_from_domain', 'iptvdark4k.nl'),
   ('auto_send_payment_email', 'true'),
   ('whatsapp_number', '+31XXXXXXXXX'),
   ('phone_number', '+31 XX XXX XX XX')

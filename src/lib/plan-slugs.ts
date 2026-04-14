@@ -24,7 +24,7 @@ export function legacyPlanSlugRedirects(): {
 }[] {
   return Object.entries(LEGACY_PLAN_SLUG_TO_NL).map(([legacy, nl]) => ({
     source: `/plans/${legacy}`,
-    destination: `/plans/${nl}`,
+    destination: `/abonnementen/${nl}`,
     permanent: true,
   }));
 }

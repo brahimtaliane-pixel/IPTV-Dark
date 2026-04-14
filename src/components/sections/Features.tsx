@@ -36,7 +36,7 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.06 }}
-              className="bg-white rounded-xl border border-border p-6 hover:border-swiss-red/20 hover:shadow-sm transition-all group"
+              className="bg-surface rounded-xl border border-border p-6 hover:border-swiss-red/20 hover:shadow-md hover:shadow-black/20 transition-all group"
             >
               <div className="w-10 h-10 rounded-lg bg-swiss-red/8 flex items-center justify-center mb-4 group-hover:bg-swiss-red/12 transition-colors">
                 <Icon className="w-5 h-5 text-swiss-red" />

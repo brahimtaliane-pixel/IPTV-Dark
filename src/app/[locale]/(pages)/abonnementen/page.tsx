@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { LucideIcon } from 'lucide-react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import {
@@ -12,8 +13,19 @@ import {
   Zap,
   Headphones,
   Star,
+  Server,
+  Sparkles,
+  Film,
+  PlayCircle,
+  Smartphone,
 } from 'lucide-react';
-import { SITE_CONFIG, PRICE_CURRENCY, PRICE_CURRENCY_SYMBOL, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
+import {
+  SITE_CONFIG,
+  PRICE_CURRENCY,
+  PRICE_CURRENCY_SYMBOL,
+  SCHEMA_PRICE_VALID_UNTIL,
+  STATS,
+} from '@/lib/constants';
 import { getPlans, type SitePlan } from '@/lib/get-plans';
 import { localeUrl, formatPrice, getMonthlyPrice, getDiscount } from '@/lib/utils';
 import { BreadcrumbSchema, FAQSchema } from '@/components/seo/SchemaMarkup';
@@ -28,11 +40,11 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
-  const title = `IPTV Nederland abonnementen — alle HD/4K-pakketten vanaf 35,99 ${PRICE_CURRENCY_SYMBOL}`;
+  const title = `IPTV Dark abonnementen — alle HD/4K-pakketten vanaf 35,99 ${PRICE_CURRENCY_SYMBOL}`;
   const description =
-    'Alle IPTV Nederland-pakketten op een rij: 1, 2, 3 of 4 schermen, looptijd 3, 6 of 12 maanden. 30.000+ zenders HD/4K, 170.000+ films en series on demand, 7 dagen replay. Activering binnen 2 uur.';
+    'Alle IPTV Dark-pakketten op een rij: 1, 2, 3 of 4 schermen, looptijd 3, 6 of 12 maanden. 32.000+ zenders HD/4K, meer dan 175.000 films en meer dan 175.000 series on demand, 7 dagen replay. Activering binnen 2 uur.';
 
-  const plansUrl = `${SITE_CONFIG.url}/plans`;
+  const plansUrl = `${SITE_CONFIG.url}/abonnementen`;
 
   return {
     title,
@@ -84,15 +96,20 @@ const DEVICE_ICONS: Record<number, typeof Tv> = {
 };
 
 const PAGE_COPY = {
-  badge: 'IPTV Nederland — 12 pakketten',
-  h1Pre: 'IPTV Nederland —',
-  h1Highlight: 'Alle abonnementen',
+  badge: 'Prijzen & pakketten',
+  h1Pre: 'Alle',
+  h1Highlight: 'IPTV Dark-abonnementen',
   intro:
-    'Kies het IPTV Nederland-pakket dat bij je past: 1 tot 4 schermen, looptijd 3, 6 of 12 maanden. Toegang tot 30.000+ zenders HD/4K en 170.000+ films en series on demand. Activering binnen 2 uur, support 24/7, geen langlopend contract.',
-  trustChannels: '30.000+ zenders HD/4K',
+    'Eén premiumdienst — jij kiest hoeveel schermen je tegelijk gebruikt (1–4) en hoelang je vooruitbetaalt (3, 6 of 12 maanden). Overal 32.000+ zenders, meer dan 175.000 films en meer dan 175.000 series on demand, replay en geen automatische verlenging.',
+  trustChannels: '32.000+ zenders HD/4K',
   trustReplay: '7 dagen replay inbegrepen',
   trustNoContract: 'Geen verplichte verlenging',
   trustActivation: 'Activering binnen 2 uur',
+  includedTitle: 'Volledig aanbod in elk pakket',
+  includedSubtitle:
+    'Of je nu 3 maanden of 12 maanden kiest — de inhoud blijft hetzelfde. Alleen het aantal gelijktijdige schermen en de looptijd verschillen.',
+  ctaScroll: 'Naar alle pakketten',
+  ctaAdvice: 'Persoonlijk advies',
   groupTitlePre: 'Pakketten',
   durationLabel: '{count} maanden',
   monthlyPrefix: 'dat is',
@@ -106,10 +123,43 @@ const PAGE_COPY = {
   ctaButton: 'Neem contact op',
   ctaSecondary: 'Naar home',
   faqTitle: 'Veelgestelde vragen over abonnementen',
-  faqIntro: 'Wat je wilt weten voordat je een IPTV Nederland-abonnement kiest.',
+  faqIntro: 'Wat je wilt weten voordat je een IPTV Dark-abonnement kiest.',
 };
 
-/** FAQ copy on /plans — prijzen uit actieve plannen zodat ze overeenkomen met de kaarten op de pagina. */
+const INCLUDED_HIGHLIGHTS: { icon: LucideIcon; title: string; desc: string }[] = [
+  {
+    icon: Server,
+    title: 'Premium servers',
+    desc: 'Stabiele streams en korte buffer — ook tijdens drukke avonden.',
+  },
+  {
+    icon: Tv,
+    title: '32.000+ zenders',
+    desc: 'Nederlandse, Belgische en internationale zenders in HD en 4K.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Ultra HD & 4K',
+    desc: 'Scherp beeld op Smart TV, box, tablet en telefoon.',
+  },
+  {
+    icon: PlayCircle,
+    title: 'Replay & EPG',
+    desc: 'Tot 7 dagen terugkijken met overzichtelijke TV-gids.',
+  },
+  {
+    icon: Film,
+    title: 'Films & series on demand',
+    desc: 'Meer dan 175.000 films en meer dan 175.000 series in de bibliotheek.',
+  },
+  {
+    icon: Smartphone,
+    title: 'Alle gangbare apparaten',
+    desc: 'Van Samsung & LG tot Fire Stick, MAG, Android en iOS.',
+  },
+];
+
+/** FAQ copy on /abonnementen — prijzen uit actieve plannen zodat ze overeenkomen met de kaarten op de pagina. */
 function buildPlansPageFaqs(plans: SitePlan[], sym: string): { question: string; answer: string }[] {
   const active = plans.filter((p) => p.is_active);
   const pick = (devices: number, duration: number) => {
@@ -171,12 +221,12 @@ export default async function PlansHubPage({ params }: Props) {
   const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'IPTV Nederland abonnementen',
+    name: 'IPTV Dark abonnementen',
     numberOfItems: PLANS.length,
     itemListElement: PLANS.map((plan, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: localeUrl(locale, `/plans/${plan.slug}`),
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
       name: plan.name_nl,
     })),
   };
@@ -194,7 +244,7 @@ export default async function PlansHubPage({ params }: Props) {
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
       priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
-      url: localeUrl(locale, `/plans/${plan.slug}`),
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
       seller: {
         '@type': 'Organization',
         name: SITE_CONFIG.name,
@@ -209,7 +259,7 @@ export default async function PlansHubPage({ params }: Props) {
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: localeUrl(locale) },
-          { name: 'Abonnementen', url: localeUrl(locale, '/plans') },
+          { name: 'Abonnementen', url: localeUrl(locale, '/abonnementen') },
         ]}
       />
       <FAQSchema faqs={planFaqs} />
@@ -225,49 +275,97 @@ export default async function PlansHubPage({ params }: Props) {
         />
       ))}
 
-      <section className="relative bg-gradient-to-b from-bg/50 to-white pt-32 pb-14 lg:pt-40 lg:pb-20 overflow-hidden border-b border-border">
+      <section className="relative bg-bg pt-28 pb-16 lg:pt-36 lg:pb-20 overflow-hidden border-b border-border">
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-swiss-red/[0.06] rounded-full blur-[100px]" />
+          <div className="absolute -top-32 -right-24 w-[min(520px,90vw)] h-[520px] bg-swiss-red/[0.07] rounded-full blur-[100px]" />
+          <div className="absolute bottom-0 left-1/4 w-[340px] h-[340px] bg-swiss-red/[0.03] rounded-full blur-[80px]" />
         </div>
 
         <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-swiss-red/20 rounded-full mb-7 shadow-sm shadow-swiss-red/5">
-              <BrandMark className="w-6 h-6 shrink-0" />
-              <span className="text-[11px] sm:text-xs font-semibold text-swiss-red tracking-wide uppercase">
-                {copy.badge}
-              </span>
-            </div>
+          <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-surface border border-swiss-red/25 rounded-full mb-6">
+                <BrandMark className="w-6 h-6 shrink-0" />
+                <span className="text-[11px] sm:text-xs font-semibold text-swiss-red tracking-wide uppercase">
+                  {copy.badge}
+                </span>
+              </div>
 
-            <div className="pl-4 sm:pl-5 border-l-[3px] border-swiss-red/35 mb-7">
-              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold leading-[1.08] tracking-tight text-text">
-                <span className="block sm:inline">{copy.h1Pre}</span>{' '}
+              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-extrabold leading-[1.06] tracking-tight text-text mb-5">
+                <span className="text-text">{copy.h1Pre}</span>{' '}
                 <span className="text-swiss-red">{copy.h1Highlight}</span>
               </h1>
+
+              <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-8 max-w-xl">
+                {copy.intro}
+              </p>
+
+              <div className="flex flex-wrap gap-3 mb-10">
+                <Link
+                  href="#pakketten"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+                >
+                  {copy.ctaScroll}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 border border-border text-text font-semibold rounded-lg hover:bg-surface transition-colors text-sm"
+                >
+                  {copy.ctaAdvice}
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[copy.trustChannels, copy.trustReplay, copy.trustNoContract, copy.trustActivation].map(
+                  (item) => (
+                    <div
+                      key={item}
+                      className="flex items-center gap-2.5 rounded-xl bg-surface border border-border px-3.5 py-3 text-xs sm:text-sm text-text-secondary"
+                    >
+                      <Check className="w-4 h-4 text-success shrink-0" strokeWidth={2.5} />
+                      <span className="leading-snug">{item}</span>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
 
-            <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-9 max-w-2xl">
-              {copy.intro}
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-3">
-              {[copy.trustChannels, copy.trustReplay, copy.trustNoContract, copy.trustActivation].map(
-                (item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-2.5 rounded-xl bg-white/80 border border-border/90 px-3.5 py-3 text-xs sm:text-sm text-text-secondary shadow-sm"
-                  >
-                    <Check className="w-4 h-4 text-success shrink-0" strokeWidth={2.5} />
-                    <span className="leading-snug">{item}</span>
-                  </div>
-                )
-              )}
+            <div className="relative">
+              <div className="rounded-2xl border border-border bg-surface/90 backdrop-blur-sm p-6 sm:p-8 shadow-xl shadow-black/40">
+                <p className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-4">
+                  Waarom IPTV Dark
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { label: 'Zenders', value: STATS.channels },
+                    { label: 'Films (VOD)', value: STATS.movies },
+                    { label: 'Series (VOD)', value: STATS.series },
+                    { label: 'Beschikbaarheid', value: STATS.uptime },
+                  ].map((s) => (
+                    <div
+                      key={s.label}
+                      className="rounded-xl bg-bg border border-border/80 px-4 py-4 text-center"
+                    >
+                      <div className="text-xl sm:text-2xl font-extrabold text-swiss-red tabular-nums">
+                        {s.value}
+                      </div>
+                      <div className="text-[10px] sm:text-xs text-text-muted mt-1 uppercase tracking-wide">
+                        {s.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-text-muted mt-5 leading-relaxed">
+                  Zelfde catalogus in elk abonnement — je betaalt alleen voor schermen en looptijd.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 lg:py-16 bg-bg">
+      <section id="pakketten" className="py-12 lg:py-16 bg-bg">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 space-y-12">
           {deviceGroups.map((group) => {
             const Icon = DEVICE_ICONS[group.devices];
@@ -300,7 +398,7 @@ export default async function PlansHubPage({ params }: Props) {
                     return (
                       <div
                         key={plan.id}
-                        className={`relative rounded-xl p-6 flex flex-col bg-white border transition-all duration-300 hover:-translate-y-1 ${
+                        className={`relative rounded-xl p-6 flex flex-col bg-surface border transition-all duration-300 hover:-translate-y-1 ${
                           isPopular
                             ? 'border-swiss-red/40 shadow-lg shadow-swiss-red/10'
                             : 'border-border hover:border-swiss-red/20'
@@ -308,7 +406,7 @@ export default async function PlansHubPage({ params }: Props) {
                       >
                         {isPopular && (
                           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                            <span className="inline-flex items-center gap-1 px-3 py-1 bg-swiss-red text-white text-[11px] font-bold rounded-full uppercase tracking-wide shadow-sm">
+                            <span className="inline-flex items-center gap-1 px-3 py-1 bg-swiss-red text-black text-[11px] font-bold rounded-full uppercase tracking-wide shadow-sm">
                               <Star className="w-3 h-3 fill-current" />
                               {copy.bestSeller}
                             </span>
@@ -366,10 +464,10 @@ export default async function PlansHubPage({ params }: Props) {
                         </ul>
 
                         <Link
-                          href={`/plans/${plan.slug}`}
+                          href={`/abonnementen/${plan.slug}`}
                           className={`block text-center py-3 rounded-lg font-semibold text-sm transition-colors ${
                             isPopular
-                              ? 'bg-swiss-red text-white hover:bg-swiss-red-dark'
+                              ? 'bg-swiss-red text-black hover:bg-swiss-red-dark'
                               : 'bg-bg border border-border text-text hover:border-swiss-red/30 hover:text-swiss-red'
                           }`}
                         >
@@ -385,7 +483,36 @@ export default async function PlansHubPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="py-12 bg-white border-y border-border">
+      <section className="py-14 lg:py-16 bg-surface border-y border-border">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-text tracking-tight mb-3">
+              {copy.includedTitle}
+            </h2>
+            <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
+              {copy.includedSubtitle}
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+            {INCLUDED_HIGHLIGHTS.map(({ icon: Icon, title, desc }) => (
+              <div
+                key={title}
+                className="flex gap-4 rounded-2xl border border-border bg-bg p-5 sm:p-6 hover:border-swiss-red/25 transition-colors"
+              >
+                <div className="w-11 h-11 rounded-xl bg-swiss-red/10 flex items-center justify-center shrink-0">
+                  <Icon className="w-5 h-5 text-swiss-red" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-text mb-1.5">{title}</h3>
+                  <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-bg border-y border-border">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -433,14 +560,14 @@ export default async function PlansHubPage({ params }: Props) {
           <div className="flex flex-wrap justify-center gap-3">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
             >
               {copy.ctaButton}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-7 py-3.5 border border-border text-text font-semibold rounded-lg hover:bg-white transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-7 py-3.5 border border-border text-text font-semibold rounded-lg hover:bg-surface transition-colors text-sm"
             >
               {copy.ctaSecondary}
             </Link>
@@ -448,7 +575,7 @@ export default async function PlansHubPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-surface">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-text mb-3 tracking-tight">

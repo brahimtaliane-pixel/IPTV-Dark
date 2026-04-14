@@ -346,18 +346,18 @@ export default function LiveChat() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="w-[min(100vw-2rem,380px)] min-h-[300px] bg-white rounded-2xl shadow-2xl border border-border overflow-hidden flex flex-col max-h-[min(70vh,520px)]"
+            className="w-[min(100vw-2rem,380px)] min-h-[300px] bg-surface rounded-2xl shadow-2xl border border-border overflow-hidden flex flex-col max-h-[min(70vh,520px)]"
           >
-            <div className="bg-swiss-red text-white px-4 py-3 flex items-center justify-between shrink-0">
+            <div className="bg-swiss-red text-black px-4 py-3 flex items-center justify-between shrink-0">
               <div>
                 <div className="font-bold text-sm">{t.title}</div>
-                <div className="text-[11px] text-white/80">{t.subtitle}</div>
+                <div className="text-[11px] text-black/65">{t.subtitle}</div>
               </div>
               <div className="flex items-center gap-1">
                 <button
                   type="button"
                   onClick={() => setIsMinimized(true)}
-                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-black/10 transition-colors"
                   aria-label="Minimaliseren"
                 >
                   <Minus className="w-4 h-4" />
@@ -365,7 +365,7 @@ export default function LiveChat() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-black/10 transition-colors"
                   aria-label="Sluiten"
                 >
                   <X className="w-4 h-4" />
@@ -391,7 +391,7 @@ export default function LiveChat() {
                   />
                   <button
                     type="submit"
-                    className="w-full py-2.5 bg-swiss-red text-white text-sm font-semibold rounded-lg hover:bg-swiss-red-dark"
+                    className="w-full py-2.5 bg-swiss-red text-black text-sm font-semibold rounded-lg hover:bg-swiss-red-dark"
                   >
                     {t.emailStart}
                   </button>
@@ -417,14 +417,14 @@ export default function LiveChat() {
                       <div
                         className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${
                           m.sender === 'visitor'
-                            ? 'bg-swiss-red text-white rounded-br-sm'
+                            ? 'bg-swiss-red text-black rounded-br-sm'
                             : 'bg-bg text-text rounded-bl-sm'
                         }`}
                       >
                         <p className="whitespace-pre-wrap break-words">{m.body}</p>
                         <p
                           className={`text-[10px] mt-1 ${
-                            m.sender === 'visitor' ? 'text-white/70' : 'text-text-muted'
+                            m.sender === 'visitor' ? 'text-black/55' : 'text-text-muted'
                           }`}
                         >
                           {formatTime(m.created_at)}
@@ -449,7 +449,7 @@ export default function LiveChat() {
             {emailSubmitted && (
               <form
                 onSubmit={sendMessage}
-                className="p-3 border-t border-border bg-white flex gap-2 shrink-0"
+                className="p-3 border-t border-border bg-surface flex gap-2 shrink-0"
               >
                 <label className="sr-only" htmlFor="live-chat-input">
                   {t.placeholder}
@@ -470,7 +470,7 @@ export default function LiveChat() {
                 <button
                   type="submit"
                   disabled={sending || !input.trim()}
-                  className="shrink-0 px-3 py-2 rounded-lg bg-swiss-red text-white disabled:opacity-50 hover:bg-swiss-red-dark transition-colors"
+                  className="shrink-0 px-3 py-2 rounded-lg bg-swiss-red text-black disabled:opacity-50 hover:bg-swiss-red-dark transition-colors"
                   aria-label={t.send}
                 >
                   <Send className="w-4 h-4" />
@@ -485,7 +485,7 @@ export default function LiveChat() {
         <button
           type="button"
           onClick={() => setIsMinimized(false)}
-          className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-lg border border-border text-sm font-medium text-text"
+          className="flex items-center gap-2 px-4 py-2 bg-surface rounded-full shadow-lg border border-border text-sm font-medium text-text"
         >
           <MessageCircle className="w-4 h-4 text-swiss-red" />
           {t.title}
@@ -497,11 +497,11 @@ export default function LiveChat() {
         <button
           type="button"
           onClick={openChat}
-          className="relative flex items-center gap-2 px-4 py-3 bg-swiss-red text-white rounded-full shadow-lg hover:bg-swiss-red-dark transition-colors text-sm font-semibold"
+          className="relative flex items-center gap-2 px-4 py-3 bg-swiss-red text-black rounded-full shadow-lg hover:bg-swiss-red-dark transition-colors text-sm font-semibold"
         >
           <MessageCircle className="w-5 h-5" />
           {t.title}
-          {hasNewMessage && <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-white border-2 border-swiss-red" />}
+          {hasNewMessage && <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-surface border-2 border-swiss-red" />}
         </button>
       )}
     </div>

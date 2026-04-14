@@ -1,33 +1,33 @@
 @import "tailwindcss";
 
 /* ============================================================
-   IPTV Nederland — brand red + neutral UI. Minimal. Premium.
+   IPTV Dark — brand lime accent + dark UI (#000 canvas).
    ============================================================ */
 
 @theme {
-  /* Swiss Red palette */
-  --color-swiss-red: #D52B1E;
-  --color-swiss-red-dark: #B71C1C;
-  --color-swiss-red-light: #EF5350;
+  /* Brand accent (legacy name: swiss-red — used across Tailwind as swiss-red) */
+  --color-swiss-red: #c6ff3f;
+  --color-swiss-red-dark: #a3d635;
+  --color-swiss-red-light: #d9ff70;
 
-  /* Neutrals — warm whites & grays */
-  --color-white: #FFFFFF;
-  --color-bg: #FAFAFA;
-  --color-bg-alt: #F3F3F3;
-  --color-surface: #FFFFFF;
-  --color-surface-dark: #111111;
-  --color-border: #E5E5E5;
-  --color-border-dark: #D4D4D4;
+  /* Canvas & surfaces (primary background = pure black) */
+  --color-white: #ffffff;
+  --color-bg: #000000;
+  --color-bg-alt: #111111;
+  --color-surface: #161616;
+  --color-surface-dark: #0a0a0a;
+  --color-border: #2a2a2a;
+  --color-border-dark: #3f3f3f;
 
-  /* Text */
-  --color-text: #111111;
-  --color-text-secondary: #525252;
-  --color-text-muted: #9CA3AF;
-  --color-text-on-red: #FFFFFF;
+  /* Text — light on dark */
+  --color-text: #f5f5f5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #737373;
+  --color-text-on-red: #0a0a0a;
 
   /* Accents */
-  --color-success: #16A34A;
-  --color-warning: #F59E0B;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
 
   /* Fonts */
   --font-display: 'Inter', system-ui, -apple-system, sans-serif;
@@ -55,6 +55,5 @@ main {
 
 ::selection {
   background-color: var(--color-swiss-red);
-  color: white;
+  color: var(--color-text-on-red);
 }
-

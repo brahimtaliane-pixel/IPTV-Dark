@@ -18,6 +18,7 @@ const CTA = nextDynamic(() => import('@/components/sections/CTA'));
 import { getPlans, selectHomePricingPlans } from '@/lib/get-plans';
 import { getSiteContact } from '@/lib/get-site-contact';
 import { STATS } from '@/lib/constants';
+import { getTranslations } from 'next-intl/server';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -32,9 +33,25 @@ export default async function HomePage({ params }: Props) {
   const [plans, contact] = await Promise.all([getPlans(), getSiteContact()]);
   const homePricingPlans = selectHomePricingPlans(plans);
 
+  const [tMeta, tFaq] = await Promise.all([
+    getTranslations({ locale, namespace: 'metadata' }),
+    getTranslations({ locale, namespace: 'faq' }),
+  ]);
+  const homeFaqs = [0, 1, 2, 3].map((i) => ({
+    question: tFaq(`items.${i}.question`),
+    answer: tFaq(`items.${i}.answer`),
+  }));
+
   return (
     <>
-      <JsonLd locale={locale} plans={plans} phone={contact.phone} />
+      <JsonLd
+        locale={locale}
+        plans={plans}
+        phone={contact.phone}
+        homeFaqs={homeFaqs}
+        pageTitle={tMeta('title')}
+        pageDescription={tMeta('description')}
+      />
       <Hero
         statValues={{
           channels: STATS.channels,

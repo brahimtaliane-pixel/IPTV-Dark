@@ -20,11 +20,11 @@ interface Lead {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  pending: 'bg-amber-50 text-amber-700 border-amber-200',
-  email_sent: 'bg-blue-50 text-blue-700 border-blue-200',
-  clicked: 'bg-purple-50 text-purple-700 border-purple-200',
-  converted: 'bg-green-50 text-green-700 border-green-200',
-  cancelled: 'bg-red-50 text-red-700 border-red-200',
+  pending: 'bg-amber-500/15 text-amber-400 border-amber-500/35',
+  email_sent: 'bg-blue-500/15 text-blue-400 border-blue-500/35',
+  clicked: 'bg-purple-500/15 text-purple-400 border-purple-500/35',
+  converted: 'bg-green-500/15 text-green-400 border-green-500/35',
+  cancelled: 'bg-red-500/15 text-red-400 border-red-500/35',
 };
 
 const STATUS_OPTIONS = ['all', 'pending', 'email_sent', 'clicked', 'converted', 'cancelled'];
@@ -101,28 +101,28 @@ export default function LeadsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Leads</h1>
-        <p className="text-sm text-gray-500 mt-1">{total} total leads</p>
+        <h1 className="text-2xl font-bold text-text">Leads</h1>
+        <p className="text-sm text-text-muted mt-1">{total} total leads</p>
       </div>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
           <input
             type="text"
             placeholder="Search by name, email, phone..."
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-            className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#D52B1E]/20 focus:border-[#D52B1E]"
+            className="w-full pl-9 pr-4 py-2.5 border border-border rounded-lg text-sm bg-surface text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-swiss-red/20 focus:border-swiss-red"
           />
         </div>
         <div className="relative">
-          <Filter size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Filter size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
           <select
             value={status}
             onChange={(e) => { setStatus(e.target.value); setPage(1); }}
-            className="pl-9 pr-8 py-2.5 border border-gray-200 rounded-lg text-sm bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#D52B1E]/20 focus:border-[#D52B1E]"
+            className="pl-9 pr-8 py-2.5 border border-border rounded-lg text-sm bg-surface text-text appearance-none focus:outline-none focus:ring-2 focus:ring-swiss-red/20 focus:border-swiss-red"
           >
             {STATUS_OPTIONS.map(s => (
               <option key={s} value={s}>{s === 'all' ? 'All Status' : s.replace('_', ' ').toUpperCase()}</option>
@@ -132,48 +132,48 @@ export default function LeadsPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-surface rounded-xl border border-border overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center h-48">
-            <div className="animate-spin w-6 h-6 border-2 border-[#D52B1E] border-t-transparent rounded-full" />
+            <div className="animate-spin w-6 h-6 border-2 border-swiss-red border-t-transparent rounded-full" />
           </div>
         ) : leads.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
-            <p className="text-lg font-medium">No leads found</p>
+          <div className="text-center py-16 text-text-muted">
+            <p className="text-lg font-medium text-text-secondary">No leads found</p>
             <p className="text-sm mt-1">Leads will appear here when customers submit the form</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Customer</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Plan</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Status</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Clicks</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Date</th>
-                  <th className="text-right px-4 py-3 font-medium text-gray-500">Actions</th>
+                <tr className="bg-bg-alt border-b border-border">
+                  <th className="text-left px-4 py-3 font-medium text-text-muted">Customer</th>
+                  <th className="text-left px-4 py-3 font-medium text-text-muted">Plan</th>
+                  <th className="text-left px-4 py-3 font-medium text-text-muted">Status</th>
+                  <th className="text-left px-4 py-3 font-medium text-text-muted">Clicks</th>
+                  <th className="text-left px-4 py-3 font-medium text-text-muted">Date</th>
+                  <th className="text-right px-4 py-3 font-medium text-text-muted">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-border">
                 {leads.map(lead => (
-                  <tr key={lead.id} className="hover:bg-gray-50/50 transition">
+                  <tr key={lead.id} className="hover:bg-bg-alt/50 transition">
                     <td className="px-4 py-3">
                       <div>
-                        <p className="font-medium text-gray-900">{lead.customer_name}</p>
-                        <p className="text-xs text-gray-500">{lead.email}</p>
-                        <p className="text-xs text-gray-400">{lead.phone}</p>
+                        <p className="font-medium text-text">{lead.customer_name}</p>
+                        <p className="text-xs text-text-muted">{lead.email}</p>
+                        <p className="text-xs text-text-muted/80">{lead.phone}</p>
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <p className="text-gray-700">{lead.plan_name}</p>
-                      <p className="text-xs text-gray-400">{lead.locale?.toUpperCase()}</p>
+                      <p className="text-text-secondary">{lead.plan_name}</p>
+                      <p className="text-xs text-text-muted">{lead.locale?.toUpperCase()}</p>
                     </td>
                     <td className="px-4 py-3">
                       <select
                         value={lead.status}
                         onChange={(e) => updateStatus(lead.id, e.target.value)}
-                        className={`text-xs font-medium px-2.5 py-1 rounded-full border ${STATUS_COLORS[lead.status] || 'bg-gray-50 text-gray-600 border-gray-200'} appearance-none cursor-pointer`}
+                        className={`text-xs font-medium px-2.5 py-1 rounded-full border appearance-none cursor-pointer ${STATUS_COLORS[lead.status] || 'bg-bg-alt text-text-secondary border-border'}`}
                       >
                         {STATUS_OPTIONS.filter(s => s !== 'all').map(s => (
                           <option key={s} value={s}>{s.replace('_', ' ')}</option>
@@ -181,13 +181,13 @@ export default function LeadsPage() {
                       </select>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-gray-600">{lead.click_count}</span>
+                      <span className="text-text-secondary">{lead.click_count}</span>
                     </td>
                     <td className="px-4 py-3">
-                      <p className="text-gray-600 text-xs">
+                      <p className="text-text-secondary text-xs">
                         {new Date(lead.created_at).toLocaleDateString('fr-CH', { day: '2-digit', month: 'short', year: 'numeric' })}
                       </p>
-                      <p className="text-gray-400 text-[10px]">
+                      <p className="text-text-muted text-[10px]">
                         {new Date(lead.created_at).toLocaleTimeString('fr-CH', { hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </td>
@@ -196,7 +196,7 @@ export default function LeadsPage() {
                         <button
                           onClick={() => sendEmail(lead.id)}
                           disabled={sendingEmail === lead.id}
-                          className="p-1.5 text-blue-500 hover:bg-blue-50 rounded-lg transition disabled:opacity-50"
+                          className="p-1.5 text-blue-400 hover:bg-blue-500/10 rounded-lg transition disabled:opacity-50"
                           title="Send payment email"
                         >
                           <Mail size={15} />
@@ -206,7 +206,7 @@ export default function LeadsPage() {
                             href={lead.payment_link}
                             target="_blank"
                             rel="noopener"
-                            className="p-1.5 text-gray-400 hover:bg-gray-50 rounded-lg transition"
+                            className="p-1.5 text-text-muted hover:bg-bg-alt rounded-lg transition"
                             title="Open payment link"
                           >
                             <ExternalLink size={15} />
@@ -214,7 +214,7 @@ export default function LeadsPage() {
                         )}
                         <button
                           onClick={() => deleteLead(lead.id)}
-                          className="p-1.5 text-red-400 hover:bg-red-50 rounded-lg transition"
+                          className="p-1.5 text-red-400 hover:bg-red-500/10 rounded-lg transition"
                           title="Delete lead"
                         >
                           <Trash2 size={15} />
@@ -230,22 +230,22 @@ export default function LeadsPage() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-gray-50">
-            <p className="text-xs text-gray-500">
+          <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-bg-alt">
+            <p className="text-xs text-text-muted">
               Page {page} of {totalPages} ({total} leads)
             </p>
             <div className="flex gap-1">
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="p-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 transition"
+                className="p-1.5 rounded-lg border border-border bg-surface hover:bg-bg-alt text-text-secondary disabled:opacity-40 transition"
               >
                 <ChevronLeft size={14} />
               </button>
               <button
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="p-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 transition"
+                className="p-1.5 rounded-lg border border-border bg-surface hover:bg-bg-alt text-text-secondary disabled:opacity-40 transition"
               >
                 <ChevronRight size={14} />
               </button>

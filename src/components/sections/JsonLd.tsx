@@ -1,4 +1,9 @@
-import { SITE_CONFIG, PRICE_CURRENCY, SCHEMA_PRICE_VALID_UNTIL } from '@/lib/constants';
+import {
+  SITE_CONFIG,
+  PRICE_CURRENCY,
+  SCHEMA_PRICE_RANGE,
+  SCHEMA_PRICE_VALID_UNTIL,
+} from '@/lib/constants';
 import { localeUrl } from '@/lib/utils';
 import type { SitePlan } from '@/lib/get-plans';
 
@@ -7,142 +12,179 @@ interface JsonLdProps {
   plans: SitePlan[];
   /** From admin_settings — keeps JSON-LD in sync with contact page */
   phone: string;
+  /** First 4 FAQ items — must match what is visible on the home FAQ section */
+  homeFaqs: { question: string; answer: string }[];
+  /** From `metadata` namespace — aligns WebPage with document title and meta description */
+  pageTitle: string;
+  pageDescription: string;
 }
 
-export default function JsonLd({ locale, plans, phone }: JsonLdProps) {
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
+/**
+ * Home page structured data: branded Organization / WebSite / WebPage graph,
+ * Product + Offer (per active plan), Service, FAQPage — all @id-linked where useful.
+ */
+export default function JsonLd({ locale, plans, phone, homeFaqs, pageTitle, pageDescription }: JsonLdProps) {
+  const base = SITE_CONFIG.url.replace(/\/$/, '');
+  const orgId = `${base}/#organization`;
+  const brandId = `${base}/#brand`;
+  const logoId = `${base}/#logo`;
+  const webSiteId = `${base}/#website`;
+  const webPageId = `${base}/#homepage`;
+  const serviceId = `${base}/#iptv-streaming-service`;
+
+  const activePlans = plans.filter((p) => p.is_active);
+
+  const logoNode = {
+    '@type': 'ImageObject',
+    '@id': logoId,
+    url: `${base}/logo.svg`,
+    contentUrl: `${base}/logo.svg`,
+    caption: `${SITE_CONFIG.name} logo`,
+  };
+
+  const brandNode = {
+    '@type': 'Brand',
+    '@id': brandId,
     name: SITE_CONFIG.name,
-    url: SITE_CONFIG.url,
-    logo: `${SITE_CONFIG.url}/logo.svg`,
-    description:
-      'IPTV-service in Nederland — 30.000+ zenders HD/4K, 170.000+ films en series on demand en 7 dagen replay op al je apparaten.',
-    contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: phone,
-      contactType: 'customer service',
-      availableLanguage: ['nl-NL', 'nl'],
-      areaServed: 'NL',
-    },
+    logo: { '@id': logoId },
+  };
+
+  const organizationNode = {
+    '@type': 'Organization',
+    '@id': orgId,
+    name: SITE_CONFIG.name,
+    alternateName: [...new Set([SITE_CONFIG.domain, 'iptvdark4k.nl'])],
+    legalName: SITE_CONFIG.name,
+    url: base,
+    logo: { '@id': logoId },
+    image: `${base}/logo.svg`,
+    brand: { '@id': brandId },
+    description: pageDescription,
+    email: SITE_CONFIG.email,
+    telephone: phone,
+    priceRange: SCHEMA_PRICE_RANGE,
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'NL',
     },
+    areaServed: [
+      { '@type': 'Country', name: 'NL' },
+      { '@type': 'Country', name: 'BE' },
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: phone,
+      email: SITE_CONFIG.email,
+      contactType: 'customer service',
+      availableLanguage: ['nl-NL', 'Dutch'],
+      areaServed: ['NL', 'BE'],
+    },
   };
 
-  const websiteSchema = {
-    '@context': 'https://schema.org',
+  const webSiteNode = {
     '@type': 'WebSite',
+    '@id': webSiteId,
     name: SITE_CONFIG.name,
-    url: SITE_CONFIG.url,
+    alternateName: [...new Set([SITE_CONFIG.domain, 'iptvdark4k.nl'])],
+    url: base,
+    publisher: { '@id': orgId },
+    copyrightHolder: { '@id': orgId },
+    inLanguage: 'nl-NL',
+    description: pageDescription,
+  };
+
+  const webPageNode = {
+    '@type': 'WebPage',
+    '@id': webPageId,
+    name: pageTitle,
+    description: pageDescription,
+    url: localeUrl(locale, '/'),
+    isPartOf: { '@id': webSiteId },
+    about: { '@id': orgId },
+    publisher: { '@id': orgId },
     inLanguage: 'nl-NL',
   };
 
-  const productSchemas = plans.map((plan) => ({
-    '@context': 'https://schema.org',
+  const productNodes = activePlans.map((plan) => ({
     '@type': 'Product',
+    '@id': `${base}/abonnementen/${plan.slug}#product`,
     name: plan.name_nl,
     description: plan.description_nl,
-    image: `${SITE_CONFIG.url}${plan.image}`,
-    brand: {
-      '@type': 'Brand',
-      name: SITE_CONFIG.name,
-    },
+    image: `${base}${plan.image}`,
+    sku: plan.slug,
+    brand: { '@id': brandId },
     offers: {
       '@type': 'Offer',
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
       price: plan.price,
       priceCurrency: PRICE_CURRENCY,
-      availability: 'https://schema.org/InStock',
       priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
-      seller: {
-        '@type': 'Organization',
-        name: SITE_CONFIG.name,
-      },
-      url: localeUrl(locale, `/plans/${plan.slug}`),
+      availability: 'https://schema.org/InStock',
+      seller: { '@id': orgId },
     },
   }));
 
-  const faqPairs = [
-    { q: 'Wat is IPTV Nederland?', a: 'Een internettelevisiedienst met meer dan 30.000 live zenders en 170.000+ films en series on demand in HD en 4K.' },
-    { q: 'Welke apparaten?', a: 'Smart TV, Android, iOS, Windows, Mac, Fire Stick en MAG.' },
-    { q: 'Hoe lang duurt activering?', a: 'Meestal binnen 2 uur na betaling.' },
-    { q: 'Is replay inbegrepen?', a: 'Ja, tot 7 dagen terug in alle pakketten.' },
-    { q: 'Hoe bereik ik support?', a: '24/7 via WhatsApp, e-mail en telefoon.' },
-    { q: 'Meerdere apparaten?', a: 'Standaard één gelijktijdig apparaat; multi-scherm pakketten voor meer.' },
-    { q: 'VPN nodig?', a: 'Meestal niet; optioneel voor privacy.' },
-    { q: 'Welke internetsnelheid?', a: 'Vanaf ca. 10 Mbps voor HD, 25 Mbps voor 4K.' },
-  ];
-
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqPairs.map(({ q, a }) => ({
-      '@type': 'Question',
-      name: q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: a,
-      },
-    })),
-  };
-
-  const serviceSchema = {
-    '@context': 'https://schema.org',
+  const serviceNode = {
     '@type': 'Service',
+    '@id': serviceId,
+    name: 'IPTV Dark — premium IPTV streaming (Nederland & België)',
     serviceType: 'IPTV-streamingabonnement',
-    provider: {
-      '@type': 'Organization',
-      name: SITE_CONFIG.name,
-      url: SITE_CONFIG.url,
-    },
-    areaServed: {
-      '@type': 'Country',
-      name: 'Netherlands',
-    },
-    name: 'IPTV Nederland — zenders HD/4K, VOD en replay',
-    description:
-      'Internettelevisie in Nederland: 30.000+ zenders, 170.000+ films en series on demand en 7 dagen replay. Werkt op Smart TV, mobiel, PC en meer.',
-    offers: plans.map((plan) => ({
+    provider: { '@id': orgId },
+    brand: { '@id': brandId },
+    areaServed: [
+      { '@type': 'Country', name: 'Netherlands' },
+      { '@type': 'Country', name: 'Belgium' },
+    ],
+    description: pageDescription,
+    offers: activePlans.map((plan) => ({
       '@type': 'Offer',
       name: plan.name_nl,
       price: plan.price,
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
-      url: localeUrl(locale, `/plans/${plan.slug}`),
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
     })),
     availableChannel: {
       '@type': 'ServiceChannel',
-      serviceUrl: SITE_CONFIG.url,
+      serviceUrl: base,
       availableLanguage: ['nl-NL'],
     },
   };
 
+  const faqPageNode = {
+    '@type': 'FAQPage',
+    '@id': `${base}/#home-faq`,
+    isPartOf: { '@id': webSiteId },
+    mainEntity: homeFaqs.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer,
+      },
+    })),
+  };
+
+  const graph = [
+    logoNode,
+    brandNode,
+    organizationNode,
+    webSiteNode,
+    webPageNode,
+    ...productNodes,
+    serviceNode,
+    faqPageNode,
+  ];
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  };
+
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      {productSchemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
   );
 }

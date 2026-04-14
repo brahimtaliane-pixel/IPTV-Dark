@@ -16,7 +16,7 @@ export default function CityLinks() {
   return (
     <section className="relative py-20 lg:py-24 overflow-hidden">
       <div
-        className="absolute inset-0 bg-gradient-to-b from-bg via-white to-bg pointer-events-none"
+        className="absolute inset-0 bg-gradient-to-b from-bg via-surface to-bg pointer-events-none"
         aria-hidden
       />
       <div
@@ -63,7 +63,7 @@ export default function CityLinks() {
               >
                 <Link
                   href={`/iptv-${slug}`}
-                  className="group flex items-start gap-3 p-4 sm:p-5 bg-white rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-swiss-red/25 hover:-translate-y-0.5 transition-all duration-300 h-full"
+                  className="group flex items-start gap-3 p-4 sm:p-5 bg-surface rounded-2xl border border-border shadow-sm shadow-black/20 hover:shadow-md hover:shadow-black/30 hover:border-swiss-red/25 hover:-translate-y-0.5 transition-all duration-300 h-full"
                 >
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-swiss-red/12 to-swiss-red/5 flex items-center justify-center shrink-0 group-hover:from-swiss-red/20 group-hover:to-swiss-red/10 transition-colors">
                     <MapPin className="w-5 h-5 text-swiss-red" strokeWidth={2} />

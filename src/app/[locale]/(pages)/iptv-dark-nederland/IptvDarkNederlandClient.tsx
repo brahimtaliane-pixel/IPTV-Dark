@@ -9,13 +9,13 @@ import {
   Tv,
   Headphones,
   Wifi,
+  Languages,
   Sparkles,
+  ShoppingCart,
+  CreditCard,
   ShieldCheck,
   Scale,
   BookOpen,
-  ShoppingCart,
-  Languages,
-  CreditCard,
   HelpCircle,
   Wrench,
   Users,
@@ -38,54 +38,55 @@ const ISP_NL = ['KPN', 'Ziggo', 'T-Mobile', 'Odido'] as const;
 
 const COMPARISON_ROWS: { label: string; generic: string; us: string }[] = [
   {
-    label: 'Zenders & VOD',
-    generic: 'Wisselend aanbod, vaak beperkte bibliotheek',
-    us: '32.000+ zenders + 175.000+ films en 175.000+ series on demand',
+    label: 'Merk & duidelijkheid',
+    generic: 'Anonieme resellers, wisselende namen — onduidelijk wie je betaalt',
+    us: 'IPTV Dark: één merk, duidelijke site (iptvdark4k.nl) en bevestiging per e-mail',
   },
   {
-    label: 'Support',
-    generic: 'Forums of anonieme verkopers',
-    us: 'Nederlandstalige support 24/7',
+    label: 'Service in Nederland',
+    generic: 'Alleen Engels, forums of tickets die weken openstaan',
+    us: 'Nederlandstalige helpdesk 24/7 — ook voor installatie en apparaten',
   },
   {
-    label: 'Activering',
-    generic: 'Onvoorspelbaar of handmatig',
-    us: 'Meestal binnen 2 uur na betaling',
+    label: 'Lokaal + internationaal',
+    generic: 'Soms alleen buitenlands aanbod of een karig NL-pakket',
+    us: 'NPO, RTL, regionaal en Vlaams — naast 32.000+ zenders wereldwijd',
   },
   {
-    label: 'Updates & EPG',
-    generic: 'Niet altijd gegarandeerd',
-    us: 'Regelmatige updates, EPG en replay tot 7 dagen',
+    label: 'EPG, replay & VOD',
+    generic: 'Lege TV-gids of geen nette replay',
+    us: 'Overzichtelijke EPG + replay tot 7 dagen + enorme VOD-bibliotheek',
   },
   {
-    label: 'Meerdere schermen',
-    generic: 'Vaak aparte apps of onduidelijke regels per apparaat',
-    us: 'Multi-scherm pakketten voor 2–4 gelijktijdige streams',
+    label: 'Kwaliteit & stabiliteit',
+    generic: 'Buffering tijdens piekuren, wisselende bitrate',
+    us: 'Premium infrastructuur — 99,8% beschikbaarheid, HD & 4K waar beschikbaar',
   },
 ];
 
 const STEPS = [
-  { n: '1', title: 'Kies je pakket', desc: '3, 6 of 12 maanden — transparante prijzen.' },
-  { n: '2', title: 'Veilig betalen', desc: 'Je ontvangt een bevestiging per e-mail.' },
-  { n: '3', title: 'Activering', desc: 'Inloggegevens binnen circa 2 uur.' },
-  { n: '4', title: 'Kijk overal', desc: 'Smart TV, mobiel, Fire Stick, MAG en meer.' },
+  { n: '1', title: 'Kies je pakket', desc: 'Geschikt voor Nederland & België — 3, 6 of 12 maanden.' },
+  { n: '2', title: 'Activeer snel', desc: 'Meestal binnen 2 uur: Nederlandse uitleg per e-mail.' },
+  { n: '3', title: 'Zet je apps klaar', desc: 'Smart TV, Fire Stick, telefoon — volg onze NL-gids.' },
+  { n: '4', title: 'Geniet lokaal + wereldwijd', desc: 'NPO tot internationaal sport — op al je schermen.' },
 ];
 
 const TOPIC_TAGS = [
-  'Pandora IPTV',
+  'IPTV Dark Nederland',
   'IPTV Dark',
-  'HD & 4K',
-  'Smart TV',
-  'Fire TV Stick',
-  'Android & iOS',
-  'MAG / Formuler',
-  'Replay & VOD',
-  'EPG',
-  'Multi-scherm',
-  'Xtream Codes',
-  'M3U playlist',
-  'Eredivisie & sport',
-  'Buffer-vrij streamen',
+  'IPTV Nederland',
+  'premium IPTV NL',
+  'NPO RTL IPTV',
+  'iptvdark4k.nl',
+  'Nederlandse IPTV',
+  'HD 4K streaming',
+  'glasvezel IPTV',
+  'KPN Ziggo IPTV',
+  'multi-scherm',
+  'replay 7 dagen',
+  'EPG Nederland',
+  'Fire TV Smart TV',
+  'Eredivisie sport',
 ];
 
 const PAGE_NAV = [
@@ -98,13 +99,13 @@ const PAGE_NAV = [
 ] as const;
 
 const HERO_HIGHLIGHTS = [
-  'Transparante prijzen',
-  'NL-support 24/7',
+  'Officieel merk IPTV Dark',
+  'Nederland & België',
   '32.000+ zenders',
-  'M3U / Xtream-ready',
+  'NL-support 24/7',
 ];
 
-export default function PandoraIptvClient({
+export default function IptvDarkNederlandClient({
   plans,
   stats,
 }: {
@@ -114,29 +115,29 @@ export default function PandoraIptvClient({
   const t = useTranslations('pricing');
 
   const benefits = [
-    'Eén betrouwbaar IPTV-abonnement — geen losse apps of onduidelijke bronnen',
-    '32.000+ zenders in HD/4K, meer dan 175.000 films en meer dan 175.000 series on demand',
-    'Replay tot 7 dagen terug + overzichtelijke EPG',
-    'Nederlandstalige support 24/7 en activering meestal binnen 2 uur',
-    'Werkt op Smart TV, Android, iOS, Fire Stick, Windows, MAG en meer',
-    'Compatibel met KPN, Ziggo, T-Mobile, Odido en glasvezel',
+    `${SITE_CONFIG.name} is dé premium IPTV-service voor kijkers in Nederland: één merk, duidelijke pakketten op iptvdark4k.nl`,
+    'NPO, RTL, regionaal en Vlaams — naast 32.000+ internationale zenders, sport en nieuws',
+    'Meer dan 175.000 films en series on demand, replay tot 7 dagen en overzichtelijke EPG',
+    'Nederlandstalige support 24/7: hulp bij Smart TV, Fire Stick, M3U, MAG en meer',
+    'Geschikt voor typisch Nederlands internet: glasvezel, kabel en DSL (o.a. KPN, Ziggo, T-Mobile, Odido)',
+    'Optioneel multi-scherm voor gezinnen — meerdere streams tegelijk op eigen apparaten',
   ];
 
   const featureCards = [
     {
-      icon: Tv,
-      title: 'Volledig aanbod',
-      desc: 'Sport, nieuws, internationaal en kinderzenders in één pakket.',
+      icon: Flag,
+      title: 'Gemaakt voor Nederland',
+      desc: 'Lokale zenders en internationaal aanbod — geoptimaliseerd voor NL & BE.',
     },
     {
       icon: ShieldCheck,
-      title: 'Duidelijke service',
-      desc: 'Geen verborgen kosten — je weet waar je aan toe bent.',
+      title: 'Transparante service',
+      desc: 'Geen verborgen “lifetime”-verhalen: duidelijke looptijden en wat je krijgt.',
     },
     {
       icon: Headphones,
-      title: 'Menselijke helpdesk',
-      desc: 'Vragen over installatie of apparaten? We helpen je stap voor stap.',
+      title: 'Support die je begrijpt',
+      desc: 'Geen alleen-Engelse forums: uitleg in het Nederlands wanneer je het nodig hebt.',
     },
   ];
 
@@ -145,10 +146,10 @@ export default function PandoraIptvClient({
     { href: '/iptv-abonnement' as const, label: 'IPTV abonnement', icon: CreditCard },
     { href: '/iptv-kopen' as const, label: 'IPTV kopen', icon: ShoppingCart },
     { href: '/dutch-iptv' as const, label: 'Dutch IPTV', icon: Languages },
-    { href: '/iptv-dark-nederland' as const, label: 'IPTV Dark Nederland', icon: Flag },
     { href: '/multi-scherm' as const, label: 'Multi-scherm', icon: Tv },
     { href: '/faq' as const, label: 'FAQ', icon: HelpCircle },
     { href: '/installation' as const, label: 'Installatie', icon: Wrench },
+    { href: '/pandora-iptv' as const, label: 'Pandora IPTV', icon: Sparkles },
   ];
 
   const trustItems = [
@@ -174,7 +175,7 @@ export default function PandoraIptvClient({
               Home
             </Link>
             <ChevronRight className="w-3.5 h-3.5 opacity-50 shrink-0" aria-hidden />
-            <span className="text-text font-medium">Pandora IPTV</span>
+            <span className="text-text font-medium">IPTV Dark Nederland</span>
             <span className="hidden sm:inline text-border">·</span>
             <time dateTime="2026-04-12" className="hidden sm:inline text-text-muted/80">
               Bijgewerkt april 2026
@@ -194,9 +195,9 @@ export default function PandoraIptvClient({
               </div>
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-swiss-red/25 shadow-sm shadow-black/25">
-              <Sparkles className="w-3.5 h-3.5 text-swiss-red shrink-0" />
+              <Flag className="w-3.5 h-3.5 text-swiss-red shrink-0" />
               <span className="text-[11px] font-semibold text-swiss-red uppercase tracking-wide">
-                Pandora IPTV
+                IPTV Dark · Nederland
               </span>
             </div>
           </motion.div>
@@ -207,7 +208,7 @@ export default function PandoraIptvClient({
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-text leading-tight tracking-tight mb-5"
           >
-            Pandora IPTV — het betrouwbare alternatief in Nederland
+            IPTV Dark Nederland — premium streaming voor heel Nederland
           </motion.h1>
 
           <motion.p
@@ -216,15 +217,15 @@ export default function PandoraIptvClient({
             transition={{ delay: 0.2 }}
             className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-6"
           >
-            Zoek je naar <strong className="text-text font-semibold">Pandora IPTV</strong> of vergelijkbare apps? Veel
-            aanbieders beloven veel maar leveren wisselende kwaliteit. Bij {SITE_CONFIG.name} krijg je een{' '}
-            <strong className="text-text font-semibold">premium IPTV-service</strong> met duizenden zenders, enorme VOD
-            en Nederlandstalige ondersteuning — overal in Nederland, op al je schermen.
+            <strong className="text-text font-semibold">IPTV Dark Nederland</strong> staat voor dezelfde premium IPTV
+            die je kent van {SITE_CONFIG.name}: NPO, RTL en regionaal, Vlaams en internationaal aanbod, 32.000+ zenders,
+            enorme VOD en Nederlandstalige support — rechtstreeks via{' '}
+            <strong className="text-text font-semibold">iptvdark4k.nl</strong>.
           </motion.p>
 
           <p className="text-sm text-text-muted max-w-3xl mb-8 border-l-2 border-swiss-red/25 pl-4">
-            {SITE_CONFIG.name} is een onafhankelijke IPTV-provider. Deze pagina helpt je bij het vergelijken van opties;
-            wij zijn niet gelieerd aan externe app-namen die je online tegenkomt.
+            Of je nu in Amsterdam, Rotterdam of Groningen kijkt: onze service is ingericht op stabiel streamen op
+            gangbare NL-internetverbindingen — thuis op de bank of onderweg op je telefoon.
           </p>
 
           <motion.div
@@ -237,7 +238,7 @@ export default function PandoraIptvClient({
               href="/abonnementen"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
             >
-              Bekijk onze pakketten
+              Bekijk IPTV Dark in Nederland
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
@@ -267,22 +268,25 @@ export default function PandoraIptvClient({
               <Lightbulb className="w-4 h-4 text-swiss-red" aria-hidden />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-text">Waar let je op bij &quot;Pandora IPTV&quot; en vergelijkbare zoekresultaten?</h2>
-              <p className="text-xs text-text-muted mt-1">Drie praktische tips voordat je een abonnement neemt — overal online.</p>
+              <h2 className="text-sm font-bold text-text">Waarom IPTV Dark in Nederland?</h2>
+              <p className="text-xs text-text-muted mt-1">Drie redenen waarom kijkers voor het merk {SITE_CONFIG.name} kiezen.</p>
             </div>
           </div>
           <ul className="space-y-2 text-sm text-text-secondary">
             <li className="flex gap-2">
               <span className="font-bold text-swiss-red shrink-0">1.</span>
-              Controleer of je <strong className="text-text font-semibold">echte support</strong> krijgt (chat, e-mail, WhatsApp) — niet alleen een anonieme verkoper.
+              <strong className="text-text font-semibold">Lokale zenders</strong> naast internationaal: nieuws, sport en
+              entertainment zoals je gewend bent.
             </li>
             <li className="flex gap-2">
               <span className="font-bold text-swiss-red shrink-0">2.</span>
-              Vraag naar <strong className="text-text font-semibold">EPG, replay en updates</strong>: een goede service levert dit standaard mee.
+              <strong className="text-text font-semibold">Hulp in het Nederlands</strong> — geen gedoe met alleen-Engelse
+              forums of anonieme verkopers.
             </li>
             <li className="flex gap-2">
               <span className="font-bold text-swiss-red shrink-0">3.</span>
-              Let op <strong className="text-text font-semibold">activeringstijd en garantie</strong> — bij ons meestal binnen 2 uur en duidelijke voorwaarden.
+              <strong className="text-text font-semibold">Stabiele streams</strong> voor HD/4K op typische NL-glasvezel- en
+              kabelverbindingen.
             </li>
           </ul>
         </div>
@@ -359,8 +363,8 @@ export default function PandoraIptvClient({
               <Scale className="w-5 h-5 text-swiss-red" />
             </div>
             <div>
-              <h2 className="text-xl font-extrabold text-text">Waarom kiezers voor {SITE_CONFIG.name} gaan</h2>
-              <p className="text-sm text-text-muted">Kort vergelijk: losse apps vs. onze premium service</p>
+              <h2 className="text-xl font-extrabold text-text">IPTV Dark Nederland vs. generieke aanbieders</h2>
+              <p className="text-sm text-text-muted">Merk, service en kwaliteit voor kijkers in NL — op een rij</p>
             </div>
           </div>
           <div className="lg:hidden p-4 sm:p-5 space-y-3 bg-bg/40 border-b border-border">
@@ -369,7 +373,7 @@ export default function PandoraIptvClient({
                 <div className="text-xs font-bold text-swiss-red uppercase tracking-wide mb-2">{row.label}</div>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <div className="text-[10px] font-semibold text-text-muted uppercase mb-0.5">Losse apps</div>
+                    <div className="text-[10px] font-semibold text-text-muted uppercase mb-0.5">Generieke aanbieders</div>
                     <p className="text-text-secondary">{row.generic}</p>
                   </div>
                   <div>
@@ -388,7 +392,7 @@ export default function PandoraIptvClient({
               <thead>
                 <tr className="border-b border-border bg-bg/80">
                   <th className="text-left py-3 px-4 sm:px-6 font-semibold text-text">Criterium</th>
-                  <th className="text-left py-3 px-4 sm:px-6 font-medium text-text-muted">Veel losse / onbekende apps</th>
+                  <th className="text-left py-3 px-4 sm:px-6 font-medium text-text-muted">Veel generieke IPTV-aanbieders</th>
                   <th className="text-left py-3 px-4 sm:px-6 font-semibold text-swiss-red">{SITE_CONFIG.name}</th>
                 </tr>
               </thead>
@@ -450,11 +454,11 @@ export default function PandoraIptvClient({
             </div>
             <blockquote className="flex-1">
               <p className="text-text text-sm sm:text-base leading-relaxed font-medium">
-                Ik zocht eerst naar losse apps, maar met {SITE_CONFIG.name} is alles overzichtelijk: zelfde kwaliteit op de
-                TV en op de telefoon, en ze reageren snel als je een vraag hebt.
+                We wilden géén anonieme reseller maar gewoon IPTV Dark met duidelijke uitleg. Op onze Samsung TV en de
+                Fire Stick werkt alles soepel — als ik mail, krijg ik antwoord in het Nederlands.
               </p>
               <footer className="mt-3 text-xs text-text-muted">
-                — Marc D., <span className="text-text-secondary">Amsterdam</span> · tevreden klant
+                — Thomas B., <span className="text-text-secondary">Utrecht</span> · tevreden klant
               </footer>
             </blockquote>
           </div>
@@ -462,9 +466,9 @@ export default function PandoraIptvClient({
 
         {/* Enhancement: steps */}
         <div id="starten" className="mb-16 scroll-mt-28">
-          <h2 className="text-2xl font-extrabold text-text mb-2 text-center">Zo start je met IPTV bij ons</h2>
+          <h2 className="text-2xl font-extrabold text-text mb-2 text-center">Zo start je met IPTV Dark in Nederland</h2>
           <p className="text-text-secondary text-center mb-10 max-w-xl mx-auto text-sm">
-            Van zoekterm tot kijken: in een paar stappen klaar — zonder gedoe.
+            Van bestelling tot je eerste zender op het scherm — in een paar duidelijke stappen.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {STEPS.map((step, i) => (
@@ -487,9 +491,10 @@ export default function PandoraIptvClient({
         </div>
 
         <div id="pakketten" className="mb-16 scroll-mt-28">
-          <h2 className="text-2xl font-extrabold text-text mb-2">Onze IPTV-pakketten</h2>
+          <h2 className="text-2xl font-extrabold text-text mb-2">Abonnementen — IPTV Dark voor heel Nederland</h2>
           <p className="text-text-secondary mb-8">
-            Kies de looptijd die bij je past. Je ontvangt je gegevens per e-mail zodra je bestelling bevestigd is.
+            Kies 3, 6 of 12 maanden. Alle pakketten geven dezelfde premium catalogus: NL & BE zenders, internationaal
+            aanbod, VOD en replay.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -562,7 +567,7 @@ export default function PandoraIptvClient({
 
         <div
           id="installatie"
-          className="mb-16 rounded-2xl border border-swiss-red/20 bg-gradient-to-br from-bg via-white to-bg p-6 sm:p-8 scroll-mt-28"
+          className="mb-16 rounded-2xl border border-swiss-red/20 bg-gradient-to-br from-bg via-surface to-bg p-6 sm:p-8 scroll-mt-28"
         >
           <div className="flex flex-col lg:flex-row lg:items-center gap-6">
             <div className="flex-1">
@@ -625,7 +630,7 @@ export default function PandoraIptvClient({
             Onderwerpen & zoektermen
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed mb-4">
-            Handige labels die passen bij wat bezoekers zoeken rond IPTV en streaming in Nederland:
+            Zoektermen rond IPTV Dark, Nederland en streaming:
           </p>
           <div className="flex flex-wrap gap-2">
             {TOPIC_TAGS.map((n) => (
@@ -637,61 +642,59 @@ export default function PandoraIptvClient({
         </div>
 
         <div id="faq" className="bg-bg rounded-xl border border-border p-6 sm:p-8 mb-16 scroll-mt-28">
-          <h2 className="text-xl font-bold text-text mb-6">Veelgestelde vragen — Pandora IPTV & alternatieven</h2>
+          <h2 className="text-xl font-bold text-text mb-6">Veelgestelde vragen — IPTV Dark Nederland</h2>
           <div className="space-y-5 text-sm text-text-secondary leading-relaxed">
             <div>
-              <h3 className="font-semibold text-text mb-1">Is {SITE_CONFIG.name} hetzelfde als Pandora IPTV?</h3>
+              <h3 className="font-semibold text-text mb-1">Is IPTV Dark Nederland hetzelfde als IPTV Dark op iptvdark4k.nl?</h3>
               <p>
-                Nee. {SITE_CONFIG.name} is onze eigen premium IPTV-service. &quot;Pandora IPTV&quot; wordt online vaak
-                gebruikt als zoekterm; deze pagina legt uit waar je op moet letten en wat wij bieden als betrouwbaar
-                alternatief.
+                Ja. “IPTV Dark Nederland” beschrijft gewoon onze premium service voor kijkers in Nederland — het merk is{' '}
+                {SITE_CONFIG.name}, met dezelfde pakketten en support als op iptvdark4k.nl.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">Waarom niet alleen een gratis app gebruiken?</h3>
+              <h3 className="font-semibold text-text mb-1">Zijn NPO en RTL inbegrepen?</h3>
               <p>
-                Gratis of onduidelijke apps leveren vaak onstabiele streams en geen echte support. Met een betaald
-                abonnement bij een erkende aanbieder weet je wat je krijgt: updates, EPG, replay en hulp bij problemen.
+                Ons aanbod is gericht op volledige entertainment: Nederlandse en Vlaamse zenders, sport, nieuws en daarnaast
+                internationaal — inclusief grote VOD-bibliotheek en replay.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">Welke apparaten worden ondersteund?</h3>
+              <h3 className="font-semibold text-text mb-1">Kan ik vanuit België kijken?</h3>
               <p>
-                Smart TV (o.a. Samsung, LG), Fire TV Stick, Apple TV, Android/iOS, Windows, Mac, MAG- en Formuler-boxen —
-                dezelfde brede ondersteuning als op onze andere landingspagina&apos;s.
+                Ja, veel klanten kijken vanuit België en Nederland. Je hebt een stabiele internetverbinding nodig; onze
+                service is daarop geoptimaliseerd.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">Hoe snel kan ik kijken?</h3>
+              <h3 className="font-semibold text-text mb-1">In welke taal is de support?</h3>
               <p>
-                Na betaling streven we naar activering binnen ongeveer 2 uur, 7 dagen per week. Je ontvangt je gegevens
-                per e-mail.
+                Onze helpdesk ondersteunt primair in het Nederlands; voor internationale klanten is er ook Engels mogelijk
+                waar nodig.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-text mb-1">Kan ik op meerdere schermen tegelijk kijken?</h3>
+              <h3 className="font-semibold text-text mb-1">Hoe snel kan ik kijken na bestellen?</h3>
               <p>
-                Ja. Voor gezinnen hebben we aparte multi-scherm pakketten (2, 3 of 4 streams). Bekijk de{' '}
+                Meestal binnen circa 2 uur na betalingsbevestiging. Je ontvangt je inloggegevens per e-mail met instructies.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-text mb-1">Multi-scherm voor het gezin?</h3>
+              <p>
+                Ja — bekijk{' '}
                 <Link href="/multi-scherm" className="text-swiss-red font-medium hover:underline">
-                  multi-scherm pagina
+                  multi-scherm pakketten
                 </Link>{' '}
-                voor prijzen en details.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text mb-1">Wat als ik niet tevreden ben?</h3>
-              <p>
-                We hanteren een duidelijke service: niet tevreden — geld terug binnen 24 uur (zie ook onze algemene
-                voorwaarden op de site).
+                voor 2, 3 of 4 gelijktijdige streams.
               </p>
             </div>
           </div>
         </div>
 
         <div className="mb-14 rounded-2xl bg-gradient-to-br from-swiss-red to-swiss-red-dark p-8 sm:p-10 text-center text-black shadow-lg shadow-swiss-red/20">
-          <h2 className="text-xl sm:text-2xl font-extrabold mb-2">Klaar voor stabiele IPTV?</h2>
+          <h2 className="text-xl sm:text-2xl font-extrabold mb-2">Start met IPTV Dark in Nederland</h2>
           <p className="text-black/80 text-sm sm:text-base max-w-lg mx-auto mb-6">
-            Geen gokwerk met onbekende apps — kies een pakket en start binnen enkele uren met kijken.
+            Eén merk, premium kwaliteit — kies je looptijd en kijk binnen enkele uren op al je schermen.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link

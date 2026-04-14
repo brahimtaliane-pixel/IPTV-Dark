@@ -84,7 +84,7 @@ export default function DeviceCompatibility() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.06 }}
-              className="bg-white rounded-xl border border-border p-6 hover:border-swiss-red/20 hover:shadow-sm transition-all group flex flex-col items-center gap-4"
+              className="bg-surface rounded-xl border border-border p-6 hover:border-swiss-red/20 hover:shadow-md hover:shadow-black/20 transition-all group flex flex-col items-center gap-4"
             >
               <div className="w-14 h-14 rounded-full bg-swiss-red/8 flex items-center justify-center group-hover:bg-swiss-red/12 transition-colors">
                 {svg}

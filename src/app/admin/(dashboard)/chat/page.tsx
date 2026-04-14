@@ -166,22 +166,23 @@ export default function AdminChatPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <MessageCircle className="w-6 h-6 text-[#D52B1E]" />
+          <h1 className="text-2xl font-bold text-text flex items-center gap-2">
+            <MessageCircle className="w-6 h-6 text-swiss-red" />
             Live Chat
             {totalUnread > 0 && (
-              <span className="ml-2 px-2 py-0.5 bg-[#D52B1E] text-white text-xs font-bold rounded-full">
+              <span className="ml-2 px-2 py-0.5 bg-swiss-red text-text-on-red text-xs font-bold rounded-full">
                 {totalUnread}
               </span>
             )}
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-text-muted mt-1">
             {sessions.length} conversation{sessions.length !== 1 ? 's' : ''}
           </p>
         </div>
         <button
+          type="button"
           onClick={fetchSessions}
-          className="text-gray-400 hover:text-gray-600 transition p-2"
+          className="text-text-muted hover:text-text transition p-2"
         >
           <RefreshCw className="w-4 h-4" />
         </button>
@@ -190,17 +191,18 @@ export default function AdminChatPage() {
       {/* Main Layout */}
       <div className="flex gap-4 h-[calc(100%-5rem)]">
         {/* Sessions List */}
-        <div className="w-80 shrink-0 bg-white rounded-xl border border-gray-200 flex flex-col overflow-hidden">
+        <div className="w-80 shrink-0 bg-surface rounded-xl border border-border flex flex-col overflow-hidden">
           {/* Filter Tabs */}
-          <div className="flex border-b border-gray-200 shrink-0">
+          <div className="flex border-b border-border shrink-0">
             {(['open', 'closed', 'all'] as const).map(f => (
               <button
                 key={f}
+                type="button"
                 onClick={() => setFilter(f)}
                 className={`flex-1 py-3 text-xs font-semibold transition ${
                   filter === f
-                    ? 'text-[#D52B1E] border-b-2 border-[#D52B1E]'
-                    : 'text-gray-400 hover:text-gray-600'
+                    ? 'text-swiss-red border-b-2 border-swiss-red'
+                    : 'text-text-muted hover:text-text-secondary'
                 }`}
               >
                 {f === 'open' ? 'Open' : f === 'closed' ? 'Closed' : 'All'}
@@ -212,33 +214,34 @@ export default function AdminChatPage() {
           <div className="flex-1 overflow-y-auto">
             {loading ? (
               <div className="p-8 text-center">
-                <div className="animate-spin w-6 h-6 border-2 border-[#D52B1E] border-t-transparent rounded-full mx-auto" />
+                <div className="animate-spin w-6 h-6 border-2 border-swiss-red border-t-transparent rounded-full mx-auto" />
               </div>
             ) : sessions.length === 0 ? (
-              <div className="p-8 text-center text-gray-400 text-sm">
+              <div className="p-8 text-center text-text-muted text-sm">
                 No conversations yet
               </div>
             ) : (
               sessions.map(s => (
                 <button
                   key={s.id}
+                  type="button"
                   onClick={() => selectSession(s)}
-                  className={`w-full text-left px-4 py-3.5 border-b border-gray-100 hover:bg-gray-50 transition ${
-                    selectedSession?.id === s.id ? 'bg-[#D52B1E]/5' : ''
+                  className={`w-full text-left px-4 py-3.5 border-b border-border hover:bg-bg-alt transition ${
+                    selectedSession?.id === s.id ? 'bg-swiss-red/10' : ''
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center shrink-0">
-                      <span className="text-xs font-semibold text-gray-500">
+                    <div className="w-9 h-9 bg-bg-alt border border-border rounded-full flex items-center justify-center shrink-0">
+                      <span className="text-xs font-semibold text-text-muted">
                         {(s.visitor_name || s.visitor_id).charAt(0).toUpperCase()}
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-semibold text-gray-900 truncate">
+                        <span className="text-sm font-semibold text-text truncate">
                           {s.visitor_email || s.visitor_name || `Visitor ${s.visitor_id.slice(0, 6)}`}
                         </span>
-                        <span className="text-[10px] text-gray-400 shrink-0 ml-2">
+                        <span className="text-[10px] text-text-muted shrink-0 ml-2">
                           {timeAgo(s.updated_at)}
                         </span>
                       </div>
@@ -247,14 +250,14 @@ export default function AdminChatPage() {
                           className={`w-2 h-2 shrink-0 ${
                             s.status === 'open'
                               ? 'fill-green-500 text-green-500'
-                              : 'fill-gray-300 text-gray-300'
+                              : 'fill-border-dark text-text-muted'
                           }`}
                         />
-                        <span className="text-xs text-gray-400 truncate">
+                        <span className="text-xs text-text-muted truncate">
                           {s.locale.toUpperCase()} · {s.status}
                         </span>
                         {s.unread_count > 0 && (
-                          <span className="ml-auto px-1.5 py-0.5 bg-[#D52B1E] text-white text-[10px] font-bold rounded-full shrink-0">
+                          <span className="ml-auto px-1.5 py-0.5 bg-swiss-red text-text-on-red text-[10px] font-bold rounded-full shrink-0">
                             {s.unread_count}
                           </span>
                         )}
@@ -268,9 +271,9 @@ export default function AdminChatPage() {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 bg-white rounded-xl border border-gray-200 flex flex-col overflow-hidden">
+        <div className="flex-1 bg-surface rounded-xl border border-border flex flex-col overflow-hidden">
           {!selectedSession ? (
-            <div className="flex-1 flex items-center justify-center text-gray-400">
+            <div className="flex-1 flex items-center justify-center text-text-muted">
               <div className="text-center">
                 <MessageCircle className="w-12 h-12 mx-auto mb-3 opacity-30" />
                 <p className="text-sm">Select a conversation to start replying</p>
@@ -279,21 +282,21 @@ export default function AdminChatPage() {
           ) : (
             <>
               {/* Chat Header */}
-              <div className="px-5 py-3.5 border-b border-gray-200 flex items-center gap-3 shrink-0">
-                <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-semibold text-gray-500">
+              <div className="px-5 py-3.5 border-b border-border flex items-center gap-3 shrink-0">
+                <div className="w-8 h-8 bg-bg-alt border border-border rounded-full flex items-center justify-center">
+                  <span className="text-xs font-semibold text-text-muted">
                     {(selectedSession.visitor_name || selectedSession.visitor_id)
                       .charAt(0)
                       .toUpperCase()}
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-bold text-gray-900">
+                  <h3 className="text-sm font-bold text-text">
                     {selectedSession.visitor_email ||
                       selectedSession.visitor_name ||
                       `Visitor ${selectedSession.visitor_id.slice(0, 8)}`}
                   </h3>
-                  <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                  <div className="flex items-center gap-3 text-[11px] text-text-muted">
                     {selectedSession.visitor_email && (
                       <span className="truncate max-w-[200px]">
                         {selectedSession.visitor_email}
@@ -312,11 +315,12 @@ export default function AdminChatPage() {
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={() => toggleStatus(selectedSession)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
                     selectedSession.status === 'open'
-                      ? 'bg-red-50 text-red-600 hover:bg-red-100'
-                      : 'bg-green-50 text-green-600 hover:bg-green-100'
+                      ? 'bg-red-500/15 text-red-400 border-red-500/25 hover:bg-red-500/20'
+                      : 'bg-green-500/15 text-green-400 border-green-500/25 hover:bg-green-500/20'
                   }`}
                 >
                   {selectedSession.status === 'open' ? (
@@ -332,7 +336,7 @@ export default function AdminChatPage() {
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-5 space-y-3 bg-gray-50">
+              <div className="flex-1 overflow-y-auto p-5 space-y-3 bg-bg">
                 {messages.map(msg => (
                   <div
                     key={msg.id}
@@ -341,27 +345,27 @@ export default function AdminChatPage() {
                     }`}
                   >
                     {msg.sender === 'visitor' && (
-                      <div className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-                        <span className="text-[10px] font-bold text-gray-500">V</span>
+                      <div className="w-7 h-7 rounded-full bg-bg-alt border border-border flex items-center justify-center shrink-0">
+                        <span className="text-[10px] font-bold text-text-muted">V</span>
                       </div>
                     )}
                     <div
                       className={`rounded-2xl px-3.5 py-2.5 max-w-[70%] shadow-sm ${
                         msg.sender === 'admin'
-                          ? 'bg-[#D52B1E] text-white rounded-br-md'
-                          : 'bg-white border border-gray-200 rounded-bl-md'
+                          ? 'bg-swiss-red text-text-on-red rounded-br-md'
+                          : 'bg-surface border border-border rounded-bl-md'
                       }`}
                     >
                       <p
                         className={`text-sm leading-relaxed ${
-                          msg.sender === 'admin' ? 'text-white' : 'text-gray-700'
+                          msg.sender === 'admin' ? 'text-text-on-red' : 'text-text-secondary'
                         }`}
                       >
                         {msg.body}
                       </p>
                       <p
                         className={`text-[10px] mt-1 ${
-                          msg.sender === 'admin' ? 'text-white/60' : 'text-gray-400'
+                          msg.sender === 'admin' ? 'text-text-on-red/65' : 'text-text-muted'
                         }`}
                       >
                         {formatTime(msg.created_at)}
@@ -376,7 +380,7 @@ export default function AdminChatPage() {
               {selectedSession.status === 'open' && (
                 <form
                   onSubmit={sendReply}
-                  className="p-3 border-t border-gray-200 bg-white flex gap-2 shrink-0"
+                  className="p-3 border-t border-border bg-surface flex gap-2 shrink-0"
                 >
                   <input
                     ref={inputRef}
@@ -384,12 +388,12 @@ export default function AdminChatPage() {
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     placeholder="Type your reply..."
-                    className="flex-1 px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#D52B1E]/40 focus:ring-1 focus:ring-[#D52B1E]/20 transition"
+                    className="flex-1 px-3.5 py-2.5 bg-bg-alt border border-border rounded-xl text-sm text-text placeholder:text-text-muted focus:outline-none focus:border-swiss-red/40 focus:ring-1 focus:ring-swiss-red/20 transition"
                   />
                   <button
                     type="submit"
                     disabled={!input.trim() || sending}
-                    className="px-4 py-2.5 bg-[#D52B1E] hover:bg-[#B82318] disabled:opacity-40 text-white rounded-xl flex items-center gap-2 text-sm font-semibold transition"
+                    className="px-4 py-2.5 bg-swiss-red hover:bg-swiss-red-dark disabled:opacity-40 text-text-on-red rounded-xl flex items-center gap-2 text-sm font-semibold transition"
                   >
                     <Send className="w-4 h-4" />
                     Send

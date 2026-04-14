@@ -19,7 +19,7 @@ const supabase = createClient(supabaseUrl, serviceRoleKey, {
 });
 
 async function setupDatabase() {
-  console.log('🔧 Setting up IPTV Nederland database...\n');
+  console.log('🔧 Setting up IPTV Dark database...\n');
 
   // Test connection
   console.log('1. Testing connection...');

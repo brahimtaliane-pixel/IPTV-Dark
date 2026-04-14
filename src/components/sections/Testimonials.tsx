@@ -5,19 +5,19 @@ import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 
 const REVIEWS = [
-  { name: 'Marc D.', location: 'Amsterdam', rating: 5, text: 'Top service! Scherp beeld en een enorme keuze aan zenders. Support reageert snel.' },
-  { name: 'Sophie L.', location: 'Rotterdam', rating: 5, text: 'Al een half jaar klant — heel tevreden. Replay werkt perfect en activering was razendsnel.' },
-  { name: 'Thomas B.', location: 'Utrecht', rating: 5, text: 'De beste IPTV die ik heb geprobeid. Stabiel en betrouwbaar.' },
-  { name: 'Laura M.', location: 'Eindhoven', rating: 5, text: 'Hele gezin blij. Nederlandse en internationale zenders zonder problemen.' },
-  { name: 'Pierre R.', location: 'Den Haag', rating: 5, text: 'Uitstekende prijs-kwaliteit. Zoveel zenders voor deze prijs is zeldzaam.' },
-  { name: 'Nathalie K.', location: 'Groningen', rating: 5, text: 'Ik raad het 100% aan. VOD is compleet en 4K op mijn Smart TV is indrukwekkend.' },
+  { name: 'Michel D.', location: 'Amsterdam', rating: 5, text: 'Onberispelijke service: scherp beeld, eerlijke prijs en een enorme keuze. IPTV Dark raad ik zeker aan.' },
+  { name: 'Sarah M.', location: 'Rotterdam', rating: 5, text: 'Zes maanden klant — replay werkt perfect en support antwoordt binnen no-time. Precies wat ik zocht.' },
+  { name: 'Thomas G.', location: 'Utrecht', rating: 5, text: 'Nederlandse én internationale zenders, installatie kinderspel en streaming blijft stabiel.' },
+  { name: 'Laura M.', location: 'Eindhoven', rating: 5, text: 'Hele gezin blij. Geen buffering en op de Smart TV ziet het er top uit.' },
+  { name: 'Pierre R.', location: 'Den Haag', rating: 5, text: 'Meer dan 32.000 zenders en een VOD-bibliotheek die niet ophoudt — prijs-kwaliteit klopt.' },
+  { name: 'Nathalie K.', location: 'Groningen', rating: 5, text: '4K op de TV is indrukwekkend. Geen gedoe met activering; binnen een paar uur klaar.' },
 ];
 
 export default function Testimonials() {
   const t = useTranslations('testimonials');
 
   return (
-    <section className="py-14 lg:py-20 bg-white">
+    <section className="py-14 lg:py-20 bg-surface">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

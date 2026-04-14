@@ -45,7 +45,7 @@ export default async function HomeContact({ contact }: { contact: SiteContact })
   ] as const;
 
   return (
-    <section className="py-14 lg:py-20 bg-white border-t border-border">
+    <section className="py-14 lg:py-20 bg-surface border-t border-border">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-12">
           <p className="text-xs font-semibold uppercase tracking-wider text-swiss-red mb-2">{t('badge')}</p>

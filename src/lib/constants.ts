@@ -1,14 +1,14 @@
 // ============================================================
-// IPTV Nederland - Constants & Configuration
+// IPTV Dark - Constants & Configuration
 // ============================================================
 
 /** Production default when `NEXT_PUBLIC_SITE_URL` is not set at build time (www for canonical consistency). */
-const DEFAULT_PUBLIC_ORIGIN = 'https://www.nederlandsiptv.com';
+const DEFAULT_PUBLIC_ORIGIN = 'https://www.iptvdark4k.nl';
 
 /**
  * Public site origin for canonical URLs, JSON-LD, metadata, emails domain.
  * - Set `NEXT_PUBLIC_SITE_URL` in `.env.local` to match what you open in the browser
- *   (e.g. `http://localhost:3000` or `https://nederlandsiptv.local`).
+ *   (e.g. `http://localhost:3000` or `https://iptvdark4k.local`).
  * - In `next dev`, if unset, defaults to `http://localhost:<PORT>` so local preview
  *   is not stuck on the production hostname.
  */
@@ -32,7 +32,7 @@ function hostnameFromOrigin(origin: string): string {
   try {
     return new URL(origin).hostname;
   } catch {
-    return 'nederlandsiptv.com';
+    return 'iptvdark4k.nl';
   }
 }
 
@@ -44,7 +44,7 @@ const _contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || `contact@${_publicDomain}`;
 
 export const SITE_CONFIG = {
-  name: 'IPTV Nederland',
+  name: 'IPTV Dark',
   domain: _publicDomain,
   url: _publicOrigin,
   email: _contactEmail,
@@ -74,12 +74,12 @@ export const SCHEMA_PRICE_VALID_UNTIL = '2026-12-31' as const;
 // City slugs live in `./nl-city-slugs` (small file — safe for Client Components)
 export { CITIES, NL_CITY_SLUGS_ORDERED, NL_CITY_SLUGS } from './nl-city-slugs';
 
-/** Hero & stat strip — channels = live TV; movies = films + series (VOD) combined */
+/** Hero & stat strip — channels = live TV; movies = VOD headline (films + series libraries) */
 export const STATS = {
-  channels: '30,000+',
-  movies: '170,000+',
-  series: '170,000+',
-  uptime: '99.9%',
+  channels: '32.000+',
+  movies: '175.000+',
+  series: '175.000+',
+  uptime: '99.8%',
   customers: '37,000+',
   supportHours: '24/7',
   activationTime: '2h',

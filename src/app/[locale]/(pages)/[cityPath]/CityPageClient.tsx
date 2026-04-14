@@ -4,11 +4,13 @@ import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { MapPin, Check, ArrowRight, Tv, Zap, Headphones, Wifi, Globe } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
+import BrandMark from '@/components/ui/BrandMark';
 import { PRICE_CURRENCY_SYMBOL, SITE_CONFIG, type SiteStatsSnapshot } from '@/lib/constants';
 import type { SitePlan } from '@/lib/get-plans';
 import { formatPrice, getDiscount } from '@/lib/utils';
 import { NL_CITY_SLUGS_ORDERED } from '@/lib/nl-city-slugs';
 import { CITIES_DATA } from '@/lib/cities';
+import { CITY_PAGE_SECTIONS_NL } from '@/lib/city-page-content-nl';
 
 const ISP_NL = ['KPN', 'Ziggo', 'T-Mobile', 'Odido'] as const;
 
@@ -26,7 +28,7 @@ export default function CityPageClient({
   const city = CITIES_DATA[citySlug];
   if (!city) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center bg-bg">
         <div className="text-center px-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-swiss-red mb-2">{SITE_CONFIG.name}</p>
           <h1 className="text-2xl font-bold text-text mb-4">Stad niet gevonden</h1>
@@ -40,54 +42,50 @@ export default function CityPageClient({
   }
 
   const meta = city.meta_nl;
-
-  const benefits = [
-    'Nederlandse, Belgische en internationale zenders — ruim 30.000 in HD/4K',
-    'HD- en 4K-kwaliteit op Smart TV, telefoon, tablet en pc',
-    'Replay en VOD met 170.000+ films en series',
-    `Nederlandstalige support 24/7 — ook voor kijkers in ${city.name}`,
-    'Activering meestal binnen 2 uur na betaling',
-    'Compatibel met Smart TV, Android, iOS, Fire Stick, MAG en meer',
-  ];
+  const sections = CITY_PAGE_SECTIONS_NL[citySlug];
+  if (!sections) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg">
+        <div className="text-center px-5">
+          <p className="text-xs font-semibold uppercase tracking-wider text-swiss-red mb-2">{SITE_CONFIG.name}</p>
+          <h1 className="text-2xl font-bold text-text mb-4">Pagina-inhoud ontbreekt</h1>
+          <p className="text-text-secondary text-sm mb-6">Deze stad heeft nog geen volledige content.</p>
+          <Link href="/" className="text-swiss-red hover:underline font-medium">
+            ← Terug naar home
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const ispList = ISP_NL;
-  const regionPhraseNl =
-    city.name === city.canton
-      ? `in ${city.name} en omgeving`
-      : `in ${city.name} en de provincie ${city.canton}`;
 
   const featureCards = [
-    {
-      icon: Tv,
-      title: '30.000+ zenders',
-      desc: 'Nederlandse, Belgische en internationale zenders in HD/4K',
-    },
-    {
-      icon: Zap,
-      title: 'Activering < 2 uur',
-      desc: 'Meestal dezelfde dag nog kijken',
-    },
-    {
-      icon: Headphones,
-      title: 'Support 24/7',
-      desc: `Hulp voor ${city.name} en omgeving`,
-    },
+    { icon: Tv, ...sections.highlights[0] },
+    { icon: Zap, ...sections.highlights[1] },
+    { icon: Headphones, ...sections.highlights[2] },
   ];
 
-  const neighborhoodLabels = city.neighborhoods_fr;
+  const neighborhoodLabels = city.neighborhoods_nl;
 
   return (
-    <section className="pt-28 pb-20 bg-white">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+    <section className="relative pt-28 pb-20 bg-bg overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="absolute -top-32 right-0 w-[min(480px,85vw)] h-[480px] bg-swiss-red/[0.06] rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[280px] h-[280px] bg-swiss-red/[0.03] rounded-full blur-[80px]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
         <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 bg-swiss-red/8 rounded-full border border-swiss-red/15 mb-5"
+            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-surface rounded-full border border-swiss-red/20 mb-5 shadow-sm shadow-black/20"
           >
-            <MapPin className="w-3.5 h-3.5 text-swiss-red" />
-            <span className="text-xs font-semibold text-swiss-red uppercase tracking-wide">
-              {SITE_CONFIG.name} · {city.name}
+            <BrandMark className="w-6 h-6 shrink-0" />
+            <MapPin className="w-3.5 h-3.5 text-swiss-red shrink-0" />
+            <span className="text-[11px] sm:text-xs font-semibold text-swiss-red uppercase tracking-wide">
+              IPTV Dark · {city.name}
               {city.canton ? ` · ${city.canton}` : ''}
             </span>
           </motion.div>
@@ -96,7 +94,7 @@ export default function CityPageClient({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-text leading-tight tracking-tight mb-5"
+            className="text-3xl sm:text-4xl lg:text-[52px] font-extrabold text-text leading-[1.08] tracking-tight mb-5"
           >
             {meta.h1}
           </motion.h1>
@@ -117,15 +115,15 @@ export default function CityPageClient({
             className="flex flex-wrap gap-3"
           >
             <Link
-              href="/#pricing"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-white font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
+              href="/abonnementen"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-black font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors text-sm"
             >
-              Bekijk onze pakketten
+              Bekijk alle abonnementen
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 border border-border text-text font-semibold rounded-lg hover:bg-bg transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-7 py-3.5 border border-border text-text font-semibold rounded-lg hover:bg-surface transition-colors text-sm"
             >
               Neem contact op
             </Link>
@@ -139,7 +137,7 @@ export default function CityPageClient({
             { value: stats.uptime, label: 'Beschikbaarheid' },
             { value: stats.supportHours, label: 'Support' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white px-6 py-5 text-center">
+            <div key={stat.label} className="bg-surface px-6 py-5 text-center">
               <div className="text-2xl sm:text-3xl font-extrabold text-swiss-red">{stat.value}</div>
               <div className="text-xs text-text-muted mt-1 uppercase tracking-wider font-medium">{stat.label}</div>
             </div>
@@ -148,10 +146,10 @@ export default function CityPageClient({
 
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           <div>
-            <h2 className="text-2xl font-extrabold text-text mb-6">Waarom {SITE_CONFIG.name} in {city.name}?</h2>
+            <h2 className="text-2xl font-extrabold text-text mb-6">{sections.whyHeading}</h2>
             <ul className="space-y-3.5">
-              {benefits.map((b) => (
-                <li key={b} className="flex items-start gap-3">
+              {sections.bullets.map((b, i) => (
+                <li key={i} className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-swiss-red/10 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-swiss-red" />
                   </div>
@@ -162,8 +160,8 @@ export default function CityPageClient({
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            {featureCards.map((item) => (
-              <div key={item.title} className="bg-bg rounded-xl border border-border p-5 flex items-start gap-4">
+            {featureCards.map((item, idx) => (
+              <div key={`${citySlug}-hl-${idx}`} className="bg-bg rounded-xl border border-border p-5 flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-swiss-red/8 flex items-center justify-center shrink-0">
                   <item.icon className="w-5 h-5 text-swiss-red" />
                 </div>
@@ -177,10 +175,8 @@ export default function CityPageClient({
         </div>
 
         <div className="mb-16">
-          <h2 className="text-2xl font-extrabold text-text mb-2">Onze IPTV-pakketten in {city.name}</h2>
-          <p className="text-text-secondary mb-8">
-            Kies het pakket dat bij je past. Je ontvangt direct je gegevens per e-mail.
-          </p>
+          <h2 className="text-2xl font-extrabold text-text mb-2">{sections.plansTitle}</h2>
+          <p className="text-text-secondary mb-8">{sections.plansLead}</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[...plans].sort((a, b) => a.duration - b.duration).map((plan) => {
@@ -191,12 +187,12 @@ export default function CityPageClient({
                   key={plan.id}
                   className={`rounded-xl border p-6 transition-all ${
                     plan.is_popular
-                      ? 'bg-swiss-red border-swiss-red text-white relative'
-                      : 'bg-white border-border hover:border-swiss-red/20'
+                      ? 'bg-swiss-red border-swiss-red text-black relative'
+                      : 'bg-surface border-border hover:border-swiss-red/20'
                   }`}
                 >
                   {plan.is_popular && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-swiss-red text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-black text-swiss-red text-xs font-bold px-3 py-1 rounded-full shadow-sm">
                       {t('popular')}
                     </span>
                   )}
@@ -218,11 +214,11 @@ export default function CityPageClient({
                     </div>
                   )}
                   <Link
-                    href={`/plans/${plan.slug}`}
+                    href={`/abonnementen/${plan.slug}`}
                     className={`block text-center py-2.5 rounded-lg font-semibold text-sm transition-colors ${
                       plan.is_popular
-                        ? 'bg-white text-swiss-red hover:bg-white/90'
-                        : 'bg-swiss-red text-white hover:bg-swiss-red-dark'
+                        ? 'bg-black text-swiss-red hover:bg-black/90'
+                        : 'bg-swiss-red text-black hover:bg-swiss-red-dark'
                     }`}
                   >
                     {t('cta')}
@@ -238,15 +234,12 @@ export default function CityPageClient({
             <div className="w-8 h-8 rounded-full bg-swiss-red/8 flex items-center justify-center">
               <Wifi className="w-4 h-4 text-swiss-red" />
             </div>
-            Internet in {city.name} — geschikt voor IPTV
+            {sections.internet.title}
           </h2>
-          <p className="text-sm text-text-secondary leading-relaxed mb-4">
-            {SITE_CONFIG.name} werkt met de grote providers {regionPhraseNl}. Je hebt geen speciale router of instellingen
-            nodig: een stabiele verbinding vanaf ongeveer 10 Mbps is genoeg voor HD, en ongeveer 25 Mbps voor 4K.
-          </p>
+          <p className="text-sm text-text-secondary leading-relaxed mb-4">{sections.internet.body}</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {ispList.map((isp) => (
-              <div key={isp} className="bg-white rounded-lg border border-border p-3 text-center">
+              <div key={isp} className="bg-surface rounded-lg border border-border p-3 text-center">
                 <div className="text-sm font-semibold text-text">{isp}</div>
                 <div className="text-xs text-success mt-0.5 flex items-center justify-center gap-1">
                   <Check className="w-3 h-3" />
@@ -262,14 +255,12 @@ export default function CityPageClient({
             <div className="w-8 h-8 rounded-full bg-swiss-red/8 flex items-center justify-center">
               <Globe className="w-4 h-4 text-swiss-red" />
             </div>
-            Dekking in en rond {city.name}
+            {sections.coverage.title}
           </h2>
-          <p className="text-sm text-text-secondary leading-relaxed mb-4">
-            IPTV is beschikbaar in onderstaande wijken en omliggende gebieden van {city.name}:
-          </p>
+          <p className="text-sm text-text-secondary leading-relaxed mb-4">{sections.coverage.body}</p>
           <div className="flex flex-wrap gap-2">
             {neighborhoodLabels.map((n) => (
-              <span key={n} className="px-3 py-1.5 bg-white border border-border rounded-full text-sm text-text-secondary">
+              <span key={n} className="px-3 py-1.5 bg-surface border border-border rounded-full text-sm text-text-secondary">
                 {n}
               </span>
             ))}
@@ -277,52 +268,19 @@ export default function CityPageClient({
         </div>
 
         <div className="bg-bg rounded-xl border border-border p-6 sm:p-8 mb-16">
-          <h2 className="text-xl font-bold text-text mb-6">
-            IPTV in {city.name} — veelgestelde vragen
-          </h2>
+          <h2 className="text-xl font-bold text-text mb-6">{sections.faqSectionTitle}</h2>
           <div className="space-y-5 text-sm text-text-secondary leading-relaxed">
-            <div>
-              <h3 className="font-semibold text-text mb-1">Hoe werkt {SITE_CONFIG.name} in {city.name}?</h3>
-              <p>
-                Je kunt overal in {city.name}
-                {city.name === city.canton ? ' en omgeving' : ` en de provincie ${city.canton}`} kijken zolang je internet
-                hebt (minimaal ca. 10 Mbps). Je krijgt toegang tot meer dan 30.000 zenders in HD en 4K. Na betaling wordt je
-                abonnement meestal binnen 2 uur geactiveerd.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text mb-1">Welke internetproviders werken in {city.name}?</h3>
-              <p>
-                Onze service werkt met vrijwel alle providers, waaronder KPN, Ziggo, T-Mobile, Odido en regionale glasvezel.
-                Geen speciale IPTV-box van je provider nodig.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text mb-1">Welke apparaten kan ik gebruiken in {city.name}?</h3>
-              <p>
-                Onder andere: Smart TV (Samsung, LG, Sony), Fire TV Stick, Apple TV, Android- en iPhones/tablets, Windows
-                en Mac, MAG- en Formuler-boxen.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text mb-1">Zitten replay en VOD inbegrepen in {city.name}?</h3>
-              <p>
-                Ja. Alle pakketten bevatten replay (tot 7 dagen terug), een grote VOD-bibliotheek met films en series, EPG
-                en updates — ook in {city.name}.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-text mb-1">Hoe snel wordt mijn abonnement actief in {city.name}?</h3>
-              <p>
-                Meestal binnen 2 uur na betalingsbevestiging, 7 dagen per week. Je ontvangt je inloggegevens per e-mail en
-                kunt direct beginnen met kijken.
-              </p>
-            </div>
+            {sections.faq.map((item, i) => (
+              <div key={`${citySlug}-faq-${i}`}>
+                <h3 className="font-semibold text-text mb-1">{item.q}</h3>
+                <p>{item.a}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="mb-8">
-          <h2 className="text-lg font-bold text-text mb-4">{SITE_CONFIG.name} in andere steden</h2>
+          <h2 className="text-lg font-bold text-text mb-4">{sections.nearbyTitle}</h2>
           <div className="flex flex-wrap gap-2">
             {NL_CITY_SLUGS_ORDERED.filter((s) => s !== citySlug)
               .slice(0, 8)

@@ -61,7 +61,7 @@ export function PlanProductSchema({
         '@type': 'Organization',
         name: SITE_CONFIG.name,
       },
-      url: localeUrl(locale, `/plans/${slug}`),
+      url: localeUrl(locale, `/abonnementen/${slug}`),
     },
   };
 
@@ -196,7 +196,7 @@ export function MultiScreenSchema({
       priceCurrency: PRICE_CURRENCY,
       availability: 'https://schema.org/InStock',
       priceValidUntil: SCHEMA_PRICE_VALID_UNTIL,
-      url: localeUrl(locale, `/plans/${plan.slug}`),
+      url: localeUrl(locale, `/abonnementen/${plan.slug}`),
       seller: {
         '@type': 'Organization',
         name: SITE_CONFIG.name,

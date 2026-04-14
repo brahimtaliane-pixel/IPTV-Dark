@@ -30,16 +30,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const deviceText =
     plan.devices > 1 ? ` — ${plan.devices} gelijktijdige schermen` : '';
 
-  const planUrl = `${SITE_CONFIG.url}/plans/${slug}`;
-  const title = `${name} — IPTV Nederland | ${plan.price} ${PRICE_CURRENCY_SYMBOL}`;
+  const planUrl = `${SITE_CONFIG.url}/abonnementen/${slug}`;
+  const title = `${name} — IPTV Dark | ${plan.price} ${PRICE_CURRENCY_SYMBOL}`;
 
-  const metaDescription = `${name}${deviceText}. ${description}. Meer dan 30.000 zenders HD/4K, 170.000+ films en series on demand, replay inbegrepen. Activering binnen 2 uur, support 24/7. ${plan.price} ${PRICE_CURRENCY_SYMBOL} voor ${plan.duration} maanden.`;
+  const metaDescription = `${name}${deviceText}. ${description}. Meer dan 32.000 zenders HD/4K, meer dan 175.000 films en meer dan 175.000 series on demand, replay inbegrepen. Activering binnen 2 uur, support 24/7. ${plan.price} ${PRICE_CURRENCY_SYMBOL} voor ${plan.duration} maanden.`;
 
   return {
     title,
     description: metaDescription,
     keywords: [
-      'IPTV Nederland',
+      'IPTV Dark',
       'iptv abonnement',
       name,
       `iptv ${plan.duration} maanden`,
@@ -92,8 +92,8 @@ export default async function PlanPage({ params }: Props) {
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: localeUrl(locale) },
-          { name: 'Abonnementen', url: localeUrl(locale, '/plans') },
-          { name: planName, url: localeUrl(locale, `/plans/${slug}`) },
+          { name: 'Abonnementen', url: localeUrl(locale, '/abonnementen') },
+          { name: planName, url: localeUrl(locale, `/abonnementen/${slug}`) },
         ]}
       />
       {plan && <PlanProductSchema locale={locale} plan={plan} />}

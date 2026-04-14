@@ -48,7 +48,7 @@ export default function Header() {
 
   const navItems = [
     { label: t('home'), href: '/' },
-    { label: t('plans'), href: '/plans' },
+    { label: t('plans'), href: '/abonnementen' },
     { label: t('multiScreen'), href: '/multi-scherm' },
     { label: t('faq'), href: '/faq' },
     { label: t('installation'), href: '/installation' },
@@ -57,7 +57,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-swiss-red text-white text-center py-1.5 px-4">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-swiss-red text-black text-center py-1.5 px-4">
         <p className="text-xs sm:text-sm font-medium truncate">
           <span className="sm:hidden">{t('promoBarShort')}</span>
           <span className="hidden sm:inline">{t('promoBar')}</span>
@@ -68,8 +68,8 @@ export default function Header() {
         className={cn(
           'fixed top-[28px] sm:top-[32px] left-0 right-0 z-50 transition-all duration-300',
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-border'
-            : 'bg-white'
+            ? 'bg-surface/95 backdrop-blur-md shadow-sm border-b border-border'
+            : 'bg-surface'
         )}
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -77,7 +77,7 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
               <BrandMark className="w-8 h-8 shrink-0" />
               <span className="text-[22px] font-extrabold tracking-tight text-text">
-                IPTV<span className="text-swiss-red">NEDERLAND</span>
+                IPTV<span className="text-swiss-red">DARK</span>
               </span>
             </Link>
 
@@ -101,7 +101,7 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-4">
               <Link
                 href="/#pricing"
-                className="px-5 py-2.5 bg-swiss-red text-white text-[13px] font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors"
+                className="px-5 py-2.5 bg-swiss-red text-black text-[13px] font-semibold rounded-lg hover:bg-swiss-red-dark transition-colors"
               >
                 {t('cta')}
               </Link>
@@ -118,7 +118,7 @@ export default function Header() {
         </div>
 
         {isOpen && (
-          <div className="lg:hidden bg-white border-t border-border">
+          <div className="lg:hidden bg-surface border-t border-border">
             <div className="max-w-6xl mx-auto px-5 py-4 space-y-1">
               {navItems.map((item) => (
                 <Link
@@ -138,7 +138,7 @@ export default function Header() {
               <Link
                 href="/#pricing"
                 onClick={() => setIsOpen(false)}
-                className="block text-center py-3 bg-swiss-red text-white text-sm font-semibold rounded-lg mt-2"
+                className="block text-center py-3 bg-swiss-red text-black text-sm font-semibold rounded-lg mt-2"
               >
                 {t('cta')}
               </Link>
