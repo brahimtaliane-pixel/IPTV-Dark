@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string }> };
 
-const PAGE_PATH = '/installation';
+const PAGE_PATH = '/installatiegids';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;

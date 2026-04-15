@@ -37,9 +37,9 @@ export default function Footer() {
             <ul className="space-y-2.5">
               <li><Link href="/" className="text-sm text-white/60 hover:text-white transition-colors">{nav('home')}</Link></li>
               <li><Link href="/abonnementen" className="text-sm text-white/60 hover:text-white transition-colors">{nav('plans')}</Link></li>
-              <li><Link href="/multi-scherm" className="text-sm text-white/60 hover:text-white transition-colors">{nav('multiScreen')}</Link></li>
+              <li><Link href="/multi-schermen" className="text-sm text-white/60 hover:text-white transition-colors">{nav('multiScreen')}</Link></li>
               <li><Link href="/faq" className="text-sm text-white/60 hover:text-white transition-colors">{nav('faq')}</Link></li>
-              <li><Link href="/installation" className="text-sm text-white/60 hover:text-white transition-colors">{nav('installation')}</Link></li>
+              <li><Link href="/installatiegids" className="text-sm text-white/60 hover:text-white transition-colors">{nav('installation')}</Link></li>
             </ul>
             <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-3 mt-6">{t('topicPages')}</h3>
             <ul className="space-y-2.5">

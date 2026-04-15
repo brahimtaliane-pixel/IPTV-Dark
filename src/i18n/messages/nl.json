@@ -6,7 +6,7 @@
   "nav": {
     "home": "Home",
     "plans": "Abonnementen",
-    "multiScreen": "Multi-scherm",
+    "multiScreen": "Multi-schermen",
     "faq": "FAQ",
     "installation": "Installatie",
     "about": "Over ons",
@@ -371,7 +371,7 @@
       },
       {
         "question": "Kan ik op meerdere apparaten tegelijk kijken?",
-        "answer": "Dat hangt van je abonnement af: standaard één stream, met multi-scherm pakketten meer. Zie de pagina multi-scherm."
+        "answer": "Dat hangt van je abonnement af: standaard één stream, met multi-scherm pakketten meer. Zie de multi-schermen-pagina."
       }
     ],
     "plansSectionTitle": "Klaar om te starten?",
@@ -566,11 +566,11 @@
     "contactSupport": "Neem contact op met support"
   },
   "multiScreenBanner": {
-    "badge": "Multi-scherm",
+    "badge": "Multi-schermen",
     "title": "Pakketten",
-    "titleHighlight": "Multi-scherm",
+    "titleHighlight": "Multi-schermen",
     "description": "Deel je IPTV met het hele gezin. Gelijktijdig kijken op 2, 3 of 4 apparaten met dezelfde premiumkwaliteit.",
-    "cta": "Bekijk multi-scherm pakketten",
+    "cta": "Bekijk multi-schermen-pakketten",
     "devices": {
       "smartTv": "Smart TV",
       "smartphone": "Smartphone",
@@ -582,7 +582,7 @@
   "multiEcrans": {
     "backToPlans": "Terug naar abonnementen",
     "title": "Pakketten",
-    "titleHighlight": "Multi-scherm",
+    "titleHighlight": "Multi-schermen",
     "subtitle": "Deel je IPTV-abonnement met je gezin op meerdere apparaten tegelijk.",
     "tab2": "2 schermen",
     "tab3": "3 schermen",

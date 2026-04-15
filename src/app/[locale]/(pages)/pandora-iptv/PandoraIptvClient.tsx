@@ -147,9 +147,9 @@ export default function PandoraIptvClient({
     { href: '/dutch-iptv' as const, label: 'Dutch IPTV', icon: Languages },
     { href: '/iptv-dark-nederland' as const, label: 'IPTV Dark Nederland', icon: Flag },
     { href: '/iptv-nederland' as const, label: 'IPTV Nederland', icon: MapPin },
-    { href: '/multi-scherm' as const, label: 'Multi-scherm', icon: Tv },
+    { href: '/multi-schermen' as const, label: 'Multi-schermen', icon: Tv },
     { href: '/faq' as const, label: 'FAQ', icon: HelpCircle },
-    { href: '/installation' as const, label: 'Installatie', icon: Wrench },
+    { href: '/installatiegids' as const, label: 'Installatie', icon: Wrench },
   ];
 
   const trustItems = [
@@ -552,7 +552,7 @@ export default function PandoraIptvClient({
             </Link>
             <span className="hidden sm:inline text-border">|</span>
             <Link
-              href="/multi-scherm"
+              href="/multi-schermen"
               className="inline-flex items-center gap-2 text-sm font-semibold text-text-secondary hover:text-swiss-red transition-colors"
             >
               Multi-scherm voor gezinnen
@@ -577,7 +577,7 @@ export default function PandoraIptvClient({
                 op Smart TV, Fire Stick, telefoon en meer zet — inclusief tips voor de beste beeldkwaliteit.
               </p>
               <Link
-                href="/installation"
+                href="/installatiegids"
                 className="inline-flex items-center gap-2 text-sm font-bold text-swiss-red hover:underline"
               >
                 Open de installatiegids
@@ -673,8 +673,8 @@ export default function PandoraIptvClient({
               <h3 className="font-semibold text-text mb-1">Kan ik op meerdere schermen tegelijk kijken?</h3>
               <p>
                 Ja. Voor gezinnen hebben we aparte multi-scherm pakketten (2, 3 of 4 streams). Bekijk de{' '}
-                <Link href="/multi-scherm" className="text-swiss-red font-medium hover:underline">
-                  multi-scherm pagina
+                <Link href="/multi-schermen" className="text-swiss-red font-medium hover:underline">
+                  multi-schermen-pagina
                 </Link>{' '}
                 voor prijzen en details.
               </p>

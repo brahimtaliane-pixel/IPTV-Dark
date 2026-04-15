@@ -83,7 +83,7 @@ export default async function IptvKopenPage({ params }: Props) {
     },
     {
       question: 'Kan ik multi-scherm erbij kopen?',
-      answer: 'Ja. Voor meerdere gelijktijdige streams hebben we aparte multi-scherm pakketten op de multi-scherm pagina.',
+      answer: 'Ja. Voor meerdere gelijktijdige streams hebben we aparte multi-scherm pakketten op de multi-schermen-pagina.',
     },
     {
       question: 'Wat als ik spijt krijg van mijn aankoop?',

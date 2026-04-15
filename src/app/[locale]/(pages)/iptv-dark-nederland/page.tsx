@@ -86,7 +86,7 @@ export default async function IptvDarkNederlandPage({ params }: Props) {
     },
     {
       question: 'Zijn er multi-scherm pakketten?',
-      answer: 'Ja — zie de multi-scherm pagina voor pakketten met meerdere gelijktijdige streams.',
+      answer: 'Ja — zie de multi-schermen-pagina voor pakketten met meerdere gelijktijdige streams.',
     },
   ];
 

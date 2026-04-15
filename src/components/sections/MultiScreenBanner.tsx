@@ -54,7 +54,7 @@ export default function MultiScreenBanner() {
             {/* Right: CTA */}
             <div className="flex flex-col items-center gap-3 shrink-0">
               <Link
-                href="/multi-scherm"
+                href="/multi-schermen"
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-swiss-red text-white font-semibold text-sm rounded-lg hover:bg-swiss-red-dark transition-colors"
               >
                 {t('cta')}

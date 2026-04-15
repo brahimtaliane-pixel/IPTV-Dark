@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
     { path: '/abonnementen', priority: 0.95, changeFrequency: 'weekly' as const },
-    { path: '/multi-scherm', priority: 0.9, changeFrequency: 'weekly' as const },
+    { path: '/multi-schermen', priority: 0.9, changeFrequency: 'weekly' as const },
     { path: '/pandora-iptv', priority: 0.85, changeFrequency: 'monthly' as const },
     { path: '/iptv-kopen', priority: 0.88, changeFrequency: 'weekly' as const },
     { path: '/dutch-iptv', priority: 0.87, changeFrequency: 'weekly' as const },
@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/iptv-abonnement', priority: 0.88, changeFrequency: 'weekly' as const },
     { path: '/iptv-dark-nederland', priority: 0.87, changeFrequency: 'weekly' as const },
     { path: '/faq', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/installation', priority: 0.8, changeFrequency: 'monthly' as const },
+    { path: '/installatiegids', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/about', priority: 0.6, changeFrequency: 'monthly' as const },
     { path: '/contact', priority: 0.7, changeFrequency: 'monthly' as const },
     { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' as const },

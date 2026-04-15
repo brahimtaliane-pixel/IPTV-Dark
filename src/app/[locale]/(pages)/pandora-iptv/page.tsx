@@ -89,7 +89,7 @@ export default async function PandoraIptvPage({ params }: Props) {
     {
       question: 'Kan ik op meerdere schermen tegelijk kijken?',
       answer:
-        'Ja. Voor gezinnen bieden we multi-scherm pakketten met 2, 3 of 4 gelijktijdige streams. Zie de multi-scherm pagina voor prijzen.',
+        'Ja. Voor gezinnen bieden we multi-scherm pakketten met 2, 3 of 4 gelijktijdige streams. Zie de multi-schermen-pagina voor prijzen.',
     },
     {
       question: 'Wat als ik niet tevreden ben?',

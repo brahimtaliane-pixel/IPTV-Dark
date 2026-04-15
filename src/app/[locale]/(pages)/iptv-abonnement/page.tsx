@@ -79,7 +79,7 @@ export default async function IptvAbonnementPage({ params }: Props) {
     },
     {
       question: 'Is er een multi-scherm-abonnement?',
-      answer: 'Ja — aparte pakketten voor meerdere gelijktijdige streams staan op de multi-scherm pagina.',
+      answer: 'Ja — aparte pakketten voor meerdere gelijktijdige streams staan op de multi-schermen-pagina.',
     },
     {
       question: 'Hoe snel is mijn abonnement actief?',

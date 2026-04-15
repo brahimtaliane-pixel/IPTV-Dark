@@ -147,9 +147,9 @@ export default function IptvKopenClient({
     { href: '/dutch-iptv' as const, label: 'Dutch IPTV', icon: Languages },
     { href: '/iptv-dark-nederland' as const, label: 'IPTV Dark Nederland', icon: Flag },
     { href: '/iptv-nederland' as const, label: 'IPTV Nederland', icon: MapPin },
-    { href: '/multi-scherm' as const, label: 'Multi-scherm', icon: Tv },
+    { href: '/multi-schermen' as const, label: 'Multi-schermen', icon: Tv },
     { href: '/faq' as const, label: 'FAQ', icon: HelpCircle },
-    { href: '/installation' as const, label: 'Installatie', icon: Wrench },
+    { href: '/installatiegids' as const, label: 'Installatie', icon: Wrench },
     { href: '/pandora-iptv' as const, label: 'Pandora IPTV', icon: Sparkles },
   ];
 
@@ -555,7 +555,7 @@ export default function IptvKopenClient({
             </Link>
             <span className="hidden sm:inline text-border">|</span>
             <Link
-              href="/multi-scherm"
+              href="/multi-schermen"
               className="inline-flex items-center gap-2 text-sm font-semibold text-text-secondary hover:text-swiss-red transition-colors"
             >
               Multi-scherm voor gezinnen
@@ -580,7 +580,7 @@ export default function IptvKopenClient({
                 op Smart TV, Fire Stick, telefoon en meer zet — inclusief tips voor de beste beeldkwaliteit.
               </p>
               <Link
-                href="/installation"
+                href="/installatiegids"
                 className="inline-flex items-center gap-2 text-sm font-bold text-swiss-red hover:underline"
               >
                 Open de installatiegids
@@ -675,7 +675,7 @@ export default function IptvKopenClient({
               <h3 className="font-semibold text-text mb-1">Kan ik multi-scherm erbij kopen?</h3>
               <p>
                 Ja. Voor meerdere gelijktijdige streams hebben we aparte pakketten. Zie{' '}
-                <Link href="/multi-scherm" className="text-swiss-red font-medium hover:underline">
+                <Link href="/multi-schermen" className="text-swiss-red font-medium hover:underline">
                   Multi-scherm
                 </Link>{' '}
                 voor opties en prijzen.

@@ -25,7 +25,7 @@ const MULTI_SCREEN_PAGE_DESCRIPTION = `${SITE_CONFIG.name} multi-scherm pakkette
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await params;
 
-  const multiUrl = `${SITE_CONFIG.url}/multi-scherm`;
+  const multiUrl = `${SITE_CONFIG.url}/multi-schermen`;
   const title = MULTI_SCREEN_PAGE_TITLE;
   const description = MULTI_SCREEN_PAGE_DESCRIPTION;
 
@@ -96,12 +96,12 @@ export default async function MultiEcransPage({ params }: Props) {
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: localeUrl(locale) },
-          { name: 'Multi-scherm', url: localeUrl(locale, '/multi-scherm') },
+          { name: 'Multi-schermen', url: localeUrl(locale, '/multi-schermen') },
         ]}
       />
       <BrandedWebPageSchema
         locale={locale}
-        path="/multi-scherm"
+        path="/multi-schermen"
         title={MULTI_SCREEN_PAGE_TITLE}
         description={MULTI_SCREEN_PAGE_DESCRIPTION}
       />

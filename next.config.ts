@@ -67,9 +67,12 @@ const nextConfig: NextConfig = {
       // Legacy Swiss marketing URL → homepage pricing (keep for old backlinks)
       { source: '/abonnement-iptv-suisse', destination: '/#pricing', permanent: true },
       // Old French slug → Dutch URL (bookmarks & external links)
-      { source: '/multi-ecrans', destination: '/multi-scherm', permanent: true },
+      { source: '/multi-ecrans', destination: '/multi-schermen', permanent: true },
+      // Singular slug → canonical multi-schermen
+      { source: '/multi-scherm', destination: '/multi-schermen', permanent: true },
       { source: '/iptv-plan/:slug', destination: '/abonnementen/:slug', permanent: true },
-      { source: '/guide-dinstallation-iptv', destination: '/installation', permanent: true },
+      { source: '/guide-dinstallation-iptv', destination: '/installatiegids', permanent: true },
+      { source: '/installation', destination: '/installatiegids', permanent: true },
       { source: '/a-propos', destination: '/about', permanent: true },
       { source: '/politique-de-confidentialite', destination: '/privacy', permanent: true },
       { source: '/conditions-dutilisation', destination: '/terms', permanent: true },

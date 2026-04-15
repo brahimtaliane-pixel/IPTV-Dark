@@ -90,7 +90,7 @@ export default async function IptvNederlandPage({ params }: Props) {
     {
       question: 'Zijn er multi-scherm pakketten?',
       answer:
-        'Ja — op de multi-scherm pagina vind je pakketten voor 2, 3 of 4 gelijktijdige streams.',
+        'Ja — op de multi-schermen-pagina vind je pakketten voor 2, 3 of 4 gelijktijdige streams.',
     },
   ];
 

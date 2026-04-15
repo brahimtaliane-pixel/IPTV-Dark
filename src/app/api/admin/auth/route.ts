@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import crypto from 'crypto';
-import { SITE_CONFIG } from '@/lib/constants';
-
-const ADMIN_EMAIL = (process.env.ADMIN_EMAIL?.trim() || SITE_CONFIG.email).toLowerCase();
-/** Set `ADMIN_PASSWORD` in `.env.local`; fallback only for legacy dev. */
+/** Defaults match production; override with `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `.env.local`. */
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL?.trim() || 'contact@iptvdark4k.nl').toLowerCase();
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD?.trim() || 'Karimisaac2311@';
 const SESSION_SECRET =
   process.env.ADMIN_SESSION_SECRET ?? process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
