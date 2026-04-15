@@ -4,20 +4,30 @@ import crypto from 'crypto';
 /** Defaults match production; override with `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `.env.local`. */
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL?.trim() || 'contact@iptvdark4k.nl').toLowerCase();
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD?.trim() || 'Karimisaac2311@';
-const SESSION_SECRET =
-  process.env.ADMIN_SESSION_SECRET ?? process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
+
+/** Prefer ADMIN_SESSION_SECRET; use Supabase role key if admin secret is unset or empty (Vercel often has `ADMIN_SESSION_SECRET` present but blank). */
+function getSessionSecret(): string {
+  return (
+    process.env.ADMIN_SESSION_SECRET?.trim() ||
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    ''
+  );
+}
 
 function createToken(email: string): string {
+  const secret = getSessionSecret();
   const payload = JSON.stringify({ email, exp: Date.now() + 24 * 60 * 60 * 1000 }); // 24h
-  const hmac = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+  const hmac = crypto.createHmac('sha256', secret).update(payload).digest('hex');
   return Buffer.from(payload).toString('base64') + '.' + hmac;
 }
 
 function verifyToken(token: string): { email: string; exp: number } | null {
   try {
+    const secret = getSessionSecret();
+    if (!secret) return null;
     const [payloadB64, hmac] = token.split('.');
     const payload = Buffer.from(payloadB64, 'base64').toString();
-    const expectedHmac = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+    const expectedHmac = crypto.createHmac('sha256', secret).update(payload).digest('hex');
     if (hmac !== expectedHmac) return null;
     const data = JSON.parse(payload);
     if (data.exp < Date.now()) return null;
@@ -38,11 +48,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
-    if (!SESSION_SECRET) {
+    if (!getSessionSecret()) {
       return NextResponse.json(
         {
           error:
-            'Server misconfigured: add SUPABASE_SERVICE_ROLE_KEY (or ADMIN_SESSION_SECRET) to .env.local and restart the dev server.',
+            'Server misconfigured: set SUPABASE_SERVICE_ROLE_KEY or ADMIN_SESSION_SECRET in your environment (e.g. Vercel project → Settings → Environment Variables, or .env.local locally), then redeploy / restart.',
         },
         { status: 500 },
       );
